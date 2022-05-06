@@ -1,8 +1,9 @@
-### Hi there 👋 I’m Morris - a devevloepr who is 🤩 about every new exiting developer tool out there. 
+### Hi there 👋 I’m Morris
 
-In my job as Chief Engineer at a super early stage deep tech VC (https://lunar.vc/) I see a lot of new cutting edge developer tools. On https://starstruck.dev/ I share some of my highlights with you!
+I'm a devevloper who is 🤩 about every new exciting developer tool out there (and invests in them). In my job as Chief Engineer at a [super early stage deep tech VC](https://lunar.vc/) I see a lot of new cutting edge developer tools. On https://starstruck.dev/ I share some of my highlights with you!
 
-[Join the starstruck.dev community](https://github.com/morrisclay/starstruck.dev/discussions/categories/developer-tools)
+- 💬  [Join the starstruck.dev community](https://github.com/morrisclay/starstruck.dev/discussions/categories/developer-tools)
+- 🌱 Looking for a super technical investor for your deep tech / dev tool startup? [Let's grab a virtual ☕](https://calendly.com/morris-lunar/15-minutes-meeting)
 
 <!--
 **morrisclay/morrisclay** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
