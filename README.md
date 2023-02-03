@@ -1,21 +1,21 @@
-### Hi there 👋 I’m Morris
+# Morris Clay
 
-I'm a devevloper who is 🤩 about every new exciting developer tool out there (and invests in them). In my job as Chief Engineer at a [super early stage deep tech VC](https://lunar.vc/) I see a lot of new cutting edge developer tools. On https://starstruck.dev/ I share some of my highlights with you!
+👋 Hey, I'm Morris,
 
-- 💬  [Join the starstruck.dev community](https://github.com/morrisclay/starstruck.dev/discussions/categories/developer-tools)
-- 🌱 Looking for a super technical investor for your deep tech / dev tool startup? [Let's grab a virtual ☕](https://calendly.com/morris-lunar/15-minutes-meeting)
+i'm an early stage tech investor at day and software developer at night. I work as a Partner at [Lunar Ventures](https://lunar.vc) where I've invested in companies such as [Hathora](https://hathora.dev), [Flipt](https://flipt.io), [Deep-Ivy](https://lets-unify.ai), [Electric SQL](https://electric-sql.com) and [Instill (VDP)](https://instill.tech). 
+I love working with technology/open-source founders on building things that make a difference. 
 
-<!--
-**morrisclay/morrisclay** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Where can I help?
+- Tech & Product strategy.
+- Early GTM strategy (open-source, produc-led, bottom-up).
+- Early talent vetting.
+- Fund-raising support and strategy.
+- Pre-seed and seed stage investments.
 
-Here are some ideas to get you started:
+Get in Touch:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- Twitter [@morrisclay](https://twitter.com/morrisclay)
+- GitHub [@morrisclay](https://github.com/morrisclay)
+- LinkedIn [@moclay](https://www.linkedin.com/in/moclay/)
+- Email mail@morrisclay.com
