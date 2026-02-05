@@ -1,0 +1,155 @@
+---
+// Design 1: Brutalist Dark - Glitch Grid
+---
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MORRIS CLAY</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; background: #0a0a0a; }
+body { font-family: 'Space Mono', monospace; color: #e0e0e0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.container { max-width: 600px; position: relative; z-index: 1; border: 1px solid #333; padding: 3rem; background: rgba(10,10,10,0.9); }
+h1 { font-size: 2.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 0.5rem; color: #fff; }
+.tagline { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem; border-bottom: 1px solid #333; padding-bottom: 2rem; }
+.tagline a { color: #0ff; text-decoration: none; }
+.bio { font-size: 0.85rem; color: #888; line-height: 1.8; margin-bottom: 2rem; }
+.bio p { margin-bottom: 1rem; }
+.bio a { color: #0ff; text-decoration: none; border-bottom: 1px solid #0ff; }
+.bio em { color: #fff; font-style: normal; }
+.links { display: flex; gap: 2rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 3rem; }
+.links a { color: #666; text-decoration: none; transition: color 0.2s; }
+.links a:hover { color: #0ff; }
+.footer-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; border-top: 1px solid #333; padding-top: 2rem; }
+.footer-sections h2 { font-size: 0.6rem; color: #444; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1rem; }
+.footer-sections ul { list-style: none; font-size: 0.8rem; line-height: 2; }
+.footer-sections a { color: #888; text-decoration: none; }
+.footer-sections a:hover { color: #0ff; }
+.date { color: #444; font-size: 0.65rem; }
+#canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+.label { position: fixed; bottom: 1rem; right: 1rem; font-size: 0.5rem; color: #333; letter-spacing: 0.2em; text-transform: uppercase; }
+::selection { background: #0ff; color: #000; }
+</style>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+<div id="canvas-container"></div>
+<div class="container">
+  <h1>Morris Clay</h1>
+  <p class="tagline">Deep Tech Investor — <a href="https://lunar.vc">Lunar</a></p>
+  <div class="bio">
+    <p>I invest in deep tech infrastructure at inception stage, working with founders on the hardest question their company faces: <em>what shape should this thing take?</em></p>
+    <p>Building something at the edge of what's possible? Still shapeshifting?</p>
+    <p><a href="mailto:morris@lunarventures.eu">Let's talk.</a></p>
+  </div>
+  <nav class="links">
+    <a href="mailto:morris@lunarventures.eu">Email</a>
+    <a href="https://www.linkedin.com/in/morris-clay/">LinkedIn</a>
+  </nav>
+  <footer class="footer-sections">
+    <section><h2>Portfolio</h2><ul><li><a href="https://getbruin.com/">Bruin</a></li><li><a href="https://electric-sql.com/">Electric SQL</a></li><li><a href="https://hathora.dev/">Hathora</a></li><li><a href="https://xorq.dev/">xorq</a></li><li><a href="https://embucket.com/">Embucket</a></li></ul></section>
+    <section><h2>Writing</h2><ul><li><a href="/blog/the-shape-of-the-thing">The Shape of the Thing</a> <span class="date">02.26</span></li></ul></section>
+  </footer>
+</div>
+<div class="label">001 / Glitch Grid</div>
+
+<script is:inline>
+const sketch = (p) => {
+  let cols, rows;
+  const cellSize = 40;
+  let grid = [];
+  let glitchFrames = 0;
+
+  p.setup = () => {
+    p.createCanvas(p.windowWidth, p.windowHeight).parent('canvas-container');
+    cols = Math.ceil(p.width / cellSize) + 1;
+    rows = Math.ceil(p.height / cellSize) + 1;
+    for (let i = 0; i < cols * rows; i++) {
+      grid.push({
+        offset: p.random(1000),
+        speed: p.random(0.01, 0.03),
+        char: p.random(['/', '\\', '|', '-', '+', '·', '○', '□', '△']),
+        glitch: false
+      });
+    }
+  };
+
+  p.draw = () => {
+    p.background(10);
+
+    // Random glitch trigger
+    if (p.random() < 0.02) glitchFrames = p.floor(p.random(5, 20));
+
+    const isGlitching = glitchFrames > 0;
+    if (isGlitching) glitchFrames--;
+
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        const i = x + y * cols;
+        const cell = grid[i];
+        const px = x * cellSize;
+        const py = y * cellSize;
+
+        const noiseVal = p.noise(x * 0.1, y * 0.1, p.frameCount * cell.speed);
+
+        // Glitch offset
+        let offsetX = 0, offsetY = 0;
+        if (isGlitching && p.random() < 0.1) {
+          offsetX = p.random(-20, 20);
+          offsetY = p.random(-5, 5);
+        }
+
+        if (noiseVal > 0.5) {
+          const alpha = p.map(noiseVal, 0.5, 1, 20, 80);
+
+          // Cyan channel offset during glitch
+          if (isGlitching && p.random() < 0.3) {
+            p.fill(0, 255, 255, alpha * 0.5);
+            p.noStroke();
+            p.textSize(14);
+            p.textAlign(p.CENTER, p.CENTER);
+            p.text(cell.char, px + offsetX + 2, py + offsetY);
+          }
+
+          p.fill(255, alpha);
+          p.noStroke();
+          p.textSize(14);
+          p.textFont('Space Mono');
+          p.textAlign(p.CENTER, p.CENTER);
+          p.text(cell.char, px + offsetX, py + offsetY);
+        }
+
+        // Occasional scan line
+        if (isGlitching && y === p.floor(p.frameCount * 0.5) % rows) {
+          p.stroke(0, 255, 255, 30);
+          p.strokeWeight(cellSize);
+          p.line(0, py, p.width, py);
+        }
+      }
+    }
+
+    // Horizontal glitch bars
+    if (isGlitching) {
+      for (let i = 0; i < 3; i++) {
+        const y = p.random(p.height);
+        const h = p.random(2, 8);
+        p.noStroke();
+        p.fill(0, 255, 255, p.random(20, 50));
+        p.rect(0, y, p.width, h);
+      }
+    }
+  };
+
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+    cols = Math.ceil(p.width / cellSize) + 1;
+    rows = Math.ceil(p.height / cellSize) + 1;
+  };
+};
+new p5(sketch);
+</script>
+</body>
+</html>
