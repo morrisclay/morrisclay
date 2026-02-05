@@ -1,0 +1,203 @@
+---
+
+---
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morris Clay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #2b2926;
+  --ink-soft: #3d3a36;
+  --paper: #f0ece4;
+  --paper-deep: #e6e1d7;
+  --faded: #918a7e;
+  --rule: #cdc6b8;
+  --accent: #5c7c5a;
+  --accent-deep: #4a6548;
+  --accent-light: rgba(92, 124, 90, 0.08);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.72;
+  letter-spacing: 0.004em;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 32em;
+  text-align: center;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0.5em;
+}
+
+.tagline {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--faded);
+  margin-bottom: 2rem;
+}
+
+.bio {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.bio p {
+  margin-bottom: 1em;
+}
+
+.bio p:last-child {
+  margin-bottom: 0;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.links a {
+  color: var(--faded);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 0.5em 0;
+}
+
+.links a:hover {
+  color: var(--accent-deep);
+}
+
+.divider {
+  width: 24px;
+  height: 1px;
+  background: var(--rule);
+}
+
+.writing-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  width: 100%;
+}
+
+.writing-section h2 {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faded);
+  margin-bottom: 1.5rem;
+}
+
+.writing-list {
+  list-style: none;
+  text-align: left;
+}
+
+.writing-list li {
+  margin-bottom: 1rem;
+}
+
+.writing-list a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.writing-list a:hover {
+  color: var(--accent-deep);
+}
+
+.writing-list .date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--faded);
+  margin-left: 0.8em;
+  letter-spacing: 0.05em;
+}
+
+::selection {
+  background: rgba(92, 124, 90, 0.16);
+  color: inherit;
+}
+
+@media (max-width: 600px) {
+  html { font-size: 16px; }
+  body { padding: 1.5rem; }
+  .links { gap: 1em; font-size: 0.6rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Morris Clay</h1>
+  <p class="tagline">Deep tech investor</p>
+
+  <div class="bio">
+    <p>I invest in deep tech at the earliest stages, working with founders on the hardest question their company faces: <em>what shape should this thing take?</em></p>
+    <p>I help widen the aperture. Then the founder drives.</p>
+  </div>
+
+  <nav class="links">
+    <a href="mailto:morris@lunarventures.eu">Email</a>
+    <span class="divider"></span>
+    <a href="https://www.linkedin.com/in/morris-clay/">LinkedIn</a>
+  </nav>
+
+  <section class="writing-section">
+    <h2>Writing</h2>
+    <ul class="writing-list">
+      <li>
+        <a href="/blog/the-shape-of-the-thing">The Shape of the Thing</a>
+        <span class="date">Feb 2026</span>
+      </li>
+    </ul>
+  </section>
+</div>
+
+</body>
+</html>

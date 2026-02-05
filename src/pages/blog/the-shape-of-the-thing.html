@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Shape of the Thing — Morris Clay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #2b2926;
+  --ink-soft: #3d3a36;
+  --paper: #f0ece4;
+  --paper-deep: #e6e1d7;
+  --faded: #918a7e;
+  --rule: #cdc6b8;
+  --accent: #5c7c5a;
+  --accent-deep: #4a6548;
+  --accent-light: rgba(92, 124, 90, 0.08);
+  --shape-stroke: rgba(92, 124, 90, 0.25);
+  --shape-ghost: rgba(145, 138, 126, 0.28);
+  --highlight: rgba(92, 124, 90, 0.09);
+  --measure: 34em;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  hanging-punctuation: first last;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.72;
+  letter-spacing: 0.004em;
+  overflow-x: hidden;
+}
+
+/* ================================
+   BOTTOM TOGGLE
+   ================================ */
+.mode-dock {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  user-select: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2px;
+  box-shadow: 0 2px 20px rgba(43, 41, 38, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.mode-dock .dock-opt {
+  padding: 0.5em 1.1em;
+  cursor: pointer;
+  color: var(--faded);
+  border-radius: 16px;
+  transition: color 0.3s ease, background 0.3s ease;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.mode-dock .dock-opt.active {
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.mode-dock .dock-opt:not(.active):hover {
+  color: var(--ink);
+}
+
+/* ================================
+   PROGRESS
+   ================================ */
+.progress-track {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 100vh;
+  background: var(--rule);
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.progress-track.visible { opacity: 0.5; }
+
+.progress-fill {
+  width: 100%;
+  background: var(--accent);
+  height: 0%;
+  transition: height 0.08s linear;
+}
+
+/* ================================
+   GRAIN
+   ================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* ================================
+   HOME NAV
+   ================================ */
+.home-nav {
+  position: fixed;
+  top: 1.4rem;
+  left: 1.6rem;
+  z-index: 300;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+  transition: opacity 0.4s ease;
+}
+
+.home-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--faded);
+  transition: color 0.3s ease;
+  padding: 0.5em 0;
+}
+
+.home-nav a:hover { color: var(--ink); }
+
+.home-nav svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+  transition: transform 0.3s ease;
+}
+
+.home-nav a:hover svg { transform: translateX(-2px); }
+
+/* ================================
+   HERO
+   ================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  gap: 0;
+}
+
+.hero-shape {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 2.4rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 0.2s forwards;
+  will-change: transform;
+}
+
+.hero-shape canvas { width: 100%; height: 100%; }
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+.hero-scatter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-scatter canvas { width: 100%; height: 100%; display: block; }
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 620px;
+}
+
+.hero h1 {
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 0.35em;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+.hero-sub {
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  line-height: 1.55;
+  color: var(--faded);
+  margin-bottom: 1.8em;
+  opacity: 0;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+
+.hero-byline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faded);
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+}
+
+.hero-byline .by-sep {
+  width: 16px;
+  height: 1px;
+  background: var(--rule);
+  display: inline-block;
+}
+
+.hero-byline a {
+  color: var(--faded);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hero-byline a:hover { color: var(--ink); }
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1.8s forwards;
+}
+
+.scroll-cue-line {
+  width: 1px;
+  height: 32px;
+  background: var(--rule);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-cue-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollDrop 2.2s ease-in-out infinite 2.2s;
+}
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollDrop { 0% { top: -100%; } 50% { top: 100%; } 100% { top: 100%; } }
+
+/* ================================
+   COMPANION SHAPE
+   ================================ */
+.companion-shape {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  right: calc(50% - 20em - 110px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 68px;
+  height: 68px;
+}
+
+.companion-shape.visible { opacity: 1; }
+
+/* ================================
+   ESSAY
+   ================================ */
+.essay-body { position: relative; z-index: 3; padding-bottom: 2rem; }
+
+.section { position: relative; padding: 0 1.5rem; }
+.section-inner { max-width: var(--measure); margin: 0 auto; }
+
+.section p {
+  margin-bottom: 1.15em;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.section p.revealed { opacity: 1; transform: translateY(0); }
+
+em { font-style: italic; letter-spacing: 0.008em; }
+
+.sc {
+  font-variant: small-caps;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-size: 0.92em;
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-weight: 500;
+  font-size: 4.1em;
+  line-height: 0.78;
+  margin-right: 0.08em;
+  margin-top: 0.06em;
+  color: var(--ink);
+}
+
+mark.hl {
+  background: transparent;
+  color: inherit;
+  padding: 0.04em 0.12em;
+  margin: -0.04em -0.12em;
+  border-radius: 2px;
+  transition: background 0.9s ease;
+}
+
+mark.hl.lit { background: var(--highlight); }
+
+/* Dividers */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 0;
+  position: relative;
+}
+
+.divider svg {
+  width: 46px;
+  height: 46px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.divider.revealed svg { opacity: 1; }
+
+.divider .d-inner {
+  transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.divider-label {
+  position: absolute;
+  top: calc(50% + 30px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.46rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--rule);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s, color 0.8s ease;
+}
+
+.divider.revealed .divider-label { opacity: 1; color: var(--faded); }
+
+/* Pull quote */
+.pull-quote-section {
+  padding: 7rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.pull-quote {
+  max-width: 20em;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  line-height: 1.4;
+  color: var(--accent-deep);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.pq-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.pq-line.revealed { opacity: 1; transform: translateY(0); }
+
+/* Reframe */
+.reframe-old {
+  position: relative;
+  transition: color 0.5s ease;
+}
+
+.reframe-old.struck { color: var(--rule); }
+
+.reframe-old.struck::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--faded);
+  animation: strikeIn 0.6s ease forwards;
+}
+
+@keyframes strikeIn { from { width: 0; } to { width: 100%; } }
+
+.reframe-new {
+  color: var(--accent-deep);
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.3s;
+}
+
+.reframe-new.show { opacity: 1; }
+
+/* Word emphasis */
+.word-emphasis {
+  display: inline-block;
+  font-style: italic;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), letter-spacing 0.7s ease;
+}
+
+.word-emphasis.breathe {
+  transform: scale(1.12);
+  letter-spacing: 0.05em;
+}
+
+/* ================================
+   FINAL — rapid cycling
+   ================================ */
+.final-shapes {
+  position: relative;
+  height: 50vh;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.final-shapes-wrap {
+  width: 140px;
+  height: 140px;
+  position: relative;
+}
+
+.final-shapes-wrap svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ================================
+   CLOSING LINE
+   ================================ */
+.closing {
+  text-align: center;
+  padding: 0 1.5rem 8rem;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.closing.revealed { opacity: 1; transform: translateY(0); }
+
+.closing p {
+  max-width: var(--measure);
+  margin: 0 auto;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--faded);
+  line-height: 1.6;
+}
+
+/* ================================
+   AGENT VIEW
+   ================================ */
+.agent-view {
+  display: none;
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.76rem;
+  line-height: 1.85;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.agent-view .md-h1 {
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2em;
+}
+
+.agent-view .md-sub {
+  font-style: italic;
+  color: var(--faded);
+  margin-bottom: 2.5em;
+  display: block;
+}
+
+.agent-view .md-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2em 0;
+}
+
+.agent-view .md-p { margin-bottom: 1.2em; }
+
+body.mode-agent .human-view { display: none; }
+body.mode-agent .agent-view { display: block; }
+body.mode-agent .companion-shape,
+body.mode-agent .progress-track,
+body.mode-agent .home-nav,
+body.mode-agent .grain { display: none; }
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 1100px) {
+  .companion-shape { right: 1.2rem; width: 52px; height: 52px; }
+}
+
+@media (max-width: 768px) {
+  html { font-size: 16.5px; }
+  .home-nav { top: 1rem; left: 1.2rem; }
+  .hero { min-height: 580px; }
+  .hero-shape { width: 150px; height: 150px; margin-bottom: 1.8rem; }
+  .hero-byline { gap: 0.8em; font-size: 0.48rem; }
+  .companion-shape { display: none; }
+  .divider svg { width: 38px; height: 38px; }
+  .pull-quote-section { padding: 5rem 1.5rem; min-height: 40vh; }
+  .final-shapes { height: 40vh; }
+  .final-shapes-wrap { width: 110px; height: 110px; }
+  .mode-dock { bottom: 1rem; }
+}
+
+::selection { background: rgba(92, 124, 90, 0.16); color: inherit; }
+</style>
+</head>
+<body class="mode-human">
+
+<!-- Home nav -->
+<nav class="home-nav" id="homeNav">
+  <a href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Morris Clay
+  </a>
+</nav>
+
+<!-- Bottom toggle -->
+<div class="mode-dock" id="modeDock">
+  <div class="dock-opt active" data-mode="human">Human</div>
+  <div class="dock-opt" data-mode="agent">Agent</div>
+</div>
+
+<div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+<div class="grain"></div>
+
+<div class="companion-shape" id="companionShape">
+  <svg viewBox="0 0 100 100">
+    <polygon id="compContainer" points="50,5 93,27 93,73 50,95 7,73 7,27" fill="none" stroke="var(--shape-ghost)" stroke-width="1"/>
+    <polygon id="compObject" points="50,25 75,35 80,60 60,80 30,72 25,42" fill="none" stroke="var(--shape-stroke)" stroke-width="1.2"/>
+  </svg>
+</div>
+
+<!-- ============================================
+     HUMAN VIEW
+     ============================================ -->
+<div class="human-view">
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-scatter"><canvas id="scatterCanvas"></canvas></div>
+
+  <div class="hero-shape" id="heroShapeWrap">
+    <canvas id="heroShapeCanvas" width="400" height="400"></canvas>
+  </div>
+
+  <div class="hero-content">
+    <h1>The Shape of<br>the&nbsp;Thing</h1>
+    <p class="hero-sub">On reshaping under uncertainty&thinsp;—&thinsp;and the role<br>of venture in the decisions that&nbsp;compound</p>
+    <div class="hero-byline">
+      <a href="/">Morris Clay</a>
+      <span class="by-sep"></span>
+      <span>February 2026</span>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><div class="scroll-cue-line"></div></div>
+</section>
+
+<!-- ESSAY -->
+<main class="essay-body" id="essayBody">
+
+  <!-- ====== SECTION 1 — The Container ====== -->
+  <section class="section" data-section="1">
+    <div class="section-inner" style="padding-top:6rem">
+      <p class="drop-cap">Every technology has a shape. Not the shape of the code or the architecture&thinsp;—&thinsp;the shape it takes when it meets the world. The packaging, the form factor, who encounters it first and what it looks like when they do. <mark class="hl">The container the thing arrives&nbsp;in.</mark></p>
+      <p>I invest in deep tech at the earliest stages, and I keep noticing a mismatch. A founder shows me something genuinely brilliant&thinsp;—&thinsp;a new approach to data synchronization, a novel compute primitive, a breakthrough in how machines perceive their environment&thinsp;—&thinsp;something that makes me lean forward in my chair. And then they show me how they're planning to ship it. And I can feel it before I can articulate it: <mark class="hl">the container doesn't fit the thing inside&nbsp;it.</mark></p>
+      <p><em>That feeling.</em> I've been sitting with it for a while now, trying to understand what it's actually pointing at. Because I think it touches something the venture world mostly ignores. We talk endlessly about markets and teams and timing. We have frameworks for evaluating technology risk. But the actual product architecture&thinsp;—&thinsp;the decisions about what shape a technology takes when it meets the world&thinsp;—&thinsp;gets treated as an implementation detail. Something the founder figures out along the&nbsp;way.</p>
+      <p>It doesn't get figured out along the way. It gets <em>negotiated</em>&thinsp;—&thinsp;over and over, often by proxy, often without anyone naming it as the decision it actually is. A packaging choice made under time pressure. A positioning that drifts because a design partner asked for something slightly different. A form factor inherited from a demo that was never meant to be the product. Each negotiation feels small. <mark class="hl">But they compound.</mark> And undoing a shape that's already been shipped, sold against, and built around is one of the most expensive things a startup can do. There's a specific kind of exhaustion that comes from iterating on a container that was never going to&nbsp;fit.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="35"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5"/><polygon class="d-inner" points="26,10 42,38 10,38" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">the reframe</div></div>
+
+  <!-- ====== SECTION 2 — The Reframe ====== -->
+  <section class="section" data-section="2">
+    <div class="section-inner">
+      <p>The pattern I see most often&thinsp;—&thinsp;the one that most clearly shows what shape decisions actually do&thinsp;—&thinsp;is what I think of as <em>the&nbsp;reframe.</em></p>
+    </div>
+  </section>
+
+  <div class="pull-quote-section">
+    <blockquote class="pull-quote">
+      <span class="pq-line">Same technology.</span>
+      <span class="pq-line">Different story.</span>
+      <span class="pq-line">Completely different&nbsp;ceiling.</span>
+    </blockquote>
+  </div>
+
+  <section class="section" data-section="2b">
+    <div class="section-inner">
+      <p>A product positioned as <span class="reframe-old" data-reframe="old">"cheaper alternative to [incumbent]"</span> is in a race to the bottom. You're defined by someone else's product. You compete on one axis. You attract buyers who'll leave when something cheaper&nbsp;appears.</p>
+      <p>Now take that same capability and frame it around a problem that didn't exist two years ago&thinsp;—&thinsp;<span class="reframe-new" data-reframe="new">agentic workloads that need isolation, real-time perception for autonomous systems, data governance for a world where <span class="sc">ai</span> touches everything.</span> The buyer changes. The urgency changes. The willingness to pay changes. And an expansion path opens that wasn't visible before. Multiple products from the same underlying technology. None of them reachable from the "cheap&nbsp;X"&nbsp;frame.</p>
+      <p><mark class="hl">The technology didn't change. The shape of the story changed.</mark> And the story's shape determines the company's&nbsp;ceiling.</p>
+      <p>This isn't a branding exercise. It's structural. When you reframe, you're changing who your first user is, how they find you, what they're willing to pay, and where the product goes next. And sometimes the same technology that struggled for years in one frame finds immediate traction in another&thinsp;—&thinsp;not because anything underneath improved, but because <mark class="hl">the container finally fit the thing inside&nbsp;it.</mark></p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="15"><svg viewBox="0 0 52 52"><rect x="8" y="8" width="36" height="36" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5" transform="rotate(45 26 26)"/><rect class="d-inner" x="12" y="12" width="28" height="28" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">what remains</div></div>
+
+  <!-- ====== SECTION 3 — What Remains ====== -->
+  <section class="section" data-section="3">
+    <div class="section-inner">
+      <p>There's something larger underneath all of this that I've been turning over for&nbsp;months.</p>
+      <p><span class="sc">ai</span> is making execution cheap. On both sides of the table. Founders prototype in an afternoon. Investors generate market maps in minutes. Code, research, content, financial models&thinsp;—&thinsp;the entire operational layer of building and investing is compressing toward zero marginal cost.&nbsp;Fast.</p>
+      <p>So what's left when execution is&nbsp;commoditized?</p>
+      <p>I used to think the answer was access&thinsp;—&thinsp;to deals, to talent, to information. But those edges are compressing too. <span class="sc">ai</span> can generate ten product configurations for a founding team. It can map every customer segment. It can model the financial implications of every form factor. And it's getting better at all of this,&nbsp;quickly.</p>
+      <p>But <mark class="hl">someone still has to <em>choose.</em></mark> Someone has to sit in the room with the ambiguity&thinsp;—&thinsp;the moment when the data doesn't resolve, when the market could go two directions, when the decision is irreversible and the information is incomplete&thinsp;—&thinsp;and make the call. Not because <span class="sc">ai</span> can't contribute to that moment. It can, and increasingly will. But because the choosing draws on something that's hard to formalize: the accumulated weight of having been in that room many times before and having watched what happened next. Pattern recognition that lives closer to intuition than to&nbsp;analysis.</p>
+      <p><span class="word-emphasis" data-emphasis>Taste.</span> In the deepest sense of the&nbsp;word.</p>
+      <p>The founders who win in this environment aren't the ones with the best engineering&thinsp;—&thinsp;<span class="sc">ai</span> narrows that gap. Or the most sophisticated go-to-market&thinsp;—&thinsp;<span class="sc">ai</span> narrows that too. They're the ones who <mark class="hl">see the right shape before anyone else.</mark> Who look at a vast space of possible configurations and notice the one that&nbsp;fits.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="0"><svg viewBox="0 0 52 52"><polygon points="26,4 48,16 48,38 26,48 4,38 4,16" fill="none" stroke="var(--shape-ghost)" stroke-width="1"/><polygon class="d-inner" points="26,4 48,16 48,38 26,48 4,38 4,16" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity="0.4"/></svg><div class="divider-label">the turn</div></div>
+
+  <!-- ====== SECTION 4 — The Turn ====== -->
+  <section class="section" data-section="4">
+    <div class="section-inner">
+      <p>Writing this essay did something I didn't fully expect. I thought I was writing about founders. But the lens turned&nbsp;around.</p>
+      <p>Investors have shapes too. We ship ourselves in containers&thinsp;—&thinsp;fund theses, value propositions, inherited activities. And I realized the thing I've spent years building&thinsp;—&thinsp;product judgment, the ability to sit with a founder and see the full landscape of possible shapes&thinsp;—&thinsp;was packaged in the standard venture container. Board seats, quarterly check-ins, portfolio support. It worked. But honestly, <mark class="hl">I could feel the same mismatch I keep diagnosing in others.</mark> The highest-leverage version of this work is concentrated at inception&thinsp;—&thinsp;the weeks when shape decisions are actually being made, before the concrete sets. Not spread thin over&nbsp;years.</p>
+      <p>So I reshaped around it. I work with deep tech founders at the earliest stage, intensively and for a short time, on the hardest question their company faces: <em>what shape should this thing take?</em> I help widen the aperture. Then the founder&nbsp;drives.</p>
+      <p>This essay, it turns out, is also a packaging pivot. I had to practice on myself what I keep telling founders: look at the container. Ask whether it fits. And if it doesn't&thinsp;—&thinsp;find the one that&nbsp;does.</p>
+    </div>
+  </section>
+
+  <section class="final-shapes" id="finalShapes">
+    <div class="final-shapes-wrap">
+      <svg viewBox="0 0 140 140">
+        <polygon points="70,6 132,38 132,102 70,134 8,102 8,38" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="4 3"/>
+      </svg>
+      <svg viewBox="0 0 140 140">
+        <polygon id="cycleShape" points="70,30 110,45 115,85 85,115 40,105 35,55" fill="none" stroke="var(--accent)" stroke-width="1.3"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="closing" id="closingLine">
+    <p>The shape of the thing. It's the question that matters most now&thinsp;—&thinsp;and the one almost nobody is asking carefully&nbsp;enough.</p>
+  </div>
+
+</main>
+</div>
+
+<!-- ============================================
+     AGENT VIEW
+     ============================================ -->
+<div class="agent-view" id="agentView">
+<div class="md-h1"># The Shape of the Thing</div>
+<span class="md-sub">On reshaping under uncertainty — and the role of venture in the decisions that compound</span>
+<span class="md-sub" style="margin-bottom:0.5em">Morris Clay · February 2026</span>
+
+<div class="md-p">Every technology has a shape. Not the shape of the code or the architecture — the shape it takes when it meets the world. The packaging, the form factor, who encounters it first and what it looks like when they do. The container the thing arrives in.</div>
+
+<div class="md-p">I invest in deep tech at the earliest stages, and I keep noticing a mismatch. A founder shows me something genuinely brilliant — a new approach to data synchronization, a novel compute primitive, a breakthrough in how machines perceive their environment — something that makes me lean forward in my chair. And then they show me how they're planning to ship it. And I can feel it before I can articulate it: the container doesn't fit the thing inside it.</div>
+
+<div class="md-p">*That feeling.* I've been sitting with it for a while now, trying to understand what it's actually pointing at. Because I think it touches something the venture world mostly ignores. We talk endlessly about markets and teams and timing. We have frameworks for evaluating technology risk. But the actual product architecture — the decisions about what shape a technology takes when it meets the world — gets treated as an implementation detail. Something the founder figures out along the way.</div>
+
+<div class="md-p">It doesn't get figured out along the way. It gets *negotiated* — over and over, often by proxy, often without anyone naming it as the decision it actually is. A packaging choice made under time pressure. A positioning that drifts because a design partner asked for something slightly different. A form factor inherited from a demo that was never meant to be the product. Each negotiation feels small. But they compound. And undoing a shape that's already been shipped, sold against, and built around is one of the most expensive things a startup can do. There's a specific kind of exhaustion that comes from iterating on a container that was never going to fit.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">The pattern I see most often — the one that most clearly shows what shape decisions actually do — is what I think of as *the reframe*.</div>
+
+<div class="md-p">**Same technology. Different story. Completely different ceiling.**</div>
+
+<div class="md-p">A product positioned as "cheaper alternative to [incumbent]" is in a race to the bottom. You're defined by someone else's product. You compete on one axis. You attract buyers who'll leave when something cheaper appears.</div>
+
+<div class="md-p">Now take that same capability and frame it around a problem that didn't exist two years ago — agentic workloads that need isolation, real-time perception for autonomous systems, data governance for a world where AI touches everything. The buyer changes. The urgency changes. The willingness to pay changes. And an expansion path opens that wasn't visible before. Multiple products from the same underlying technology. None of them reachable from the "cheap X" frame.</div>
+
+<div class="md-p">The technology didn't change. The shape of the story changed. And the story's shape determines the company's ceiling.</div>
+
+<div class="md-p">This isn't a branding exercise. It's structural. When you reframe, you're changing who your first user is, how they find you, what they're willing to pay, and where the product goes next. Sometimes the same technology that struggled for years in one frame finds immediate traction in another — not because anything underneath improved, but because the container finally fit the thing inside it.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">There's something larger underneath all of this that I've been turning over for months.</div>
+
+<div class="md-p">AI is making execution cheap. On both sides of the table. Founders prototype in an afternoon. Investors generate market maps in minutes. Code, research, content, financial models — the entire operational layer of building and investing is compressing toward zero marginal cost. Fast.</div>
+
+<div class="md-p">So what's left when execution is commoditized?</div>
+
+<div class="md-p">I used to think the answer was access — to deals, to talent, to information. But those edges are compressing too. AI can generate ten product configurations for a founding team. It can map every customer segment. It can model the financial implications of every form factor. And it's getting better at all of this, quickly.</div>
+
+<div class="md-p">But someone still has to *choose*. Someone has to sit in the room with the ambiguity — the moment when the data doesn't resolve, when the market could go two directions, when the decision is irreversible and the information is incomplete — and make the call. Not because AI can't contribute to that moment. It can, and increasingly will. But because the choosing draws on something that's hard to formalize: the accumulated weight of having been in that room many times before and having watched what happened next. Pattern recognition that lives closer to intuition than to analysis.</div>
+
+<div class="md-p">*Taste.* In the deepest sense of the word.</div>
+
+<div class="md-p">The founders who win in this environment aren't the ones with the best engineering — AI narrows that gap. Or the most sophisticated go-to-market — AI narrows that too. They're the ones who see the right shape before anyone else. Who look at a vast space of possible configurations and notice the one that fits.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">Writing this essay did something I didn't fully expect. I thought I was writing about founders. But the lens turned around.</div>
+
+<div class="md-p">Investors have shapes too. We ship ourselves in containers — fund theses, value propositions, inherited activities. And I realized the thing I've spent years building — product judgment, the ability to sit with a founder and see the full landscape of possible shapes — was packaged in the standard venture container. Board seats, quarterly check-ins, portfolio support. It worked. But honestly, I could feel the same mismatch I keep diagnosing in others. The highest-leverage version of this work is concentrated at inception — the weeks when shape decisions are actually being made, before the concrete sets. Not spread thin over years.</div>
+
+<div class="md-p">So I reshaped around it. I work with deep tech founders at the earliest stage, intensively and for a short time, on the hardest question their company faces: *what shape should this thing take?* I help widen the aperture. Then the founder drives.</div>
+
+<div class="md-p">This essay, it turns out, is also a packaging pivot. I had to practice on myself what I keep telling founders: look at the container. Ask whether it fits. And if it doesn't — find the one that does.</div>
+
+<div class="md-p">The shape of the thing. It's the question that matters most now — and the one almost nobody is asking carefully enough.</div>
+</div>
+
+<script>
+/* ================================
+   MODE TOGGLE
+   ================================ */
+document.getElementById('modeDock').addEventListener('click', e => {
+  const opt = e.target.closest('.dock-opt');
+  if (!opt) return;
+  document.querySelectorAll('.dock-opt').forEach(o => o.classList.remove('active'));
+  opt.classList.add('active');
+  document.body.className = 'mode-' + opt.dataset.mode;
+  window.scrollTo(0, 0);
+});
+
+/* ================================
+   HERO — central shape animation
+   Mouse-reactive, with ghost trail
+   ================================ */
+(function(){
+  const c = document.getElementById('heroShapeCanvas');
+  const wrap = document.getElementById('heroShapeWrap');
+  const heroEl = document.getElementById('heroSection');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = 400, H = 400;
+  c.width = W * dpr; c.height = H * dpr;
+  c.style.width = '100%'; c.style.height = '100%';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const cx = W/2, cy = H/2;
+
+  // Mouse influence
+  let mx = 0, my = 0, tmx = 0, tmy = 0;
+  document.addEventListener('mousemove', e => {
+    if (!heroEl) return;
+    const r = heroEl.getBoundingClientRect();
+    tmx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    tmy = ((e.clientY - r.top) / r.height - 0.5) * 2;
+  });
+
+  // Container: hexagon
+  function hexPts(r) {
+    const pts = [];
+    for (let i = 0; i < 6; i++) {
+      const a = (i/6) * Math.PI * 2 - Math.PI/2;
+      pts.push([cx + Math.cos(a)*r, cy + Math.sin(a)*r]);
+    }
+    return pts;
+  }
+
+  const containerR = 130;
+  const container = hexPts(containerR);
+
+  // Previous frame vertices for ghost trail
+  let prevVerts = [];
+
+  let t = 0;
+
+  function drawFrame() {
+    t += 0.006;
+
+    // Smooth mouse
+    mx += (tmx - mx) * 0.04;
+    my += (tmy - my) * 0.04;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Container — dashed hexagon
+    ctx.beginPath();
+    container.forEach((p, i) => i === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]));
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(145, 138, 126, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Ghost trail shape (delayed)
+    if (prevVerts.length) {
+      ctx.beginPath();
+      prevVerts.forEach((p, i) => i === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]));
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(92, 124, 90, 0.1)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Inner shape — morphing, rotating, mouse-reactive
+    const sides = 5;
+    const rot = t * 0.7;
+    const wobbleFreq = 0.8;
+    const breathe = Math.sin(t * 0.5) * 8;
+    const mouseInfluence = 12;
+
+    const verts = [];
+    ctx.beginPath();
+    for (let i = 0; i < sides; i++) {
+      const baseAngle = (i / sides) * Math.PI * 2 - Math.PI/2 + rot;
+      const rVar = 68 + breathe
+        + Math.sin(t * wobbleFreq + i * 2.1) * 22
+        + Math.cos(t * 1.3 + i * 0.7) * 12
+        + (Math.cos(baseAngle) * mx + Math.sin(baseAngle) * my) * mouseInfluence;
+      const px = cx + Math.cos(baseAngle) * rVar;
+      const py = cy + Math.sin(baseAngle) * rVar;
+      verts.push([px, py]);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(92, 124, 90, 0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(92, 124, 90, 0.025)';
+    ctx.fill();
+
+    // Vertex dots
+    verts.forEach(([px, py]) => {
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(92, 124, 90, 0.35)';
+      ctx.fill();
+    });
+
+    // Thin connecting lines from vertices to container center (subtle tension lines)
+    verts.forEach(([px, py], i) => {
+      const cp = container[i % container.length];
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(cp[0], cp[1]);
+      ctx.strokeStyle = 'rgba(92, 124, 90, 0.06)';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    });
+
+    // Save for ghost trail
+    prevVerts = verts;
+
+    // Subtle parallax on the shape wrapper
+    if (wrap) {
+      wrap.style.transform = `translate(${mx * -6}px, ${my * -6}px)`;
+    }
+
+    requestAnimationFrame(drawFrame);
+  }
+
+  requestAnimationFrame(drawFrame);
+
+  // Scroll parallax for hero shape
+  window.addEventListener('scroll', () => {
+    if (!heroEl || !wrap) return;
+    const sy = window.scrollY;
+    const hh = heroEl.offsetHeight;
+    if (sy < hh) {
+      const p = sy / hh;
+      wrap.style.opacity = 1 - p * 1.2;
+    }
+  }, { passive: true });
+})();
+
+/* ================================
+   HERO — scattered background shapes
+   ================================ */
+(function(){
+  const c = document.getElementById('scatterCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, S = [], t = 0;
+
+  function sz() {
+    const d = Math.min(devicePixelRatio || 1, 2);
+    const r = c.parentElement.getBoundingClientRect();
+    w = r.width; h = r.height;
+    c.width = w*d; c.height = h*d;
+    c.style.width = w+'px'; c.style.height = h+'px';
+    ctx.setTransform(d,0,0,d,0,0);
+  }
+
+  function init() {
+    S = [];
+    const n = Math.min(10, Math.floor(w/120));
+    for (let i = 0; i < n; i++) S.push({
+      x: Math.random()*w, y: Math.random()*h,
+      sz: 12+Math.random()*40, si: 3+Math.floor(Math.random()*4),
+      r: Math.random()*Math.PI*2, rs: (Math.random()-.5)*.004,
+      dx: (Math.random()-.5)*.08, dy: (Math.random()-.5)*.08,
+      ph: Math.random()*Math.PI*2, a: .025+Math.random()*.035
+    });
+  }
+
+  function draw(T) {
+    t = T; ctx.clearRect(0,0,w,h);
+    S.forEach(s => {
+      s.x+=s.dx; s.y+=s.dy; s.r+=s.rs;
+      if(s.x<-80)s.x=w+80; if(s.x>w+80)s.x=-80;
+      if(s.y<-80)s.y=h+80; if(s.y>h+80)s.y=-80;
+      ctx.save(); ctx.translate(s.x,s.y); ctx.rotate(s.r); ctx.beginPath();
+      for(let i=0;i<=s.si;i++){
+        const a=(i/s.si)*Math.PI*2-Math.PI/2;
+        const R=s.sz+Math.sin(t*.0008+s.ph+i)*2;
+        i===0?ctx.moveTo(Math.cos(a)*R,Math.sin(a)*R):ctx.lineTo(Math.cos(a)*R,Math.sin(a)*R);
+      }
+      ctx.closePath();
+      ctx.strokeStyle=`rgba(92,124,90,${s.a})`;
+      ctx.lineWidth=0.8; ctx.stroke(); ctx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  sz(); init();
+  window.addEventListener('resize',()=>{sz();init()});
+  requestAnimationFrame(draw);
+})();
+
+/* ================================
+   COMPANION + PROGRESS + NAV
+   ================================ */
+(function(){
+  const pTrack = document.getElementById('progressTrack');
+  const pFill = document.getElementById('progressFill');
+  const comp = document.getElementById('companionShape');
+  const compObj = document.getElementById('compObject');
+  const essay = document.getElementById('essayBody');
+  const homeNav = document.getElementById('homeNav');
+
+  const fit=[[50,5],[93,27],[93,73],[50,95],[7,73],[7,27]];
+  const mis=[[50,25],[75,35],[80,60],[60,80],[30,72],[25,42]];
+
+  function lp(a,b,t){return a.map((p,i)=>[p[0]+(b[i][0]-p[0])*t,p[1]+(b[i][1]-p[1])*t].join(',')).join(' ');}
+  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+
+  function tick(){
+    const sy=window.scrollY;
+    const dH=document.documentElement.scrollHeight-window.innerHeight;
+    const prog=Math.max(0,Math.min(1,sy/dH));
+
+    pFill.style.height=(prog*100)+'%';
+    pTrack.classList.toggle('visible',prog>0.02&&prog<0.98);
+
+    // Home nav: visible in hero, then stays visible but subtler
+    if(homeNav){
+      const heroH = window.innerHeight;
+      if(sy > heroH * 0.6) homeNav.style.opacity = '0.5';
+      else homeNav.style.opacity = '';
+    }
+
+    if(!essay)return;
+    const bTop=essay.offsetTop,bH=essay.offsetHeight;
+    const ep=Math.max(0,Math.min(1,(sy-bTop+window.innerHeight*.5)/bH));
+    compObj.setAttribute('points',lp(mis,fit,ease(ep)));
+
+    const inE=sy>bTop-window.innerHeight*.5&&sy<bTop+bH-window.innerHeight*.3;
+    comp.classList.toggle('visible',inE);
+
+    const wb=Math.sin(Date.now()*.0008)*(3-ease(ep)*3);
+    comp.style.transform=`translateY(-50%) rotate(${wb}deg)`;
+  }
+
+  window.addEventListener('scroll',tick,{passive:true});
+  tick();
+})();
+
+/* ================================
+   OBSERVERS
+   ================================ */
+(function(){
+  const io=(sel,opts,cb)=>{const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)cb(e.target)})},opts);document.querySelectorAll(sel).forEach(el=>o.observe(el));return o;};
+
+  io('.section p',{threshold:0.1,rootMargin:'0px 0px -25px 0px'},el=>el.classList.add('revealed'));
+  io('mark.hl',{threshold:0.9,rootMargin:'0px 0px -5% 0px'},el=>el.classList.add('lit'));
+
+  io('[data-divider]',{threshold:0.5},el=>{
+    el.classList.add('revealed');
+    const inner=el.querySelector('.d-inner');
+    if(inner)inner.style.transform=`rotate(${el.dataset.rotation||0}deg)`;
+  });
+
+  const pqL=document.querySelectorAll('.pq-line');
+  if(pqL.length){
+    const o=new IntersectionObserver(es=>{es.forEach(e=>{
+      if(e.isIntersecting){pqL.forEach((l,i)=>setTimeout(()=>l.classList.add('revealed'),i*280));o.disconnect();}
+    })},{threshold:0.4});
+    o.observe(pqL[0].parentElement);
+  }
+
+  const oE=document.querySelector('[data-reframe="old"]');
+  if(oE){let f=0;io('[data-reframe="old"]',{threshold:0.7},()=>{if(!f){f=1;oE.classList.add('struck')}});}
+
+  const nE=document.querySelector('[data-reframe="new"]');
+  if(nE){let f=0;io('[data-reframe="new"]',{threshold:0.7},()=>{if(!f){f=1;nE.classList.add('show')}});}
+
+  const we=document.querySelector('[data-emphasis]');
+  if(we) io('[data-emphasis]',{threshold:1.0},()=>{we.classList.add('breathe');setTimeout(()=>we.classList.remove('breathe'),800);});
+
+  // Closing line
+  const cl=document.getElementById('closingLine');
+  if(cl) io('#closingLine',{threshold:0.5},el=>el.classList.add('revealed'));
+})();
+
+/* ================================
+   FINAL — rapid shape cycling
+   ================================ */
+(function(){
+  const shape=document.getElementById('cycleShape');
+  const section=document.getElementById('finalShapes');
+  if(!shape||!section)return;
+
+  function rp(){
+    const cx=70,cy=70,pts=[];
+    for(let i=0;i<6;i++){
+      const a=(i/6)*Math.PI*2-Math.PI/2;
+      const r=25+Math.random()*42;
+      pts.push([Math.round(cx+Math.cos(a)*r),Math.round(cy+Math.sin(a)*r)]);
+    }
+    return pts;
+  }
+
+  let active=false,cur=rp(),tgt=rp(),mt=0;
+  const sp=0.022;
+
+  function lp(a,b,t){return a.map((p,i)=>[p[0]+(b[i][0]-p[0])*t,p[1]+(b[i][1]-p[1])*t].join(',')).join(' ');}
+  function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+
+  function go(){
+    if(!active)return;
+    mt+=sp;
+    if(mt>=1){cur=tgt;tgt=rp();mt=0;}
+    shape.setAttribute('points',lp(cur,tgt,ease(mt)));
+    requestAnimationFrame(go);
+  }
+
+  new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting&&!active){active=true;go();}
+    else if(!e.isIntersecting){active=false;}
+  })},{threshold:0.2}).observe(section);
+})();
+</script>
+
+</body>
+</html>
