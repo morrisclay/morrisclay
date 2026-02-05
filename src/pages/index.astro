@@ -152,6 +152,18 @@ h1::after {
   color: var(--accent-deep);
 }
 
+.shortcut {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.4rem;
+  color: var(--faded);
+  margin-left: 0.5em;
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--rule);
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+  letter-spacing: 0.02em;
+}
+
 .divider {
   width: 24px;
   height: 1px;
@@ -235,6 +247,106 @@ h1::after {
   margin-top: 0.2em;
 }
 
+.contact-form {
+  display: none;
+  text-align: left;
+}
+
+.contact-form.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+.links.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.form-row {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 0.5rem 0;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--faded);
+  font-style: italic;
+}
+
+.contact-form textarea {
+  resize: none;
+  height: 4rem;
+  line-height: 1.6;
+}
+
+.char-count {
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  color: var(--faded);
+  pointer-events: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.contact-form button {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.contact-form button[type="submit"] {
+  color: var(--accent-deep);
+}
+
+.contact-form button[type="submit"]:hover {
+  color: var(--accent);
+}
+
+.contact-form button[type="button"] {
+  color: var(--faded);
+}
+
+.contact-form button[type="button"]:hover {
+  color: var(--ink-soft);
+}
+
+
 ::selection {
   background: rgba(92, 124, 90, 0.16);
   color: inherit;
@@ -295,6 +407,12 @@ h1::after {
   .portfolio-list .more { font-size: 0.75rem; }
   .writing-list .date { font-size: 0.45rem; }
   #canvas-container { opacity: 0.4; }
+  .contact-form { margin-top: 1rem; }
+  .contact-form input,
+  .contact-form textarea { font-size: 0.9rem; }
+  .contact-form textarea { height: 3.5rem; }
+  .contact-form button { font-size: 0.55rem; }
+  .form-row { margin-bottom: 1rem; }
 }
 #canvas-container {
   position: fixed;
@@ -320,14 +438,28 @@ h1::after {
 
   <div class="bio">
     <p>I invest in deep tech infrastructure at inception stage, working with founders on the mother of all questions: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
-    <p>Building something at the edge of what's possible?<br><a href="mailto:morris@lunarventures.eu">Let's talk.</a></p>
+    <p>Building something at the edge of what's possible?<br><a href="#" class="email-trigger">Let's talk.</a></p>
   </div>
 
-  <nav class="links">
-    <a href="mailto:morris@lunarventures.eu">Email</a>
+  <nav class="links" id="nav-links">
+    <a href="#" id="email-toggle">Email <span class="shortcut">E</span></a>
     <span class="divider"></span>
-    <a href="https://www.linkedin.com/in/morris-clay/">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/morris-clay/" id="linkedin-link" target="_blank">LinkedIn <span class="shortcut">L</span></a>
   </nav>
+
+  <form id="contact-form" class="contact-form" action="https://formspree.io/f/yourformid" method="POST">
+    <div class="form-row">
+      <input type="email" name="email" placeholder="your@email.com" required>
+    </div>
+    <div class="form-row">
+      <textarea name="message" placeholder="What are you building?" maxlength="300" required></textarea>
+      <span class="char-count">300</span>
+    </div>
+    <div class="form-actions">
+      <button type="submit">Send <span class="shortcut">shift+enter</span></button>
+      <button type="button" id="form-cancel">Cancel <span class="shortcut">esc</span></button>
+    </div>
+  </form>
 
   <footer class="footer-sections">
     <section class="portfolio-section">
@@ -607,6 +739,78 @@ const sketch = (p) => {
 };
 
 new p5(sketch);
+</script>
+
+<script is:inline>
+// Contact form toggle
+const contactForm = document.getElementById('contact-form');
+const navLinks = document.getElementById('nav-links');
+const cancelBtn = document.getElementById('form-cancel');
+const textarea = contactForm.querySelector('textarea');
+const charCount = contactForm.querySelector('.char-count');
+
+function openForm() {
+  navLinks.classList.add('hidden');
+  contactForm.classList.add('active');
+  contactForm.querySelector('input').focus();
+}
+
+function closeForm() {
+  contactForm.classList.remove('active');
+  navLinks.classList.remove('hidden');
+  contactForm.reset();
+  charCount.textContent = '300';
+}
+
+// All triggers that open the form
+document.querySelectorAll('#email-toggle, .email-trigger').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    openForm();
+  });
+});
+
+cancelBtn.addEventListener('click', closeForm);
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  // Don't trigger if typing in an input
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+    if (e.key === 'Escape') closeForm();
+    if (e.key === 'Enter' && e.shiftKey) {
+      e.preventDefault();
+      contactForm.requestSubmit();
+    }
+    return;
+  }
+
+  if (e.key === 'e' || e.key === 'E') {
+    e.preventDefault();
+    openForm();
+  }
+
+  if (e.key === 'l' || e.key === 'L') {
+    window.open('https://www.linkedin.com/in/morris-clay/', '_blank');
+  }
+
+  if (e.key === 'Escape') {
+    closeForm();
+  }
+});
+
+textarea.addEventListener('input', () => {
+  const remaining = 300 - textarea.value.length;
+  let msg = remaining;
+
+  if (remaining <= 10) msg = `${remaining} — tweet energy`;
+  else if (remaining <= 30) msg = `${remaining} — haiku territory`;
+  else if (remaining <= 50) msg = `${remaining} — beautifully concise`;
+  else if (remaining <= 80) msg = `${remaining} — getting sharp`;
+  else if (remaining <= 120) msg = `${remaining} — warming up`;
+
+  charCount.textContent = msg;
+  charCount.style.color = remaining < 30 ? 'var(--accent-deep)' : 'var(--faded)';
+});
 </script>
 
 </body>
