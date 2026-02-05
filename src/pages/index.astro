@@ -31,13 +31,14 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  background: var(--paper);
 }
 
 body {
   font-family: 'Newsreader', Georgia, serif;
   font-weight: 400;
   color: var(--ink);
-  background: var(--paper);
+  background: transparent;
   line-height: 1.72;
   letter-spacing: 0.004em;
   min-height: 100vh;
@@ -46,11 +47,14 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  position: relative;
 }
 
 .container {
   max-width: 32em;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -60,6 +64,7 @@ h1 {
   letter-spacing: -0.02em;
   color: var(--ink);
   margin-bottom: 0.5em;
+  text-shadow: 0 0 20px var(--paper), 0 0 40px var(--paper);
 }
 
 .tagline {
@@ -87,6 +92,7 @@ h1 {
   color: var(--ink-soft);
   margin-bottom: 2.5rem;
   text-align: left;
+  text-shadow: 0 0 15px var(--paper), 0 0 30px var(--paper);
 }
 
 .bio p {
@@ -214,9 +220,23 @@ h1 {
   .links { gap: 1em; font-size: 0.6rem; }
   .footer-sections { flex-direction: column; gap: 2rem; }
 }
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 </style>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 </head>
 <body>
+
+<div id="canvas-container"></div>
 
 <div class="container">
   <h1>Morris Clay</h1>
@@ -224,7 +244,8 @@ h1 {
 
   <div class="bio">
     <p>I invest in deep tech infrastructure at inception stage, working with founders on the hardest question their company faces: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
-    <p>Building something at the edge of what's possible? Still shapeshifting? <a href="mailto:morris@lunarventures.eu">Let's talk.</a></p>
+    <p>Building something at the edge of what's possible? Still shapeshifting?</p>
+    <p><a href="mailto:morris@lunarventures.eu">Let's talk.</a></p>
   </div>
 
   <nav class="links">
@@ -241,7 +262,7 @@ h1 {
         <li><a href="https://electric-sql.com/">Electric SQL</a></li>
         <li><a href="https://hathora.dev/">Hathora</a></li>
         <li><a href="https://xorq.dev/">xorq</a></li>
-        <li><a href="https://embucket.io/">Embucket</a></li>
+        <li><a href="https://embucket.com/">Embucket</a></li>
       </ul>
     </section>
 
@@ -256,6 +277,230 @@ h1 {
     </section>
   </footer>
 </div>
+
+<script is:inline>
+// Organic flow field with morphing shapes
+const sketch = (p) => {
+  let particles = [];
+  let flowField;
+  let cols, rows;
+  let scale = 20;
+  let zoff = 0;
+  let shapes = [];
+
+  const accent = p.color(92, 124, 90);
+  const accentLight = p.color(92, 124, 90, 25);
+  const ink = p.color(43, 41, 38);
+  const faded = p.color(145, 138, 126);
+
+  p.setup = () => {
+    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    canvas.parent('canvas-container');
+
+    cols = p.floor(p.width / scale);
+    rows = p.floor(p.height / scale);
+    flowField = new Array(cols * rows);
+
+    // Create particles
+    for (let i = 0; i < 800; i++) {
+      particles.push(new Particle(p));
+    }
+
+    // Create morphing shapes with variety
+    const shapeConfigs = [
+      { vertices: 3, radius: 60, speed: 0.003 },
+      { vertices: 5, radius: 45, speed: 0.005 },
+      { vertices: 6, radius: 80, speed: 0.002 },
+      { vertices: 4, radius: 35, speed: 0.007 },
+      { vertices: 7, radius: 55, speed: 0.004 },
+      { vertices: 8, radius: 70, speed: 0.002 },
+    ];
+    for (let i = 0; i < shapeConfigs.length; i++) {
+      shapes.push(new MorphShape(p, p.random(p.width), p.random(p.height), shapeConfigs[i]));
+    }
+
+    p.strokeWeight(0.5);
+  };
+
+  p.draw = () => {
+    p.clear();
+
+    // Update flow field
+    let yoff = 0;
+    for (let y = 0; y < rows; y++) {
+      let xoff = 0;
+      for (let x = 0; x < cols; x++) {
+        let index = x + y * cols;
+        let angle = p.noise(xoff, yoff, zoff) * p.TWO_PI * 2;
+        let v = p5.Vector.fromAngle(angle);
+        v.setMag(0.5);
+        flowField[index] = v;
+        xoff += 0.08;
+      }
+      yoff += 0.08;
+    }
+    zoff += 0.002;
+
+    // Draw and update particles
+    for (let particle of particles) {
+      particle.follow(flowField, cols, scale);
+      particle.update();
+      particle.edges();
+      particle.show(accentLight);
+    }
+
+    // Draw morphing shapes
+    for (let shape of shapes) {
+      shape.update(p.mouseX, p.mouseY);
+      shape.show(accent, faded);
+    }
+
+    // Draw connections between nearby shapes
+    p.stroke(92, 124, 90, 15);
+    p.strokeWeight(0.5);
+    for (let i = 0; i < shapes.length; i++) {
+      for (let j = i + 1; j < shapes.length; j++) {
+        let d = p.dist(shapes[i].x, shapes[i].y, shapes[j].x, shapes[j].y);
+        if (d < 300) {
+          p.line(shapes[i].x, shapes[i].y, shapes[j].x, shapes[j].y);
+        }
+      }
+    }
+  };
+
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+    cols = p.floor(p.width / scale);
+    rows = p.floor(p.height / scale);
+    flowField = new Array(cols * rows);
+  };
+
+  class Particle {
+    constructor(p) {
+      this.p = p;
+      this.pos = p.createVector(p.random(p.width), p.random(p.height));
+      this.vel = p.createVector(0, 0);
+      this.acc = p.createVector(0, 0);
+      this.maxSpeed = 1.5;
+      this.prevPos = this.pos.copy();
+    }
+
+    follow(vectors, cols, scale) {
+      let x = this.p.floor(this.pos.x / scale);
+      let y = this.p.floor(this.pos.y / scale);
+      let index = x + y * cols;
+      let force = vectors[index];
+      if (force) this.applyForce(force);
+    }
+
+    applyForce(force) {
+      this.acc.add(force);
+    }
+
+    update() {
+      this.vel.add(this.acc);
+      this.vel.limit(this.maxSpeed);
+      this.pos.add(this.vel);
+      this.acc.mult(0);
+    }
+
+    edges() {
+      if (this.pos.x > this.p.width) { this.pos.x = 0; this.prevPos.x = 0; }
+      if (this.pos.x < 0) { this.pos.x = this.p.width; this.prevPos.x = this.p.width; }
+      if (this.pos.y > this.p.height) { this.pos.y = 0; this.prevPos.y = 0; }
+      if (this.pos.y < 0) { this.pos.y = this.p.height; this.prevPos.y = this.p.height; }
+    }
+
+    show(col) {
+      this.p.stroke(col);
+      this.p.line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+      this.prevPos = this.pos.copy();
+    }
+  }
+
+  class MorphShape {
+    constructor(p, x, y, config = {}) {
+      this.p = p;
+      this.x = x;
+      this.y = y;
+      this.baseRadius = config.radius || p.random(40, 80);
+      this.vertices = config.vertices || p.floor(p.random(5, 8));
+      this.noiseOffset = p.random(1000);
+      this.rotationSpeed = config.speed || p.random(0.002, 0.008);
+      this.rotation = p.random(p.TWO_PI);
+      this.driftSpeed = p.random(0.2, 0.5);
+      this.driftAngle = p.random(p.TWO_PI);
+      this.morphIntensity = p.random(20, 40);
+    }
+
+    update(mx, my) {
+      // Gentle drift
+      this.driftAngle += this.p.random(-0.02, 0.02);
+      this.x += this.p.cos(this.driftAngle) * this.driftSpeed;
+      this.y += this.p.sin(this.driftAngle) * this.driftSpeed;
+
+      // Wrap around edges
+      if (this.x < -100) this.x = this.p.width + 100;
+      if (this.x > this.p.width + 100) this.x = -100;
+      if (this.y < -100) this.y = this.p.height + 100;
+      if (this.y > this.p.height + 100) this.y = -100;
+
+      // Subtle mouse influence
+      let d = this.p.dist(mx, my, this.x, this.y);
+      if (d < 200) {
+        let angle = this.p.atan2(this.y - my, this.x - mx);
+        this.x += this.p.cos(angle) * 0.5;
+        this.y += this.p.sin(angle) * 0.5;
+      }
+
+      this.rotation += this.rotationSpeed;
+      this.noiseOffset += 0.01;
+    }
+
+    show(accent, faded) {
+      this.p.push();
+      this.p.translate(this.x, this.y);
+      this.p.rotate(this.rotation);
+
+      // Outer dashed container
+      this.p.noFill();
+      this.p.stroke(faded);
+      this.p.strokeWeight(0.8);
+      this.p.drawingContext.setLineDash([4, 4]);
+      this.p.beginShape();
+      for (let i = 0; i < this.vertices; i++) {
+        let angle = this.p.map(i, 0, this.vertices, 0, this.p.TWO_PI);
+        let r = this.baseRadius + 15;
+        this.p.vertex(this.p.cos(angle) * r, this.p.sin(angle) * r);
+      }
+      this.p.endShape(this.p.CLOSE);
+      this.p.drawingContext.setLineDash([]);
+
+      // Inner morphing shape
+      this.p.stroke(accent);
+      this.p.strokeWeight(1);
+      this.p.fill(92, 124, 90, 8);
+      this.p.beginShape();
+      for (let i = 0; i < this.vertices; i++) {
+        let angle = this.p.map(i, 0, this.vertices, 0, this.p.TWO_PI);
+        let noiseVal = this.p.noise(this.p.cos(angle) + this.noiseOffset, this.p.sin(angle) + this.noiseOffset);
+        let r = this.baseRadius * 0.6 + noiseVal * this.morphIntensity;
+        this.p.vertex(this.p.cos(angle) * r, this.p.sin(angle) * r);
+      }
+      this.p.endShape(this.p.CLOSE);
+
+      // Center dot
+      this.p.fill(accent);
+      this.p.noStroke();
+      this.p.ellipse(0, 0, 3, 3);
+
+      this.p.pop();
+    }
+  }
+};
+
+new p5(sketch);
+</script>
 
 </body>
 </html>
