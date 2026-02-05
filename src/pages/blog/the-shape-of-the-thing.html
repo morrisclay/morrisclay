@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -33,6 +34,7 @@ html {
   text-rendering: optimizeLegibility;
   hanging-punctuation: first last;
   scroll-behavior: smooth;
+  background: var(--paper);
 }
 
 body {
@@ -40,6 +42,7 @@ body {
   font-weight: 400;
   color: var(--ink);
   background: var(--paper);
+  min-height: 100vh;
   line-height: 1.72;
   letter-spacing: 0.004em;
   overflow-x: hidden;
@@ -596,18 +599,21 @@ body.mode-agent .grain { display: none; }
 
 ::selection { background: rgba(92, 124, 90, 0.16); color: inherit; }
 </style>
+
 </head>
 <body class="mode-human">
 
 <!-- Home nav -->
+
 <nav class="home-nav" id="homeNav">
-  <a href="/">
+  <a href="https://morrisclay.com">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     Morris Clay
   </a>
 </nav>
 
 <!-- Bottom toggle -->
+
 <div class="mode-dock" id="modeDock">
   <div class="dock-opt active" data-mode="human">Human</div>
   <div class="dock-opt" data-mode="agent">Agent</div>
@@ -626,9 +632,11 @@ body.mode-agent .grain { display: none; }
 <!-- ============================================
      HUMAN VIEW
      ============================================ -->
+
 <div class="human-view">
 
 <!-- HERO -->
+
 <section class="hero" id="heroSection">
   <div class="hero-scatter"><canvas id="scatterCanvas"></canvas></div>
 
@@ -638,9 +646,9 @@ body.mode-agent .grain { display: none; }
 
   <div class="hero-content">
     <h1>The Shape of<br>the&nbsp;Thing</h1>
-    <p class="hero-sub">On reshaping under uncertainty&thinsp;—&thinsp;and the role<br>of venture in the decisions that&nbsp;compound</p>
+    <p class="hero-sub">Why the most expensive mistake in deep tech<br>is one almost nobody talks&nbsp;about</p>
     <div class="hero-byline">
-      <a href="/">Morris Clay</a>
+      <a href="https://morrisclay.com">Morris Clay</a>
       <span class="by-sep"></span>
       <span>February 2026</span>
     </div>
@@ -650,9 +658,11 @@ body.mode-agent .grain { display: none; }
 </section>
 
 <!-- ESSAY -->
+
 <main class="essay-body" id="essayBody">
 
   <!-- ====== SECTION 1 — The Container ====== -->
+
   <section class="section" data-section="1">
     <div class="section-inner" style="padding-top:6rem">
       <p class="drop-cap">Every technology has a shape. Not the shape of the code or the architecture&thinsp;—&thinsp;the shape it takes when it meets the world. The packaging, the form factor, who encounters it first and what it looks like when they do. <mark class="hl">The container the thing arrives&nbsp;in.</mark></p>
@@ -665,6 +675,7 @@ body.mode-agent .grain { display: none; }
   <div class="divider" data-divider data-rotation="35"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5"/><polygon class="d-inner" points="26,10 42,38 10,38" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">the reframe</div></div>
 
   <!-- ====== SECTION 2 — The Reframe ====== -->
+
   <section class="section" data-section="2">
     <div class="section-inner">
       <p>The pattern I see most often&thinsp;—&thinsp;the one that most clearly shows what shape decisions actually do&thinsp;—&thinsp;is what I think of as <em>the&nbsp;reframe.</em></p>
@@ -681,32 +692,48 @@ body.mode-agent .grain { display: none; }
 
   <section class="section" data-section="2b">
     <div class="section-inner">
-      <p>A product positioned as <span class="reframe-old" data-reframe="old">"cheaper alternative to [incumbent]"</span> is in a race to the bottom. You're defined by someone else's product. You compete on one axis. You attract buyers who'll leave when something cheaper&nbsp;appears.</p>
-      <p>Now take that same capability and frame it around a problem that didn't exist two years ago&thinsp;—&thinsp;<span class="reframe-new" data-reframe="new">agentic workloads that need isolation, real-time perception for autonomous systems, data governance for a world where <span class="sc">ai</span> touches everything.</span> The buyer changes. The urgency changes. The willingness to pay changes. And an expansion path opens that wasn't visible before. Multiple products from the same underlying technology. None of them reachable from the "cheap&nbsp;X"&nbsp;frame.</p>
-      <p><mark class="hl">The technology didn't change. The shape of the story changed.</mark> And the story's shape determines the company's&nbsp;ceiling.</p>
-      <p>This isn't a branding exercise. It's structural. When you reframe, you're changing who your first user is, how they find you, what they're willing to pay, and where the product goes next. And sometimes the same technology that struggled for years in one frame finds immediate traction in another&thinsp;—&thinsp;not because anything underneath improved, but because <mark class="hl">the container finally fit the thing inside&nbsp;it.</mark></p>
+      <p>A product positioned as <span class="reframe-old" data-reframe="old">"cheaper alternative to [incumbent]"</span> is in a race to the bottom. You're defined by someone else's product. You compete on one axis. You attract buyers who'll leave the moment something cheaper shows&nbsp;up.</p>
+      <p>Now take that same capability and frame it around a problem that didn't exist two years ago&thinsp;—&thinsp;<span class="reframe-new" data-reframe="new">agentic workloads that need isolation, real-time perception for autonomous systems, data governance for a world where <span class="sc">ai</span> touches everything.</span> Suddenly you're not selling against an incumbent. You're selling into urgency. The conversation changes&thinsp;—&thinsp;from "why should we switch" to "we need this and nobody else has it." And from that position, expansion paths open that were invisible from the cheap-X&nbsp;frame.</p>
+      <p>I've watched this happen. A team I know spent eighteen months pitching a developer tool as a better version of something that already worked fine. Polite interest, no urgency, long evaluation cycles. They reframed around a use case that was genuinely new&thinsp;—&thinsp;same core technology, different entry point&thinsp;—&thinsp;and closed their first design partner in three weeks. <mark class="hl">Nothing underneath changed. The container changed.</mark></p>
+      <p>This is what makes shape decisions so easy to get wrong. The reframe isn't a branding exercise. It's structural. You're changing who finds you, what they're willing to pay, and where the product goes next. And deep tech founders feel real tension here, because they've built something genuinely better and they want the container to honor that novelty. That instinct is right&thinsp;—&thinsp;and it's also often the thing that limits them. <mark class="hl">Adoption friction is the real bottleneck. Not&nbsp;capability.</mark></p>
     </div>
   </section>
 
-  <div class="divider" data-divider data-rotation="15"><svg viewBox="0 0 52 52"><rect x="8" y="8" width="36" height="36" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5" transform="rotate(45 26 26)"/><rect class="d-inner" x="12" y="12" width="28" height="28" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">what remains</div></div>
+  <div class="divider" data-divider data-rotation="15"><svg viewBox="0 0 52 52"><rect x="8" y="8" width="36" height="36" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5" transform="rotate(45 26 26)"/><rect class="d-inner" x="12" y="12" width="28" height="28" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">the gap</div></div>
 
-  <!-- ====== SECTION 3 — What Remains ====== -->
+  <!-- ====== SECTION 3 — The Supply-Side Gap ====== -->
+
   <section class="section" data-section="3">
     <div class="section-inner">
-      <p>There's something larger underneath all of this that I've been turning over for&nbsp;months.</p>
-      <p><span class="sc">ai</span> is making execution cheap. On both sides of the table. Founders prototype in an afternoon. Investors generate market maps in minutes. Code, research, content, financial models&thinsp;—&thinsp;the entire operational layer of building and investing is compressing toward zero marginal cost.&nbsp;Fast.</p>
-      <p>So what's left when execution is&nbsp;commoditized?</p>
-      <p>I used to think the answer was access&thinsp;—&thinsp;to deals, to talent, to information. But those edges are compressing too. <span class="sc">ai</span> can generate ten product configurations for a founding team. It can map every customer segment. It can model the financial implications of every form factor. And it's getting better at all of this,&nbsp;quickly.</p>
-      <p>But <mark class="hl">someone still has to <em>choose.</em></mark> Someone has to sit in the room with the ambiguity&thinsp;—&thinsp;the moment when the data doesn't resolve, when the market could go two directions, when the decision is irreversible and the information is incomplete&thinsp;—&thinsp;and make the call. Not because <span class="sc">ai</span> can't contribute to that moment. It can, and increasingly will. But because the choosing draws on something that's hard to formalize: the accumulated weight of having been in that room many times before and having watched what happened next. Pattern recognition that lives closer to intuition than to&nbsp;analysis.</p>
-      <p><span class="word-emphasis" data-emphasis>Taste.</span> In the deepest sense of the&nbsp;word.</p>
-      <p>The founders who win in this environment aren't the ones with the best engineering&thinsp;—&thinsp;<span class="sc">ai</span> narrows that gap. Or the most sophisticated go-to-market&thinsp;—&thinsp;<span class="sc">ai</span> narrows that too. They're the ones who <mark class="hl">see the right shape before anyone else.</mark> Who look at a vast space of possible configurations and notice the one that&nbsp;fits.</p>
+      <p>Here's the thing that actually bothers&nbsp;me.</p>
+      <p>The venture world has built real infrastructure on the demand side. Investors make introductions, open doors, connect founders to customers and capital. This is genuinely valuable work. I don't want to diminish&nbsp;it.</p>
+      <p>But on the supply side&thinsp;—&thinsp;the question of <em>what exactly you're building,</em> what form it takes, who encounters it first&thinsp;—&thinsp;founders at the frontier are mostly working through it alone. Good angels and operators contribute real thinking, but their attention is fragmented. A couple of hours here, a coffee conversation there. <mark class="hl">Nobody is going deep</mark> on the specific question of how <em>this</em> technology should be shaped for <em>this</em> market at <em>this</em>&nbsp;moment.</p>
+      <p>And it's not for lack of caring. It's structural. The standard investor relationship is built around governance and access, not product architecture. A board seat doesn't give you the context to have a useful opinion about form factor. Quarterly check-ins don't match the tempo at which these decisions actually get made. The support structure was designed for a different kind of problem than the one that kills most deep tech&nbsp;companies.</p>
+      <p>The best founders have extraordinary product instincts. Some of them see the right shape before anyone else and don't need someone in the room helping them find it. But even those founders&thinsp;—&thinsp;<em>especially</em> those founders&thinsp;—&thinsp;at the moment when a single architectural decision forecloses entire futures or opens new ones, benefit from a process that <mark class="hl">widens the aperture.</mark> Not to replace their judgment. To make sure the full landscape of possible shapes is visible before the concrete&nbsp;sets.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="8"><svg viewBox="0 0 52 52"><polygon points="26,4 49,18 49,38 26,50 3,38 3,18" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5"/><polygon class="d-inner" points="26,10 43,20 43,36 26,44 9,36 9,20" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">what remains</div></div>
+
+  <!-- ====== SECTION 4 — What Remains ====== -->
+
+  <section class="section" data-section="4">
+    <div class="section-inner">
+      <p>There's a question underneath all of this that I keep circling&nbsp;back&nbsp;to.</p>
+      <p><span class="sc">ai</span> is compressing the operational layer of building and investing fast. Founders prototype in an afternoon. I can generate a market map in minutes that would have taken a week two years ago. Code, research, financial models&thinsp;—&thinsp;the stuff that used to be the work is becoming&nbsp;table&nbsp;stakes.</p>
+      <p>So what's actually left?</p>
+      <p>I used to think it was access. But <span class="sc">ai</span> can generate ten product configurations for a founding team. It can map every possible customer segment. It can model the financial implications of every form factor. The things I thought were hard are getting easy. And I'll be honest&thinsp;—&thinsp;that made me uncomfortable for a while, because it forced a question about what my own work is actually&nbsp;worth.</p>
+      <p>What I keep coming back to is this: <mark class="hl">someone still has to <em>choose.</em></mark> Someone has to sit in the room with the ambiguity&thinsp;—&thinsp;the moment when the data doesn't resolve, when the market could go two directions, when the decision is irreversible and the information is incomplete&thinsp;—&thinsp;and make the call. <span class="sc">ai</span> can inform that moment. But the choosing draws on something harder to formalize: having been in that room many times before and having watched what happened&nbsp;next.</p>
+      <p><span class="word-emphasis" data-emphasis>Taste.</span> That's the word I keep landing on, and I know it sounds imprecise. But I mean something specific: the ability to look at a vast space of possible configurations and notice the one that fits. Not because you can articulate why in the moment&thinsp;—&thinsp;sometimes the articulation comes later&thinsp;—&thinsp;but because you've seen enough of these decisions play out to have a feel for which shapes hold weight and which&nbsp;don't.</p>
+      <p>I've been wrong about this plenty of times. There are companies I told to narrow that should have stayed broad. Form factors I was sure about that turned out to be dead ends. Taste isn't infallible. But it's the thing that <mark class="hl">doesn't commoditize.</mark> It compounds with experience rather than getting automated&nbsp;away.</p>
     </div>
   </section>
 
   <div class="divider" data-divider data-rotation="0"><svg viewBox="0 0 52 52"><polygon points="26,4 48,16 48,38 26,48 4,38 4,16" fill="none" stroke="var(--shape-ghost)" stroke-width="1"/><polygon class="d-inner" points="26,4 48,16 48,38 26,48 4,38 4,16" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity="0.4"/></svg><div class="divider-label">the turn</div></div>
 
-  <!-- ====== SECTION 4 — The Turn ====== -->
-  <section class="section" data-section="4">
+  <!-- ====== SECTION 5 — The Turn ====== -->
+
+  <section class="section" data-section="5">
     <div class="section-inner">
       <p>Writing this essay did something I didn't fully expect. I thought I was writing about founders. But the lens turned&nbsp;around.</p>
       <p>Investors have shapes too. We ship ourselves in containers&thinsp;—&thinsp;fund theses, value propositions, inherited activities. And I realized the thing I've spent years building&thinsp;—&thinsp;product judgment, the ability to sit with a founder and see the full landscape of possible shapes&thinsp;—&thinsp;was packaged in the standard venture container. Board seats, quarterly check-ins, portfolio support. It worked. But honestly, <mark class="hl">I could feel the same mismatch I keep diagnosing in others.</mark> The highest-leverage version of this work is concentrated at inception&thinsp;—&thinsp;the weeks when shape decisions are actually being made, before the concrete sets. Not spread thin over&nbsp;years.</p>
@@ -736,9 +763,10 @@ body.mode-agent .grain { display: none; }
 <!-- ============================================
      AGENT VIEW
      ============================================ -->
+
 <div class="agent-view" id="agentView">
 <div class="md-h1"># The Shape of the Thing</div>
-<span class="md-sub">On reshaping under uncertainty — and the role of venture in the decisions that compound</span>
+<span class="md-sub">Why the most expensive mistake in deep tech is one almost nobody talks about</span>
 <span class="md-sub" style="margin-bottom:0.5em">Morris Clay · February 2026</span>
 
 <div class="md-p">Every technology has a shape. Not the shape of the code or the architecture — the shape it takes when it meets the world. The packaging, the form factor, who encounters it first and what it looks like when they do. The container the thing arrives in.</div>
@@ -755,29 +783,41 @@ body.mode-agent .grain { display: none; }
 
 <div class="md-p">**Same technology. Different story. Completely different ceiling.**</div>
 
-<div class="md-p">A product positioned as "cheaper alternative to [incumbent]" is in a race to the bottom. You're defined by someone else's product. You compete on one axis. You attract buyers who'll leave when something cheaper appears.</div>
+<div class="md-p">A product positioned as "cheaper alternative to [incumbent]" is in a race to the bottom. You're defined by someone else's product. You compete on one axis. You attract buyers who'll leave the moment something cheaper shows up.</div>
 
-<div class="md-p">Now take that same capability and frame it around a problem that didn't exist two years ago — agentic workloads that need isolation, real-time perception for autonomous systems, data governance for a world where AI touches everything. The buyer changes. The urgency changes. The willingness to pay changes. And an expansion path opens that wasn't visible before. Multiple products from the same underlying technology. None of them reachable from the "cheap X" frame.</div>
+<div class="md-p">Now take that same capability and frame it around a problem that didn't exist two years ago — agentic workloads that need isolation, real-time perception for autonomous systems, data governance for a world where AI touches everything. Suddenly you're not selling against an incumbent. You're selling into urgency. The conversation changes — from "why should we switch" to "we need this and nobody else has it." And from that position, expansion paths open that were invisible from the cheap-X frame.</div>
 
-<div class="md-p">The technology didn't change. The shape of the story changed. And the story's shape determines the company's ceiling.</div>
+<div class="md-p">I've watched this happen. A team I know spent eighteen months pitching a developer tool as a better version of something that already worked fine. Polite interest, no urgency, long evaluation cycles. They reframed around a use case that was genuinely new — same core technology, different entry point — and closed their first design partner in three weeks. Nothing underneath changed. The container changed.</div>
 
-<div class="md-p">This isn't a branding exercise. It's structural. When you reframe, you're changing who your first user is, how they find you, what they're willing to pay, and where the product goes next. Sometimes the same technology that struggled for years in one frame finds immediate traction in another — not because anything underneath improved, but because the container finally fit the thing inside it.</div>
+<div class="md-p">This is what makes shape decisions so easy to get wrong. The reframe isn't a branding exercise. It's structural. You're changing who finds you, what they're willing to pay, and where the product goes next. And deep tech founders feel real tension here, because they've built something genuinely better and they want the container to honor that novelty. That instinct is right — and it's also often the thing that limits them. Adoption friction is the real bottleneck. Not capability.</div>
 
 <hr class="md-rule">
 
-<div class="md-p">There's something larger underneath all of this that I've been turning over for months.</div>
+<div class="md-p">Here's the thing that actually bothers me.</div>
 
-<div class="md-p">AI is making execution cheap. On both sides of the table. Founders prototype in an afternoon. Investors generate market maps in minutes. Code, research, content, financial models — the entire operational layer of building and investing is compressing toward zero marginal cost. Fast.</div>
+<div class="md-p">The venture world has built real infrastructure on the demand side. Investors make introductions, open doors, connect founders to customers and capital. This is genuinely valuable work. I don't want to diminish it.</div>
 
-<div class="md-p">So what's left when execution is commoditized?</div>
+<div class="md-p">But on the supply side — the question of *what exactly you're building*, what form it takes, who encounters it first — founders at the frontier are mostly working through it alone. Good angels and operators contribute real thinking, but their attention is fragmented. A couple of hours here, a coffee conversation there. Nobody is going deep on the specific question of how *this* technology should be shaped for *this* market at *this* moment.</div>
 
-<div class="md-p">I used to think the answer was access — to deals, to talent, to information. But those edges are compressing too. AI can generate ten product configurations for a founding team. It can map every customer segment. It can model the financial implications of every form factor. And it's getting better at all of this, quickly.</div>
+<div class="md-p">And it's not for lack of caring. It's structural. The standard investor relationship is built around governance and access, not product architecture. A board seat doesn't give you the context to have a useful opinion about form factor. Quarterly check-ins don't match the tempo at which these decisions actually get made. The support structure was designed for a different kind of problem than the one that kills most deep tech companies.</div>
 
-<div class="md-p">But someone still has to *choose*. Someone has to sit in the room with the ambiguity — the moment when the data doesn't resolve, when the market could go two directions, when the decision is irreversible and the information is incomplete — and make the call. Not because AI can't contribute to that moment. It can, and increasingly will. But because the choosing draws on something that's hard to formalize: the accumulated weight of having been in that room many times before and having watched what happened next. Pattern recognition that lives closer to intuition than to analysis.</div>
+<div class="md-p">The best founders have extraordinary product instincts. Some of them see the right shape before anyone else and don't need someone in the room helping them find it. But even those founders — *especially* those founders — at the moment when a single architectural decision forecloses entire futures or opens new ones, benefit from a process that widens the aperture. Not to replace their judgment. To make sure the full landscape of possible shapes is visible before the concrete sets.</div>
 
-<div class="md-p">*Taste.* In the deepest sense of the word.</div>
+<hr class="md-rule">
 
-<div class="md-p">The founders who win in this environment aren't the ones with the best engineering — AI narrows that gap. Or the most sophisticated go-to-market — AI narrows that too. They're the ones who see the right shape before anyone else. Who look at a vast space of possible configurations and notice the one that fits.</div>
+<div class="md-p">There's a question underneath all of this that I keep circling back to.</div>
+
+<div class="md-p">AI is compressing the operational layer of building and investing fast. Founders prototype in an afternoon. I can generate a market map in minutes that would have taken a week two years ago. Code, research, financial models — the stuff that used to be the work is becoming table stakes.</div>
+
+<div class="md-p">So what's actually left?</div>
+
+<div class="md-p">I used to think it was access. But AI can generate ten product configurations for a founding team. It can map every possible customer segment. It can model the financial implications of every form factor. The things I thought were hard are getting easy. And I'll be honest — that made me uncomfortable for a while, because it forced a question about what my own work is actually worth.</div>
+
+<div class="md-p">What I keep coming back to is this: someone still has to *choose*. Someone has to sit in the room with the ambiguity — the moment when the data doesn't resolve, when the market could go two directions, when the decision is irreversible and the information is incomplete — and make the call. AI can inform that moment. But the choosing draws on something harder to formalize: having been in that room many times before and having watched what happened next.</div>
+
+<div class="md-p">*Taste.* That's the word I keep landing on, and I know it sounds imprecise. But I mean something specific: the ability to look at a vast space of possible configurations and notice the one that fits. Not because you can articulate why in the moment — sometimes the articulation comes later — but because you've seen enough of these decisions play out to have a feel for which shapes hold weight and which don't.</div>
+
+<div class="md-p">I've been wrong about this plenty of times. There are companies I told to narrow that should have stayed broad. Form factors I was sure about that turned out to be dead ends. Taste isn't infallible. But it's the thing that doesn't commoditize. It compounds with experience rather than getting automated away.</div>
 
 <hr class="md-rule">
 
