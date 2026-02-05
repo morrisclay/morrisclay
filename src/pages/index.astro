@@ -70,6 +70,18 @@ h1 {
   margin-bottom: 2rem;
 }
 
+.tagline a {
+  color: var(--faded);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.tagline a:hover {
+  color: var(--accent-deep);
+  border-color: var(--accent-deep);
+}
+
 .bio {
   font-size: 1rem;
   color: var(--ink-soft);
@@ -83,6 +95,17 @@ h1 {
 
 .bio p:last-child {
   margin-bottom: 0;
+}
+
+.bio a {
+  color: var(--accent-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  transition: border-color 0.3s ease;
+}
+
+.bio a:hover {
+  border-color: var(--accent-deep);
 }
 
 .links {
@@ -114,30 +137,50 @@ h1 {
   background: var(--rule);
 }
 
-.writing-section {
+.footer-sections {
   margin-top: 4rem;
-  padding-top: 2rem;
+  padding-top: 2.5rem;
   border-top: 1px solid var(--rule);
   width: 100%;
+  display: flex;
+  gap: 3rem;
+  text-align: left;
 }
 
-.writing-section h2 {
+.footer-sections section {
+  flex: 1;
+}
+
+.footer-sections h2 {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 300;
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--faded);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.portfolio-list {
+  list-style: none;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.portfolio-list a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.portfolio-list a:hover {
+  color: var(--accent-deep);
 }
 
 .writing-list {
   list-style: none;
-  text-align: left;
-}
-
-.writing-list li {
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.8;
 }
 
 .writing-list a {
@@ -153,10 +196,11 @@ h1 {
 
 .writing-list .date {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   color: var(--faded);
-  margin-left: 0.8em;
   letter-spacing: 0.05em;
+  display: block;
+  margin-top: 0.2em;
 }
 
 ::selection {
@@ -168,6 +212,7 @@ h1 {
   html { font-size: 16px; }
   body { padding: 1.5rem; }
   .links { gap: 1em; font-size: 0.6rem; }
+  .footer-sections { flex-direction: column; gap: 2rem; }
 }
 </style>
 </head>
@@ -175,11 +220,11 @@ h1 {
 
 <div class="container">
   <h1>Morris Clay</h1>
-  <p class="tagline">Deep tech investor</p>
+  <p class="tagline">Deep tech investor at <a href="https://lunar.vc" class="lunar-link">Lunar</a></p>
 
   <div class="bio">
-    <p>I invest in deep tech at the earliest stages, working with founders on the hardest question their company faces: <em>what shape should this thing take?</em></p>
-    <p>I help widen the aperture. Then the founder drives.</p>
+    <p>I invest in deep tech infrastructure at inception stage, working with founders on the hardest question their company faces: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
+    <p>Building something at the edge of what's possible? Still shapeshifting? <a href="mailto:morris@lunarventures.eu">Let's talk.</a></p>
   </div>
 
   <nav class="links">
@@ -188,15 +233,28 @@ h1 {
     <a href="https://www.linkedin.com/in/morris-clay/">LinkedIn</a>
   </nav>
 
-  <section class="writing-section">
-    <h2>Writing</h2>
-    <ul class="writing-list">
-      <li>
-        <a href="/blog/the-shape-of-the-thing">The Shape of the Thing</a>
-        <span class="date">Feb 2026</span>
-      </li>
-    </ul>
-  </section>
+  <footer class="footer-sections">
+    <section class="portfolio-section">
+      <h2>Investments</h2>
+      <ul class="portfolio-list">
+        <li><a href="https://getbruin.com/">Bruin</a></li>
+        <li><a href="https://electric-sql.com/">Electric SQL</a></li>
+        <li><a href="https://hathora.dev/">Hathora</a></li>
+        <li><a href="https://xorq.dev/">xorq</a></li>
+        <li><a href="https://embucket.io/">Embucket</a></li>
+      </ul>
+    </section>
+
+    <section class="writing-section">
+      <h2>Writing</h2>
+      <ul class="writing-list">
+        <li>
+          <a href="/blog/the-shape-of-the-thing">The Shape of the Thing</a>
+          <span class="date">Feb 2026</span>
+        </li>
+      </ul>
+    </section>
+  </footer>
 </div>
 
 </body>
