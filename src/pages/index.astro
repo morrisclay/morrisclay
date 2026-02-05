@@ -63,8 +63,18 @@ h1 {
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--ink);
-  margin-bottom: 0.5em;
+  margin-bottom: 0.4em;
   text-shadow: 0 0 20px var(--paper), 0 0 40px var(--paper);
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 2em;
+  height: 2px;
+  background: var(--accent);
+  margin: 0.5em auto 0;
+  opacity: 0.5;
 }
 
 .tagline {
@@ -112,6 +122,11 @@ h1 {
 
 .bio a:hover {
   border-color: var(--accent-deep);
+}
+
+.bio em {
+  font-style: italic;
+  color: var(--ink);
 }
 
 .links {
@@ -167,6 +182,11 @@ h1 {
   margin-bottom: 0.8rem;
 }
 
+.footer-sections h2::before {
+  content: '— ';
+  opacity: 0.4;
+}
+
 .portfolio-list {
   list-style: none;
   font-size: 0.9rem;
@@ -181,6 +201,12 @@ h1 {
 
 .portfolio-list a:hover {
   color: var(--accent-deep);
+}
+
+.portfolio-list .more {
+  color: var(--faded);
+  font-style: italic;
+  font-size: 0.85rem;
 }
 
 .writing-list {
@@ -217,36 +243,58 @@ h1 {
 @media (max-width: 600px) {
   html { font-size: 16px; }
   body {
-    padding: 1.5rem;
+    padding: 1.25rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
     justify-content: flex-start;
-    padding-top: 3rem;
+    align-items: flex-start;
   }
-  .container { text-align: left; }
-  h1 { font-size: 2rem; margin-bottom: 0.4em; }
+  .container {
+    text-align: left;
+    max-width: 100%;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.3em;
+  }
+  h1::after {
+    margin: 0.4em 0 0;
+    width: 1.5em;
+  }
   .tagline {
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
   }
   .bio {
-    font-size: 0.95rem;
-    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.65;
   }
+  .bio p { margin-bottom: 0.8em; }
   .links {
     justify-content: flex-start;
-    gap: 1.2em;
-    font-size: 0.6rem;
-    margin-bottom: 2.5rem;
+    gap: 1em;
+    font-size: 0.55rem;
+    margin-bottom: 0;
   }
-  .divider { width: 16px; }
+  .divider { width: 12px; }
   .footer-sections {
     flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-top: 1.25rem;
   }
-  .footer-sections h2 { margin-bottom: 0.5rem; }
-  .portfolio-list, .writing-list { font-size: 0.85rem; line-height: 1.9; }
-  #canvas-container { opacity: 0.5; }
+  .footer-sections h2 {
+    margin-bottom: 0.4rem;
+    font-size: 0.5rem;
+  }
+  .portfolio-list, .writing-list {
+    font-size: 0.8rem;
+    line-height: 1.75;
+  }
+  .portfolio-list .more { font-size: 0.75rem; }
+  .writing-list .date { font-size: 0.45rem; }
+  #canvas-container { opacity: 0.4; }
 }
 #canvas-container {
   position: fixed;
@@ -268,7 +316,7 @@ h1 {
 
 <div class="container">
   <h1>Morris Clay</h1>
-  <p class="tagline">Deep tech investor at <a href="https://lunar.vc" class="lunar-link">Lunar</a></p>
+  <p class="tagline">Deep tech investor at <a href="https://lunar.vc">Lunar</a></p>
 
   <div class="bio">
     <p>I invest in deep tech infrastructure at inception stage, working with founders on the mother of all questions: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
@@ -290,6 +338,7 @@ h1 {
         <li><a href="https://hathora.dev/">Hathora</a></li>
         <li><a href="https://xorq.dev/">xorq</a></li>
         <li><a href="https://embucket.com/">Embucket</a></li>
+        <li class="more">&amp; others</li>
       </ul>
     </section>
 
