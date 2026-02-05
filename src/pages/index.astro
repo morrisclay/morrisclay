@@ -876,14 +876,17 @@ document.addEventListener('keydown', (e) => {
 });
 
 textarea.addEventListener('input', () => {
-  const remaining = 300 - textarea.value.length;
+  const typed = textarea.value.length;
+  const remaining = 300 - typed;
   let msg = remaining;
 
-  if (remaining <= 10) msg = `${remaining} — tweet energy`;
-  else if (remaining <= 30) msg = `${remaining} — haiku territory`;
-  else if (remaining <= 50) msg = `${remaining} — beautifully concise`;
-  else if (remaining <= 80) msg = `${remaining} — getting sharp`;
-  else if (remaining <= 120) msg = `${remaining} — warming up`;
+  if (typed === 0) msg = '300';
+  else if (typed <= 20) msg = `${remaining} — just getting started`;
+  else if (typed <= 60) msg = `${remaining} — warming up`;
+  else if (typed <= 120) msg = `${remaining} — finding your rhythm`;
+  else if (typed <= 200) msg = `${remaining} — nice and focused`;
+  else if (typed <= 270) msg = `${remaining} — beautifully concise`;
+  else msg = `${remaining} — every word counts`;
 
   charCount.textContent = msg;
   charCount.style.color = remaining < 30 ? 'var(--accent-deep)' : 'var(--faded)';
