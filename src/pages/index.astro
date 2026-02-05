@@ -58,51 +58,25 @@ body {
 }
 
 h1 {
-  font-weight: 500;
-  font-size: clamp(2.2rem, 5vw, 3rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 5vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
   color: var(--ink);
-  margin-bottom: 0.4em;
-  text-shadow: 0 0 20px var(--paper), 0 0 40px var(--paper);
+  margin-bottom: 1.8rem;
+  text-shadow: 0 0 30px var(--paper), 0 0 60px var(--paper);
 }
 
-h1::after {
-  content: '';
-  display: block;
-  width: 2em;
-  height: 2px;
-  background: var(--accent);
-  margin: 0.5em auto 0;
-  opacity: 0.5;
-}
-
-.tagline {
-  font-weight: 300;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--faded);
-  margin-bottom: 2rem;
-}
-
-.tagline a {
-  color: var(--faded);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule);
-  transition: color 0.3s ease, border-color 0.3s ease;
-}
-
-.tagline a:hover {
-  color: var(--accent-deep);
-  border-color: var(--accent-deep);
-}
+h1 .first { font-weight: 500; }
+h1 .last { font-weight: 300; color: var(--ink-soft); }
 
 .bio {
   font-size: 1rem;
   color: var(--ink-soft);
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.8rem;
   text-align: left;
   text-shadow: 0 0 15px var(--paper), 0 0 30px var(--paper);
+  line-height: 1.8;
 }
 
 .bio p {
@@ -171,8 +145,8 @@ h1::after {
 }
 
 .footer-sections {
-  margin-top: 4rem;
-  padding-top: 2.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--rule);
   width: 100%;
   display: flex;
@@ -347,6 +321,68 @@ h1::after {
 }
 
 
+/* Mode toggle dock */
+.mode-dock {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  user-select: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2px;
+  box-shadow: 0 2px 20px rgba(43, 41, 38, 0.06);
+}
+
+.mode-dock .dock-opt {
+  padding: 0.5em 1.1em;
+  cursor: pointer;
+  color: var(--faded);
+  border-radius: 16px;
+  transition: color 0.3s ease, background 0.3s ease;
+  background: transparent;
+}
+
+.mode-dock .dock-opt.active {
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.mode-dock .dock-opt:not(.active):hover {
+  color: var(--ink);
+}
+
+/* Mode-specific visibility */
+.agent-view { display: none; }
+body.mode-agent .human-view { display: none; }
+body.mode-agent .agent-view { display: block; }
+body.mode-agent #canvas-container { opacity: 0.15; }
+body.mode-agent h1 { display: none; }
+body.mode-agent .footer-sections { display: none; }
+
+.agent-markdown {
+  text-align: left;
+}
+
+.agent-markdown pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+  margin: 0;
+}
+
 ::selection {
   background: rgba(92, 124, 90, 0.16);
   color: inherit;
@@ -366,21 +402,14 @@ h1::after {
     max-width: 100%;
   }
   h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.3em;
-  }
-  h1::after {
-    margin: 0.4em 0 0;
-    width: 1.5em;
-  }
-  .tagline {
-    font-size: 0.9rem;
+    font-size: 1.75rem;
     margin-bottom: 1.25rem;
+    letter-spacing: 0.01em;
   }
   .bio {
     font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.65;
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
   }
   .bio p { margin-bottom: 0.8em; }
   .links {
@@ -428,20 +457,52 @@ h1::after {
 </style>
 <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 </head>
-<body>
+<body class="mode-human">
 
 <div id="canvas-container"></div>
 
 <div class="container">
-  <h1>Morris Clay</h1>
-  <p class="tagline">Deep tech investor at <a href="https://lunar.vc">Lunar</a></p>
+  <h1><span class="first">Morris</span> <span class="last">Clay</span></h1>
 
-  <div class="bio">
-    <p>I invest in deep tech infrastructure at inception stage, working with founders on the mother of all questions: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
+  <!-- Human View -->
+  <div class="bio human-view">
+    <p>I <a href="https://lunar.vc">invest in deep tech infrastructure</a> at inception stage, working with founders on the mother of all questions: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
     <p>Building something at the edge of what's possible?<br><a href="#" class="email-trigger">Let's talk.</a></p>
   </div>
 
-  <nav class="links" id="nav-links">
+  <!-- Agent View -->
+  <div class="agent-view agent-markdown">
+<pre>
+# Morris Clay
+
+Deep tech investor at [Lunar](https://lunar.vc) (inception stage)
+
+## About
+
+I invest in deep tech infrastructure at inception stage, working with
+founders on the mother of all questions: *what shape should this thing take?*
+
+## Portfolio
+
+- [Bruin](https://getbruin.com/) — Data pipeline tooling
+- [Electric SQL](https://electric-sql.com/) — Local-first sync
+- [Hathora](https://hathora.dev/) — Game server infrastructure
+- [xorq](https://xorq.dev/) — Query federation
+- [Embucket](https://embucket.com/) — Lakehouse platform
+- & others
+
+## Writing
+
+- [The Shape of the Thing](/blog/the-shape-of-the-thing) — Feb 2026
+
+## Contact
+
+- Email: morris@lunarventures.eu
+- LinkedIn: https://www.linkedin.com/in/morris-clay/
+</pre>
+  </div>
+
+  <nav class="links human-view" id="nav-links">
     <a href="#" id="email-toggle">Email <span class="shortcut">E</span></a>
     <span class="divider"></span>
     <a href="https://www.linkedin.com/in/morris-clay/" id="linkedin-link" target="_blank">LinkedIn <span class="shortcut">L</span></a>
@@ -485,6 +546,22 @@ h1::after {
     </section>
   </footer>
 </div>
+
+<div class="mode-dock" id="modeDock">
+  <div class="dock-opt active" data-mode="human">Human</div>
+  <div class="dock-opt" data-mode="agent">Agent</div>
+</div>
+
+<script is:inline>
+// Mode toggle
+document.getElementById('modeDock').addEventListener('click', e => {
+  const opt = e.target.closest('.dock-opt');
+  if (!opt) return;
+  document.querySelectorAll('.dock-opt').forEach(o => o.classList.remove('active'));
+  opt.classList.add('active');
+  document.body.className = 'mode-' + opt.dataset.mode;
+});
+</script>
 
 <script is:inline>
 // Morphing shapes + mechanical geometry - "what shape should this thing take?"
