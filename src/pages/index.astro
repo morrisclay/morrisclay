@@ -216,9 +216,37 @@ h1 {
 
 @media (max-width: 600px) {
   html { font-size: 16px; }
-  body { padding: 1.5rem; }
-  .links { gap: 1em; font-size: 0.6rem; }
-  .footer-sections { flex-direction: column; gap: 2rem; }
+  body {
+    padding: 1.5rem;
+    justify-content: flex-start;
+    padding-top: 3rem;
+  }
+  .container { text-align: left; }
+  h1 { font-size: 2rem; margin-bottom: 0.4em; }
+  .tagline {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  .bio {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  .links {
+    justify-content: flex-start;
+    gap: 1.2em;
+    font-size: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+  .divider { width: 16px; }
+  .footer-sections {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+  }
+  .footer-sections h2 { margin-bottom: 0.5rem; }
+  .portfolio-list, .writing-list { font-size: 0.85rem; line-height: 1.9; }
+  #canvas-container { opacity: 0.5; }
 }
 #canvas-container {
   position: fixed;
@@ -228,7 +256,7 @@ h1 {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 </style>
@@ -243,7 +271,7 @@ h1 {
   <p class="tagline">Deep tech investor at <a href="https://lunar.vc" class="lunar-link">Lunar</a></p>
 
   <div class="bio">
-    <p>I invest in deep tech infrastructure at inception stage, working with founders on the hardest question their company faces: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
+    <p>I invest in deep tech infrastructure at inception stage, working with founders on the mother of all questions: <a href="/blog/the-shape-of-the-thing"><em>what shape should this thing take?</em></a></p>
     <p>Building something at the edge of what's possible?<br><a href="mailto:morris@lunarventures.eu">Let's talk.</a></p>
   </div>
 
@@ -278,100 +306,255 @@ h1 {
 </div>
 
 <script is:inline>
-// Subtle organic flow field
+// Morphing shapes + mechanical geometry - "what shape should this thing take?"
 const sketch = (p) => {
-  let particles = [];
-  let flowField;
-  let cols, rows;
-  let scale = 25;
-  let zoff = 0;
+  let organicShapes = [];
+  let mechShapes = [];
+  let time = 0;
+
+  // Organic morphing shape
+  class OrganicShape {
+    constructor(x, y, config) {
+      this.x = x;
+      this.y = y;
+      this.targetX = x;
+      this.targetY = y;
+      this.baseRadius = config.radius;
+      this.noiseOffset = p.random(1000);
+      this.rotationSpeed = config.speed;
+      this.rotation = p.random(p.TWO_PI);
+      this.morphSpeed = p.random(0.008, 0.015);
+      this.morphIntensity = config.radius * 0.5;
+      this.currentVertices = config.vertices;
+      this.targetVertices = config.vertices;
+      this.vertexTransition = 0;
+      this.nextMorphTime = p.random(200, 500);
+    }
+
+    update() {
+      this.x += (this.targetX - this.x) * 0.01;
+      this.y += (this.targetY - this.y) * 0.01;
+
+      // Float away from cursor
+      const d = p.dist(p.mouseX, p.mouseY, this.x, this.y);
+      if (d < 250) {
+        const angle = p.atan2(this.y - p.mouseY, this.x - p.mouseX);
+        const force = p.map(d, 0, 250, 2, 0);
+        this.x += p.cos(angle) * force;
+        this.y += p.sin(angle) * force;
+      }
+
+      if (p.random() < 0.005) {
+        this.targetX = p.constrain(this.x + p.random(-100, 100), 50, p.width - 50);
+        this.targetY = p.constrain(this.y + p.random(-100, 100), 50, p.height - 50);
+      }
+
+      this.rotation += this.rotationSpeed;
+      this.noiseOffset += this.morphSpeed;
+
+      this.nextMorphTime--;
+      if (this.nextMorphTime <= 0) {
+        this.currentVertices = this.targetVertices;
+        this.targetVertices = p.floor(p.random(3, 9));
+        this.vertexTransition = 0;
+        this.nextMorphTime = p.random(300, 600);
+      }
+      this.vertexTransition = p.min(1, this.vertexTransition + 0.01);
+    }
+
+    draw() {
+      p.push();
+      p.translate(this.x, this.y);
+      p.rotate(this.rotation);
+
+      const vCount = p.lerp(this.currentVertices, this.targetVertices, this.ease(this.vertexTransition));
+
+      // Main morphing shape
+      p.fill(92, 124, 90, 10);
+      p.stroke(92, 124, 90, 50);
+      p.strokeWeight(1.5);
+      this.drawOrganic(vCount, this.baseRadius, 1);
+
+      // Inner core
+      p.fill(92, 124, 90, 20);
+      p.noStroke();
+      this.drawOrganic(vCount, this.baseRadius * 0.35, 1.5);
+
+      p.pop();
+    }
+
+    drawOrganic(vCount, radius, noiseScale) {
+      p.beginShape();
+      for (let i = 0; i < 60; i++) {
+        const angle = p.map(i, 0, 60, 0, p.TWO_PI);
+        const polyAngle = angle * vCount;
+        const polyRadius = radius / p.cos(p.PI / vCount - (polyAngle % (p.TWO_PI / vCount)));
+        const smoothPoly = p.lerp(radius, p.min(polyRadius, radius * 1.5), 0.7);
+        const noise = p.noise(p.cos(angle) * noiseScale + this.noiseOffset, p.sin(angle) * noiseScale + this.noiseOffset);
+        const r = smoothPoly + noise * this.morphIntensity - this.morphIntensity * 0.5;
+        p.vertex(p.cos(angle) * r, p.sin(angle) * r);
+      }
+      p.endShape(p.CLOSE);
+    }
+
+    ease(t) { return t < 0.5 ? 2 * t * t : 1 - p.pow(-2 * t + 2, 2) / 2; }
+  }
+
+  // Mechanical geometric shape
+  class MechShape {
+    constructor(x, y, config) {
+      this.x = x;
+      this.y = y;
+      this.size = config.size;
+      this.vertices = config.vertices;
+      this.rotation = p.random(p.TWO_PI);
+      this.rotationSpeed = config.speed * (p.random() > 0.5 ? 1 : -1);
+      this.orbitRadius = config.orbit || 0;
+      this.orbitAngle = p.random(p.TWO_PI);
+      this.orbitSpeed = p.random(0.002, 0.005);
+      this.centerX = x;
+      this.centerY = y;
+      this.dashOffset = 0;
+    }
+
+    update() {
+      this.rotation += this.rotationSpeed;
+
+      // Float away from cursor
+      const d = p.dist(p.mouseX, p.mouseY, this.x, this.y);
+      if (d < 200) {
+        const angle = p.atan2(this.y - p.mouseY, this.x - p.mouseX);
+        const force = p.map(d, 0, 200, 1.5, 0);
+        this.centerX += p.cos(angle) * force;
+        this.centerY += p.sin(angle) * force;
+        if (this.orbitRadius === 0) {
+          this.x += p.cos(angle) * force;
+          this.y += p.sin(angle) * force;
+        }
+      }
+
+      if (this.orbitRadius > 0) {
+        this.orbitAngle += this.orbitSpeed;
+        this.x = this.centerX + p.cos(this.orbitAngle) * this.orbitRadius;
+        this.y = this.centerY + p.sin(this.orbitAngle) * this.orbitRadius;
+      }
+      this.dashOffset += 0.5;
+    }
+
+    draw() {
+      p.push();
+      p.translate(this.x, this.y);
+      p.rotate(this.rotation);
+
+      // Dashed outer ring
+      p.noFill();
+      p.stroke(145, 138, 126, 25);
+      p.strokeWeight(0.8);
+      p.drawingContext.setLineDash([3, 5]);
+      p.drawingContext.lineDashOffset = this.dashOffset;
+      p.ellipse(0, 0, this.size * 2.2, this.size * 2.2);
+      p.drawingContext.setLineDash([]);
+
+      // Clean geometric polygon
+      p.stroke(145, 138, 126, 35);
+      p.strokeWeight(0.8);
+      p.beginShape();
+      for (let i = 0; i < this.vertices; i++) {
+        const angle = p.map(i, 0, this.vertices, 0, p.TWO_PI) - p.HALF_PI;
+        p.vertex(p.cos(angle) * this.size, p.sin(angle) * this.size);
+      }
+      p.endShape(p.CLOSE);
+
+      // Center crosshair
+      p.stroke(145, 138, 126, 20);
+      p.line(-6, 0, 6, 0);
+      p.line(0, -6, 0, 6);
+
+      // Corner markers
+      p.strokeWeight(1.5);
+      p.stroke(145, 138, 126, 30);
+      for (let i = 0; i < this.vertices; i++) {
+        const angle = p.map(i, 0, this.vertices, 0, p.TWO_PI) - p.HALF_PI;
+        const vx = p.cos(angle) * this.size;
+        const vy = p.sin(angle) * this.size;
+        p.point(vx, vy);
+      }
+
+      p.pop();
+    }
+  }
 
   p.setup = () => {
     const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
     canvas.parent('canvas-container');
 
-    cols = p.floor(p.width / scale);
-    rows = p.floor(p.height / scale);
-    flowField = new Array(cols * rows);
+    const isMobile = p.width < 600;
 
-    for (let i = 0; i < 500; i++) {
-      particles.push(new Particle(p));
+    // Organic shapes (fewer, bolder)
+    const organicConfigs = [
+      { vertices: 3, radius: 90, speed: 0.002 },
+      { vertices: 5, radius: 70, speed: 0.003 },
+      { vertices: 4, radius: 80, speed: 0.0025 },
+    ];
+    const organicCount = isMobile ? 2 : 3;
+    for (let i = 0; i < organicCount; i++) {
+      organicShapes.push(new OrganicShape(
+        p.random(120, p.width - 120),
+        p.random(120, p.height - 120),
+        organicConfigs[i]
+      ));
+    }
+
+    // Mechanical shapes (more, lighter)
+    const mechConfigs = [
+      { vertices: 6, size: 45, speed: 0.008, orbit: 0 },
+      { vertices: 4, size: 28, speed: -0.012, orbit: 55 },
+      { vertices: 3, size: 32, speed: 0.01, orbit: 0 },
+      { vertices: 8, size: 38, speed: -0.006, orbit: 40 },
+      { vertices: 5, size: 24, speed: 0.015, orbit: 0 },
+      { vertices: 7, size: 30, speed: -0.009, orbit: 35 },
+      { vertices: 4, size: 20, speed: 0.018, orbit: 50 },
+    ];
+    const mechCount = isMobile ? 3 : 7;
+    for (let i = 0; i < mechCount; i++) {
+      mechShapes.push(new MechShape(
+        p.random(80, p.width - 80),
+        p.random(80, p.height - 80),
+        mechConfigs[i]
+      ));
     }
   };
 
   p.draw = () => {
     p.clear();
+    time++;
 
-    // Update flow field
-    let yoff = 0;
-    for (let y = 0; y < rows; y++) {
-      let xoff = 0;
-      for (let x = 0; x < cols; x++) {
-        let index = x + y * cols;
-        let angle = p.noise(xoff, yoff, zoff) * p.TWO_PI * 2;
-        let v = p5.Vector.fromAngle(angle);
-        v.setMag(0.3);
-        flowField[index] = v;
-        xoff += 0.06;
+    // Draw mechanical shapes (background layer)
+    for (let shape of mechShapes) {
+      shape.update();
+      shape.draw();
+    }
+
+    // Draw organic shapes (foreground layer)
+    for (let shape of organicShapes) {
+      shape.update();
+      shape.draw();
+    }
+
+    // Connections between organic shapes
+    p.stroke(92, 124, 90, 12);
+    p.strokeWeight(1);
+    for (let i = 0; i < organicShapes.length; i++) {
+      for (let j = i + 1; j < organicShapes.length; j++) {
+        const d = p.dist(organicShapes[i].x, organicShapes[i].y, organicShapes[j].x, organicShapes[j].y);
+        if (d < 400) {
+          p.line(organicShapes[i].x, organicShapes[i].y, organicShapes[j].x, organicShapes[j].y);
+        }
       }
-      yoff += 0.06;
-    }
-    zoff += 0.001;
-
-    for (let particle of particles) {
-      particle.follow(flowField, cols, scale);
-      particle.update();
-      particle.edges();
-      particle.show();
     }
   };
 
-  p.windowResized = () => {
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
-    cols = p.floor(p.width / scale);
-    rows = p.floor(p.height / scale);
-    flowField = new Array(cols * rows);
-  };
-
-  class Particle {
-    constructor(p) {
-      this.p = p;
-      this.pos = p.createVector(p.random(p.width), p.random(p.height));
-      this.vel = p.createVector(0, 0);
-      this.acc = p.createVector(0, 0);
-      this.maxSpeed = 1;
-      this.prevPos = this.pos.copy();
-    }
-
-    follow(vectors, cols, scale) {
-      let x = this.p.floor(this.pos.x / scale);
-      let y = this.p.floor(this.pos.y / scale);
-      let index = x + y * cols;
-      let force = vectors[index];
-      if (force) this.acc.add(force);
-    }
-
-    update() {
-      this.vel.add(this.acc);
-      this.vel.limit(this.maxSpeed);
-      this.pos.add(this.vel);
-      this.acc.mult(0);
-    }
-
-    edges() {
-      if (this.pos.x > this.p.width) { this.pos.x = 0; this.prevPos.x = 0; }
-      if (this.pos.x < 0) { this.pos.x = this.p.width; this.prevPos.x = this.p.width; }
-      if (this.pos.y > this.p.height) { this.pos.y = 0; this.prevPos.y = 0; }
-      if (this.pos.y < 0) { this.pos.y = this.p.height; this.prevPos.y = this.p.height; }
-    }
-
-    show() {
-      this.p.stroke(92, 124, 90, 20);
-      this.p.strokeWeight(0.5);
-      this.p.line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
-      this.prevPos = this.pos.copy();
-    }
-  }
+  p.windowResized = () => p.resizeCanvas(p.windowWidth, p.windowHeight);
 };
 
 new p5(sketch);
