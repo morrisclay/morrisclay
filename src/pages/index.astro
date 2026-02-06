@@ -417,50 +417,72 @@ body.mode-agent .footer-sections { display: none; }
   .container {
     text-align: left;
     max-width: 100%;
-    padding: 2.5rem 1.75rem 2rem;
+    padding: 3rem 1.75rem 5rem;
   }
+
+  /* Typography */
   h1 {
-    font-size: 1.75rem;
-    margin-bottom: 1.25rem;
+    font-size: 1.85rem;
+    margin-bottom: 1.5rem;
     letter-spacing: 0.01em;
   }
   .bio {
-    font-size: 0.9rem;
-    margin-bottom: 1.25rem;
-    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
   }
-  .bio p { margin-bottom: 0.8em; }
+  .bio p { margin-bottom: 0.9em; }
+
+  /* Nav links — bigger touch targets, hide keyboard shortcuts */
   .links {
     justify-content: flex-start;
-    gap: 1em;
-    font-size: 0.55rem;
+    gap: 1.2em;
+    font-size: 0.6rem;
     margin-bottom: 0;
   }
-  .divider { width: 12px; }
+  .links a {
+    padding: 0.6em 0.2em;
+  }
+  .shortcut { display: none; }
+  .divider { width: 14px; }
+
+  /* Footer sections */
   .footer-sections {
     flex-direction: column;
-    gap: 1.25rem;
-    margin-top: 2rem;
-    padding-top: 1.25rem;
+    gap: 1.8rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
   }
   .footer-sections h2 {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
     font-size: 0.5rem;
   }
   .portfolio-list, .writing-list {
-    font-size: 0.8rem;
-    line-height: 1.75;
+    font-size: 0.85rem;
+    line-height: 2;
   }
-  .portfolio-list .more { font-size: 0.75rem; }
-  .writing-list .date { font-size: 0.45rem; }
-  #canvas-container { opacity: 0.4; }
-  .contact-form { margin-top: 1rem; }
+  .portfolio-list .more { font-size: 0.8rem; }
+  .writing-list .date { font-size: 0.48rem; margin-top: 0.15em; }
+
+  /* Canvas — subtle on mobile */
+  #canvas-container { opacity: 0.25; }
+
+  /* Contact form — roomier inputs */
+  .contact-form { margin-top: 1.25rem; }
   .contact-form input,
-  .contact-form textarea { font-size: 0.9rem; }
-  .contact-form textarea { height: 3.5rem; }
-  .contact-form button { font-size: 0.55rem; }
-  .form-row { margin-bottom: 1rem; }
-  .mode-dock { bottom: 1rem; }
+  .contact-form textarea {
+    font-size: 1rem;
+    padding: 0.65rem 0;
+  }
+  .contact-form textarea { height: 4.5rem; }
+  .contact-form button {
+    font-size: 0.6rem;
+    padding: 0.5em 0;
+  }
+  .form-row { margin-bottom: 1.2rem; }
+
+  /* Mode dock — clear of content */
+  .mode-dock { bottom: 1.2rem; }
 }
 
 /* iPhone Pro range (393–430pt) */
@@ -477,6 +499,7 @@ body.mode-agent .footer-sections { display: none; }
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+  h1 { font-size: 1.65rem; }
 }
 #canvas-container {
   position: fixed;
