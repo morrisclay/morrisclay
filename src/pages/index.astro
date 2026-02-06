@@ -32,6 +32,7 @@ html {
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
   background: var(--paper);
+  overflow-x: hidden;
 }
 
 body {
@@ -48,6 +49,8 @@ body {
   justify-content: center;
   padding: 2rem;
   position: relative;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .container {
@@ -462,6 +465,12 @@ body.mode-agent .footer-sections { display: none; }
   z-index: 0;
   pointer-events: none;
   opacity: 0.85;
+  overflow: hidden;
+}
+
+#canvas-container canvas {
+  display: block;
+  max-width: 100%;
 }
 
 </style>
