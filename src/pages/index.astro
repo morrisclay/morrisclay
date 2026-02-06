@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Morris Clay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -391,9 +391,10 @@ body.mode-agent .footer-sections { display: none; }
 @media (max-width: 600px) {
   html { font-size: 16px; }
   body {
-    padding: 1.25rem;
-    padding-top: 2.5rem;
-    padding-bottom: 2rem;
+    padding: 2.5rem 1.75rem 2rem;
+    padding-left: max(1.75rem, env(safe-area-inset-left, 0px) + 1.25rem);
+    padding-right: max(1.75rem, env(safe-area-inset-right, 0px) + 1.25rem);
+    padding-bottom: max(2rem, env(safe-area-inset-bottom, 0px) + 1rem);
     justify-content: flex-start;
     align-items: flex-start;
   }
@@ -442,6 +443,15 @@ body.mode-agent .footer-sections { display: none; }
   .contact-form textarea { height: 3.5rem; }
   .contact-form button { font-size: 0.55rem; }
   .form-row { margin-bottom: 1rem; }
+  .mode-dock { bottom: max(1rem, env(safe-area-inset-bottom, 0px) + 0.5rem); }
+}
+
+/* iPhone Pro range (393–430pt) */
+@media (max-width: 440px) {
+  body {
+    padding-left: max(2rem, env(safe-area-inset-left, 0px) + 1.4rem);
+    padding-right: max(2rem, env(safe-area-inset-right, 0px) + 1.4rem);
+  }
 }
 #canvas-container {
   position: fixed;

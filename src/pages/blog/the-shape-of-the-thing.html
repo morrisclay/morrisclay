@@ -729,6 +729,29 @@ body.mode-agent .grain { display: none; }
   color: var(--faded);
   white-space: nowrap;
 }
+
+.audio-speed {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.44rem;
+  letter-spacing: 0.04em;
+  color: var(--faded);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  min-width: 2.4em;
+  text-align: center;
+}
+
+.audio-speed:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
 </style>
 </head>
 <body class="mode-human">
@@ -790,6 +813,7 @@ body.mode-agent .grain { display: none; }
         </div>
         <span class="audio-time" id="audioTime"></span>
       </div>
+      <button class="audio-speed" id="audioSpeed" aria-label="Playback speed">1x</button>
     </div>
   </div>
 
@@ -1337,6 +1361,19 @@ document.getElementById('modeDock').addEventListener('click', e => {
     audio.currentTime = 0;
     time.textContent = fmt(audio.duration);
   });
+
+  // Speed toggle
+  const speedBtn = document.getElementById('audioSpeed');
+  const speeds = [1, 1.5, 2];
+  let speedIdx = 0;
+
+  if (speedBtn) {
+    speedBtn.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      audio.playbackRate = speeds[speedIdx];
+      speedBtn.textContent = speeds[speedIdx] + 'x';
+    });
+  }
 
   bar.addEventListener('click', e => {
     if (!audio.duration) return;
