@@ -234,6 +234,23 @@ h1 .last { font-weight: 300; color: var(--ink-soft); }
   animation: fadeIn 0.25s ease;
 }
 
+body.form-open h1,
+body.form-open .bio,
+body.form-open .footer-sections,
+body.form-open #canvas-container {
+  opacity: 0.15;
+  transition: opacity 0.4s ease;
+}
+
+body.form-open .mode-dock {
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
+
+h1, .bio, .footer-sections, #canvas-container, .mode-dock {
+  transition: opacity 0.4s ease;
+}
+
 .links.hidden {
   display: none;
 }
@@ -527,7 +544,7 @@ founders on the mother of all questions: *what shape should this thing take?*
     <a href="https://www.linkedin.com/in/morris-clay/" id="linkedin-link" target="_blank">LinkedIn <span class="shortcut">L</span></a>
   </nav>
 
-  <form id="contact-form" class="contact-form" action="https://formspree.io/f/yourformid" method="POST">
+  <form id="contact-form" class="contact-form" action="https://formspree.io/f/xgolewor" method="POST">
     <div class="form-row">
       <input type="email" name="email" placeholder="your@email.com" required>
     </div>
@@ -848,12 +865,14 @@ const charCount = contactForm.querySelector('.char-count');
 function openForm() {
   navLinks.classList.add('hidden');
   contactForm.classList.add('active');
+  document.body.classList.add('form-open');
   contactForm.querySelector('input').focus();
 }
 
 function closeForm() {
   contactForm.classList.remove('active');
   navLinks.classList.remove('hidden');
+  document.body.classList.remove('form-open');
   contactForm.reset();
   charCount.textContent = '300';
 }
