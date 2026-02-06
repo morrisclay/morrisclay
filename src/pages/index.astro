@@ -50,7 +50,6 @@ body {
   padding: 2rem;
   position: relative;
   overflow-x: hidden;
-  width: 100%;
 }
 
 .container {
@@ -411,16 +410,14 @@ body.mode-agent .footer-sections { display: none; }
 @media (max-width: 600px) {
   html { font-size: 16px; }
   body {
-    padding: 2.5rem 1.75rem 2rem;
-    padding-left: max(1.75rem, env(safe-area-inset-left, 0px) + 1.25rem);
-    padding-right: max(1.75rem, env(safe-area-inset-right, 0px) + 1.25rem);
-    padding-bottom: max(2rem, env(safe-area-inset-bottom, 0px) + 1rem);
+    padding: 0;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stretch;
   }
   .container {
     text-align: left;
     max-width: 100%;
+    padding: 2.5rem 1.75rem 2rem;
   }
   h1 {
     font-size: 1.75rem;
@@ -463,14 +460,22 @@ body.mode-agent .footer-sections { display: none; }
   .contact-form textarea { height: 3.5rem; }
   .contact-form button { font-size: 0.55rem; }
   .form-row { margin-bottom: 1rem; }
-  .mode-dock { bottom: max(1rem, env(safe-area-inset-bottom, 0px) + 0.5rem); }
+  .mode-dock { bottom: 1rem; }
 }
 
 /* iPhone Pro range (393–430pt) */
 @media (max-width: 440px) {
-  body {
-    padding-left: max(2rem, env(safe-area-inset-left, 0px) + 1.4rem);
-    padding-right: max(2rem, env(safe-area-inset-right, 0px) + 1.4rem);
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* iPhone SE / small screens */
+@media (max-width: 380px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 #canvas-container {
