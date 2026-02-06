@@ -426,12 +426,12 @@ body.mode-agent .footer-sections { display: none; }
 
   /* Typography — generous for readability */
   h1 {
-    font-size: 2.1rem;
+    font-size: 2.2rem;
     margin-bottom: 1.5rem;
     letter-spacing: 0.01em;
   }
   .bio {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     margin-bottom: 1.5rem;
     line-height: 1.8;
   }
@@ -477,22 +477,26 @@ body.mode-agent .footer-sections { display: none; }
     stroke: var(--faded);
     transition: transform 0.3s ease;
   }
-  .footer-sections section.open h2 .chevron {
+  .footer-sections h2 .chevron {
     transform: rotate(180deg);
   }
+  .footer-sections section.closed h2 .chevron {
+    transform: rotate(0deg);
+  }
   .footer-sections .section-list {
-    max-height: 0;
+    max-height: 500px;
     overflow: hidden;
     transition: max-height 0.35s ease, opacity 0.3s ease;
-    opacity: 0;
-  }
-  .footer-sections section.open .section-list {
-    max-height: 500px;
     opacity: 1;
     padding-bottom: 1rem;
   }
+  .footer-sections section.closed .section-list {
+    max-height: 0;
+    opacity: 0;
+    padding-bottom: 0;
+  }
   .portfolio-list, .writing-list {
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 2.1;
   }
   .portfolio-list .more { font-size: 0.85rem; }
@@ -668,7 +672,7 @@ document.getElementById('modeDock').addEventListener('click', e => {
 document.querySelectorAll('.footer-sections h2').forEach(h2 => {
   h2.addEventListener('click', () => {
     if (window.innerWidth > 600) return;
-    h2.closest('section').classList.toggle('open');
+    h2.closest('section').classList.toggle('closed');
   });
 });
 </script>
