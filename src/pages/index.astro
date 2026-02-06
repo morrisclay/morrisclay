@@ -175,6 +175,10 @@ h1 .last { font-weight: 300; color: var(--ink-soft); }
   opacity: 0.4;
 }
 
+.footer-sections h2 .chevron {
+  display: none;
+}
+
 .portfolio-list {
   list-style: none;
   font-size: 0.9rem;
@@ -420,16 +424,16 @@ body.mode-agent .footer-sections { display: none; }
     padding: 3rem 1.75rem 5rem;
   }
 
-  /* Typography */
+  /* Typography — generous for readability */
   h1 {
-    font-size: 1.85rem;
+    font-size: 2.1rem;
     margin-bottom: 1.5rem;
     letter-spacing: 0.01em;
   }
   .bio {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     margin-bottom: 1.5rem;
-    line-height: 1.75;
+    line-height: 1.8;
   }
   .bio p { margin-bottom: 0.9em; }
 
@@ -437,42 +441,72 @@ body.mode-agent .footer-sections { display: none; }
   .links {
     justify-content: flex-start;
     gap: 1.2em;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     margin-bottom: 0;
   }
   .links a {
-    padding: 0.6em 0.2em;
+    padding: 0.7em 0.2em;
   }
   .shortcut { display: none; }
   .divider { width: 14px; }
 
-  /* Footer sections */
+  /* Footer sections — collapsible accordion */
   .footer-sections {
     flex-direction: column;
-    gap: 1.8rem;
+    gap: 0;
     margin-top: 2.5rem;
-    padding-top: 1.5rem;
+    padding-top: 0;
+    border-top: none;
+  }
+  .footer-sections section {
+    border-top: 1px solid var(--rule);
   }
   .footer-sections h2 {
-    margin-bottom: 0.5rem;
-    font-size: 0.5rem;
+    margin-bottom: 0;
+    font-size: 0.52rem;
+    cursor: pointer;
+    padding: 1.1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-sections h2 .chevron {
+    display: block;
+    width: 12px;
+    height: 12px;
+    stroke: var(--faded);
+    transition: transform 0.3s ease;
+  }
+  .footer-sections section.open h2 .chevron {
+    transform: rotate(180deg);
+  }
+  .footer-sections .section-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  .footer-sections section.open .section-list {
+    max-height: 500px;
+    opacity: 1;
+    padding-bottom: 1rem;
   }
   .portfolio-list, .writing-list {
-    font-size: 0.85rem;
-    line-height: 2;
+    font-size: 0.95rem;
+    line-height: 2.1;
   }
-  .portfolio-list .more { font-size: 0.8rem; }
+  .portfolio-list .more { font-size: 0.85rem; }
   .writing-list .date { font-size: 0.48rem; margin-top: 0.15em; }
 
   /* Canvas — subtle on mobile */
-  #canvas-container { opacity: 0.25; }
+  #canvas-container { opacity: 0.2; }
 
   /* Contact form — roomier inputs */
   .contact-form { margin-top: 1.25rem; }
   .contact-form input,
   .contact-form textarea {
-    font-size: 1rem;
-    padding: 0.65rem 0;
+    font-size: 1.05rem;
+    padding: 0.7rem 0;
   }
   .contact-form textarea { height: 4.5rem; }
   .contact-form button {
@@ -499,7 +533,7 @@ body.mode-agent .footer-sections { display: none; }
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
-  h1 { font-size: 1.65rem; }
+  h1 { font-size: 1.85rem; }
 }
 #canvas-container {
   position: fixed;
@@ -588,25 +622,29 @@ founders on the mother of all questions: *what shape should this thing take?*
 
   <footer class="footer-sections">
     <section class="portfolio-section">
-      <h2>Investments</h2>
-      <ul class="portfolio-list">
-        <li><a href="https://getbruin.com/">Bruin</a></li>
-        <li><a href="https://electric-sql.com/">Electric SQL</a></li>
-        <li><a href="https://hathora.dev/">Hathora</a></li>
-        <li><a href="https://xorq.dev/">xorq</a></li>
-        <li><a href="https://embucket.com/">Embucket</a></li>
-        <li class="more">&amp; others</li>
-      </ul>
+      <h2>Investments <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg></h2>
+      <div class="section-list">
+        <ul class="portfolio-list">
+          <li><a href="https://getbruin.com/">Bruin</a></li>
+          <li><a href="https://electric-sql.com/">Electric SQL</a></li>
+          <li><a href="https://hathora.dev/">Hathora</a></li>
+          <li><a href="https://xorq.dev/">xorq</a></li>
+          <li><a href="https://embucket.com/">Embucket</a></li>
+          <li class="more">&amp; others</li>
+        </ul>
+      </div>
     </section>
 
     <section class="writing-section">
-      <h2>Writing</h2>
-      <ul class="writing-list">
-        <li>
-          <a href="/blog/the-shape-of-the-thing">The Shape of the Thing</a>
-          <span class="date">Feb 2026</span>
-        </li>
-      </ul>
+      <h2>Writing <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg></h2>
+      <div class="section-list">
+        <ul class="writing-list">
+          <li>
+            <a href="/blog/the-shape-of-the-thing">The Shape of the Thing</a>
+            <span class="date">Feb 2026</span>
+          </li>
+        </ul>
+      </div>
     </section>
   </footer>
 </div>
@@ -624,6 +662,14 @@ document.getElementById('modeDock').addEventListener('click', e => {
   document.querySelectorAll('.dock-opt').forEach(o => o.classList.remove('active'));
   opt.classList.add('active');
   document.body.className = 'mode-' + opt.dataset.mode;
+});
+
+// Footer accordion (mobile only)
+document.querySelectorAll('.footer-sections h2').forEach(h2 => {
+  h2.addEventListener('click', () => {
+    if (window.innerWidth > 600) return;
+    h2.closest('section').classList.toggle('open');
+  });
 });
 </script>
 
