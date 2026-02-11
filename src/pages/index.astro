@@ -595,14 +595,14 @@ founders on the mother of all questions: *what shape should this thing take?*
 
 ## Writing
 
-- [Shape Work](/blog/shape-work) — Feb 2026
-- [The Shape of the Thing](/blog/the-shape-of-the-thing) — Feb 2026
-- [The Seven Shapes](/blog/the-seven-shapes) — Feb 2026
-- [The Pull Between](/blog/the-pull-between) — Feb 2026
-- [The Room](/blog/the-room) — Feb 2026
-- [The Drift](/blog/the-drift) — Feb 2026
-- [The Simplest Move](/blog/the-simplest-move) — Feb 2026
-- [Acquired Taste](/blog/acquired-taste) — Feb 2026
+- [Shape Work](/blog/shape-work) — Feb 16, 2026
+- [The Shape of the Thing](/blog/the-shape-of-the-thing) — Feb 17, 2026
+- [The Seven Shapes](/blog/the-seven-shapes) — Feb 18, 2026
+- [The Pull Between](/blog/the-pull-between) — Feb 19, 2026
+- [The Room](/blog/the-room) — Feb 20, 2026
+- [The Drift](/blog/the-drift) — Feb 21, 2026
+- [The Simplest Move](/blog/the-simplest-move) — Feb 22, 2026
+- [Acquired Taste](/blog/acquired-taste) — Feb 23, 2026
 
 ## Contact
 
@@ -649,38 +649,38 @@ founders on the mother of all questions: *what shape should this thing take?*
     <section class="writing-section">
       <h2>Writing <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg></h2>
       <div class="section-list">
-        <ul class="writing-list">
-          <li>
+        <ul class="writing-list" id="writing-list">
+          <li data-launch="2026-02-16">
             <a href="/blog/shape-work">Shape Work</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 16, 2026</span>
           </li>
-          <li>
+          <li data-launch="2026-02-17">
             <a href="/blog/the-shape-of-the-thing">The Shape of the Thing</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 17, 2026</span>
           </li>
-          <li>
+          <li data-launch="2026-02-18">
             <a href="/blog/the-seven-shapes">The Seven Shapes</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 18, 2026</span>
           </li>
-          <li>
+          <li data-launch="2026-02-19">
             <a href="/blog/the-pull-between">The Pull Between</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 19, 2026</span>
           </li>
-          <li>
+          <li data-launch="2026-02-20">
             <a href="/blog/the-room">The Room</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 20, 2026</span>
           </li>
-          <li>
+          <li data-launch="2026-02-21">
             <a href="/blog/the-drift">The Drift</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 21, 2026</span>
           </li>
-          <li>
+          <li data-launch="2026-02-22">
             <a href="/blog/the-simplest-move">The Simplest Move</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 22, 2026</span>
           </li>
-          <li>
+          <li data-launch="2026-02-23">
             <a href="/blog/acquired-taste">Acquired Taste</a>
-            <span class="date">Feb 2026</span>
+            <span class="date">Feb 23, 2026</span>
           </li>
         </ul>
       </div>
@@ -709,6 +709,12 @@ document.querySelectorAll('.footer-sections h2').forEach(h2 => {
     if (window.innerWidth > 600) return;
     h2.closest('section').classList.toggle('closed');
   });
+});
+
+// Hide posts that haven't launched yet
+const today = new Date().toISOString().slice(0, 10);
+document.querySelectorAll('#writing-list li[data-launch]').forEach(li => {
+  if (li.dataset.launch > today) li.style.display = 'none';
 });
 </script>
 
