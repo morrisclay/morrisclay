@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Room — Morris Clay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #2b2926;
+  --ink-soft: #3d3a36;
+  --paper: #f0ece4;
+  --paper-deep: #e6e1d7;
+  --faded: #918a7e;
+  --rule: #cdc6b8;
+  --accent: #5c7c5a;
+  --accent-deep: #4a6548;
+  --accent-light: rgba(92, 124, 90, 0.08);
+  --shape-stroke: rgba(92, 124, 90, 0.25);
+  --shape-ghost: rgba(145, 138, 126, 0.28);
+  --highlight: rgba(92, 124, 90, 0.09);
+  --measure: 34em;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  hanging-punctuation: first last;
+  scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+body {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+  line-height: 1.72;
+  letter-spacing: 0.004em;
+  overflow-x: hidden;
+}
+
+/* ================================
+   BOTTOM TOGGLE
+   ================================ */
+.mode-dock {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  user-select: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2px;
+  box-shadow: 0 2px 20px rgba(43, 41, 38, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.mode-dock .dock-opt {
+  padding: 0.5em 1.1em;
+  cursor: pointer;
+  color: var(--faded);
+  border-radius: 16px;
+  transition: color 0.3s ease, background 0.3s ease;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.mode-dock .dock-opt.active {
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.mode-dock .dock-opt:not(.active):hover {
+  color: var(--ink);
+}
+
+/* ================================
+   PROGRESS
+   ================================ */
+.progress-track {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 100vh;
+  background: var(--rule);
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.progress-track.visible { opacity: 0.5; }
+
+.progress-fill {
+  width: 100%;
+  background: var(--accent);
+  height: 0%;
+  transition: height 0.08s linear;
+}
+
+/* ================================
+   GRAIN
+   ================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* ================================
+   HOME NAV
+   ================================ */
+.home-nav {
+  position: fixed;
+  top: 1.4rem;
+  left: 1.6rem;
+  z-index: 300;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+  transition: opacity 0.4s ease;
+}
+
+.home-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--faded);
+  transition: color 0.3s ease;
+  padding: 0.5em 0;
+}
+
+.home-nav a:hover { color: var(--ink); }
+
+.home-nav svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+  transition: transform 0.3s ease;
+}
+
+.home-nav a:hover svg { transform: translateX(-2px); }
+
+/* ================================
+   HERO
+   ================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  gap: 0;
+}
+
+.hero-shape {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 2.4rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 0.2s forwards;
+  will-change: transform;
+}
+
+.hero-shape canvas { width: 100%; height: 100%; }
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+.hero-scatter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-scatter canvas { width: 100%; height: 100%; display: block; }
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 620px;
+}
+
+.hero h1 {
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 0.35em;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+.hero-sub {
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  line-height: 1.55;
+  color: var(--faded);
+  margin-bottom: 1.8em;
+  opacity: 0;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+
+.hero-byline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faded);
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+}
+
+.hero-byline .by-sep {
+  width: 16px;
+  height: 1px;
+  background: var(--rule);
+  display: inline-block;
+}
+
+.hero-byline a {
+  color: var(--faded);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hero-byline a:hover { color: var(--ink); }
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1.8s forwards;
+}
+
+.scroll-cue-line {
+  width: 1px;
+  height: 32px;
+  background: var(--rule);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-cue-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollDrop 2.2s ease-in-out infinite 2.2s;
+}
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollDrop { 0% { top: -100%; } 50% { top: 100%; } 100% { top: 100%; } }
+
+/* ================================
+   COMPANION SHAPE
+   ================================ */
+.companion-shape {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  right: calc(50% - 20em - 110px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 68px;
+  height: 68px;
+}
+
+.companion-shape.visible { opacity: 1; }
+
+/* ================================
+   ESSAY
+   ================================ */
+.essay-body { position: relative; z-index: 3; padding-bottom: 2rem; }
+
+.section { position: relative; padding: 0 1.5rem; }
+.section-inner { max-width: var(--measure); margin: 0 auto; }
+
+.section p {
+  margin-bottom: 1.15em;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.section p.revealed { opacity: 1; transform: translateY(0); }
+
+em { font-style: italic; letter-spacing: 0.008em; }
+
+.section a {
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 0.15em;
+  transition: text-decoration-color 0.3s ease;
+}
+
+.section a:hover { text-decoration-color: var(--accent-deep); }
+
+.sc {
+  font-variant: small-caps;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-size: 0.92em;
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-weight: 500;
+  font-size: 4.1em;
+  line-height: 0.78;
+  margin-right: 0.08em;
+  margin-top: 0.06em;
+  color: var(--ink);
+}
+
+mark.hl {
+  background: transparent;
+  color: inherit;
+  padding: 0.04em 0.12em;
+  margin: -0.04em -0.12em;
+  border-radius: 2px;
+  transition: background 0.9s ease;
+}
+
+mark.hl.lit { background: var(--highlight); }
+
+/* Dividers */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 0;
+  position: relative;
+}
+
+.divider svg {
+  width: 46px;
+  height: 46px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.divider.revealed svg { opacity: 1; }
+
+.divider .d-inner {
+  transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.divider-label {
+  position: absolute;
+  top: calc(50% + 30px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.46rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--rule);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s, color 0.8s ease;
+}
+
+.divider.revealed .divider-label { opacity: 1; color: var(--faded); }
+
+/* Pull quote */
+.pull-quote-section {
+  padding: 7rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.pull-quote {
+  max-width: 20em;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  line-height: 1.4;
+  color: var(--accent-deep);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.pq-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.pq-line.revealed { opacity: 1; transform: translateY(0); }
+
+/* Reframe */
+.reframe-old {
+  position: relative;
+  transition: color 0.5s ease;
+}
+
+.reframe-old.struck { color: var(--rule); }
+
+.reframe-old.struck::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--faded);
+  animation: strikeIn 0.6s ease forwards;
+}
+
+@keyframes strikeIn { from { width: 0; } to { width: 100%; } }
+
+.reframe-new {
+  color: var(--accent-deep);
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.3s;
+}
+
+.reframe-new.show { opacity: 1; }
+
+/* Word emphasis */
+.word-emphasis {
+  display: inline-block;
+  font-style: italic;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), letter-spacing 0.7s ease;
+}
+
+.word-emphasis.breathe {
+  transform: scale(1.12);
+  letter-spacing: 0.05em;
+}
+
+/* ================================
+   FINAL — rapid cycling
+   ================================ */
+.final-shapes {
+  position: relative;
+  height: 50vh;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.final-shapes-wrap {
+  width: 140px;
+  height: 140px;
+  position: relative;
+}
+
+.final-shapes-wrap svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ================================
+   CLOSING LINE
+   ================================ */
+.closing {
+  text-align: center;
+  padding: 0 1.5rem 8rem;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.closing.revealed { opacity: 1; transform: translateY(0); }
+
+.closing p {
+  max-width: var(--measure);
+  margin: 0 auto;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--faded);
+  line-height: 1.6;
+}
+
+.disclaimer {
+  text-align: center;
+  padding: 0 1.5rem 6rem;
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.disclaimer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  color: var(--rule);
+  line-height: 1.7;
+}
+
+/* ================================
+   AGENT VIEW
+   ================================ */
+.agent-view {
+  display: none;
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.76rem;
+  line-height: 1.85;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.agent-view .md-h1 {
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2em;
+}
+
+.agent-view .md-sub {
+  font-style: italic;
+  color: var(--faded);
+  margin-bottom: 2.5em;
+  display: block;
+}
+
+.agent-view .md-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2em 0;
+}
+
+.agent-view .md-p { margin-bottom: 1.2em; }
+
+body.mode-agent .human-view { display: none; }
+body.mode-agent .agent-view { display: block; }
+body.mode-agent .companion-shape,
+body.mode-agent .progress-track,
+body.mode-agent .home-nav,
+body.mode-agent .grain { display: none; }
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 1100px) {
+  .companion-shape { right: 1.2rem; width: 52px; height: 52px; }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --pad-x: max(2rem, env(safe-area-inset-left, 0px) + 1.4rem);
+  }
+  html { font-size: 16.5px; }
+  .home-nav { top: 1rem; left: var(--pad-x); }
+  .hero { min-height: 580px; }
+  .hero-shape { width: 150px; height: 150px; margin-bottom: 1.8rem; }
+  .hero-content { padding: 0 var(--pad-x); }
+  .hero-byline { gap: 0.8em; font-size: 0.48rem; }
+  .companion-shape { display: none; }
+  .section { padding: 0 var(--pad-x); }
+  .divider svg { width: 38px; height: 38px; }
+  .pull-quote-section { padding: 5rem var(--pad-x); min-height: 40vh; }
+  .closing { padding: 0 var(--pad-x) 8rem; }
+  .disclaimer { padding: 0 var(--pad-x) 6rem; }
+  .agent-view { padding: 4rem var(--pad-x) 6rem; }
+  .final-shapes { height: 40vh; }
+  .final-shapes-wrap { width: 110px; height: 110px; }
+  .mode-dock { bottom: max(1rem, env(safe-area-inset-bottom, 0px) + 0.5rem); }
+}
+
+/* iPhone Pro range (393–430pt) */
+@media (max-width: 440px) {
+  :root { --pad-x: max(2.4rem, env(safe-area-inset-left, 0px) + 1.6rem); }
+  html { font-size: 16px; }
+  .hero h1 { font-size: 2.3rem; }
+  .hero-sub { font-size: 0.85rem; }
+  .hero-shape { width: 130px; height: 130px; margin-bottom: 1.5rem; }
+}
+
+/* iPhone SE / small screens (375pt and below) */
+@media (max-width: 380px) {
+  :root { --pad-x: max(1.8rem, env(safe-area-inset-left, 0px) + 1.2rem); }
+  html { font-size: 15.5px; }
+  .hero h1 { font-size: 2rem; }
+}
+
+::selection { background: rgba(92, 124, 90, 0.16); color: inherit; }
+
+/* ================================
+   AUDIO PLAYER
+   ================================ */
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin: 1.8em auto 0;
+  max-width: 240px;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.5s forwards;
+}
+
+.audio-player.hidden { display: none; }
+
+.audio-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.audio-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.audio-btn svg {
+  width: 10px;
+  height: 10px;
+  fill: var(--faded);
+  stroke: none;
+  transition: fill 0.3s ease;
+}
+
+.audio-btn:hover svg { fill: var(--accent); }
+
+.audio-btn .icon-pause { display: none; }
+.audio-btn.playing .icon-play { display: none; }
+.audio-btn.playing .icon-pause { display: block; }
+
+.audio-track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  min-width: 0;
+}
+
+.audio-bar {
+  flex: 1;
+  height: 2px;
+  background: var(--rule);
+  border-radius: 1px;
+  cursor: pointer;
+  position: relative;
+}
+
+.audio-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  border-radius: 1px;
+}
+
+.audio-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.46rem;
+  letter-spacing: 0.08em;
+  color: var(--faded);
+  white-space: nowrap;
+}
+
+.audio-speed {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.44rem;
+  letter-spacing: 0.04em;
+  color: var(--faded);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  min-width: 2.4em;
+  text-align: center;
+}
+
+.audio-speed:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+</style>
+</head>
+<body class="mode-human">
+
+<!-- Home nav -->
+<nav class="home-nav" id="homeNav">
+  <a href="https://morrisclay.com">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Morris Clay
+  </a>
+</nav>
+
+<!-- Bottom toggle -->
+<div class="mode-dock" id="modeDock">
+  <div class="dock-opt active" data-mode="human">Human</div>
+  <div class="dock-opt" data-mode="agent">Agent</div>
+</div>
+
+<div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+<div class="grain"></div>
+
+<div class="companion-shape" id="companionShape">
+  <svg viewBox="0 0 100 100">
+    <polygon id="compContainer" points="50,5 93,27 93,73 50,95 7,73 7,27" fill="none" stroke="var(--shape-ghost)" stroke-width="1"/>
+    <polygon id="compObject" points="50,25 75,35 80,60 60,80 30,72 25,42" fill="none" stroke="var(--shape-stroke)" stroke-width="1.2"/>
+  </svg>
+</div>
+
+<!-- ============================================
+     HUMAN VIEW
+     ============================================ -->
+<div class="human-view">
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-scatter"><canvas id="scatterCanvas"></canvas></div>
+
+  <div class="hero-shape" id="heroShapeWrap">
+    <canvas id="heroShapeCanvas" width="400" height="400"></canvas>
+  </div>
+
+  <div class="hero-content">
+    <h1>The Room</h1>
+    <p class="hero-sub">The friction that&nbsp;compounds</p>
+    <div class="hero-byline">
+      <a href="https://morrisclay.com">Morris Clay</a>
+      <span class="by-sep"></span>
+      <span>February 2026</span>
+    </div>
+    <div class="audio-player" id="audioPlayer">
+      <audio id="audioEl" preload="metadata" src="/audio/the-room.mp3"></audio>
+      <button class="audio-btn" id="audioBtn" aria-label="Play audio">
+        <svg class="icon-play" viewBox="0 0 16 16"><polygon points="5,2 14,8 5,14"/></svg>
+        <svg class="icon-pause" viewBox="0 0 16 16"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></svg>
+      </button>
+      <div class="audio-track">
+        <div class="audio-bar" id="audioBar">
+          <div class="audio-bar-fill" id="audioFill"></div>
+        </div>
+        <span class="audio-time" id="audioTime"></span>
+      </div>
+      <button class="audio-speed" id="audioSpeed" aria-label="Playback speed">1x</button>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><div class="scroll-cue-line"></div></div>
+</section>
+
+<!-- ESSAY -->
+<main class="essay-body" id="essayBody">
+
+  <!-- ====== SECTION 1 — Intro ====== -->
+  <section class="section" data-section="1">
+    <div class="section-inner" style="padding-top:6rem">
+      <p class="drop-cap">I keep ending up at the same whiteboard. A founder and I, two or three hours in, pulling their vision apart. Not because it's wrong&thinsp;—&thinsp;because it's too big to ship whole. The technology works. The demo is compelling. And the distance between what this thing could become and what the world will tolerate right now is making everyone in the room&nbsp;anxious.</p>
+      <p>You can feel it. The founder keeps gesturing at the future. Someone else keeps pulling back to the next eighteen months. Both are right. That's what makes it&nbsp;hard.</p>
+      <p><mark class="hl">That anxiety is information.</mark> Two versions of the company pulling on each other&thinsp;—&thinsp;where this could go and what the world will underwrite right now&thinsp;—&thinsp;and the tension between them is trying to tell you something. The question isn't which one wins. It's whether the friction between them is producing anything&thinsp;—&thinsp;an opinion, a product, a direction neither side could have generated&nbsp;alone.</p>
+      <p>Most teams either collapse the tension&thinsp;—&thinsp;pick a shape and commit&thinsp;—&thinsp;or get stuck in it, the same argument circling week after week. There's a third option. Stay inside the friction long enough for it to produce something. <mark class="hl">Shape work starts when you stop choosing between them</mark> and start asking what each one is telling&nbsp;you.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="35"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5"/><polygon class="d-inner" points="26,10 42,38 10,38" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">the prototype</div></div>
+
+  <!-- ====== SECTION 2 — The Prototype ====== -->
+  <section class="section" data-section="2">
+    <div class="section-inner">
+      <p>I've watched teams argue about product direction for months. The same conversation circling, each person reacting to a different imagined version of what the product should become. Then someone puts a prototype in the room and the argument changes in minutes. Not because the prototype is right&thinsp;—&thinsp;usually it isn't. Because it creates a shared felt experience that the room can react to&nbsp;together.</p>
+      <p>This is why I build prototypes for portfolio companies&thinsp;—&thinsp;not to show them the answer, but to put something in the room that can push back. A rough, provocative thing that shifts the conversation from "what should we build?" to "what do we think about <em>this</em>?"</p>
+      <p>The prototype didn't resolve the argument. <mark class="hl">It turned abstract disagreement into shared material.</mark> Before: everyone reacting to their own imagined shape, their own private version of the future. After: a common surface to push against. That's what productive friction looks like. The output wasn't an answer. It was a shared object that made the next conversation&nbsp;possible.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="15"><svg viewBox="0 0 52 52"><rect x="8" y="8" width="36" height="36" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5" transform="rotate(45 26 26)"/><rect class="d-inner" x="12" y="12" width="28" height="28" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">the question</div></div>
+
+  <!-- ====== SECTION 3 — The Question ====== -->
+  <section class="section" data-section="3">
+    <div class="section-inner">
+      <p>I was in a room where the imagined shape and the measured shape had been arguing for weeks. The founder believed in the product. The dashboard said nobody else did. Same two shapes pressing against each other, wearing grooves but not&nbsp;moving.</p>
+      <p>I asked when the last time anyone had talked to the three users doing something unexpected with the product. Silence. The enacted shape&thinsp;—&thinsp;what was actually happening in the wild&thinsp;—&thinsp;hadn't been in the room at&nbsp;all.</p>
+      <p>A week later, the conversation was different. Not because the old tension resolved. Because a new tension replaced it&thinsp;—&thinsp;the enacted shape pressing against the imagined shape. The question shifted from "is the product working?" to "what are these users actually doing with&nbsp;it?"</p>
+      <p>You can feel the difference. When friction is doing its job, the room gets quieter. Someone says something they haven't said before. Positions move. When it's not, you hear the same arguments gaining volume. People get more certain, not&nbsp;less.</p>
+      <p>The move wasn't reducing friction&thinsp;—&thinsp;it was changing what the room pushed against. The old friction wore grooves. The new friction generated signal. <mark class="hl">A better question replaced a stuck&nbsp;one.</mark></p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="22"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5"/><rect class="d-inner" x="14" y="14" width="24" height="24" fill="none" stroke="var(--shape-stroke)" stroke-width="1" transform="rotate(45 26 26)"/></svg><div class="divider-label">the slice</div></div>
+
+  <!-- ====== SECTION 4 — The Slice ====== -->
+  <section class="section" data-section="4">
+    <div class="section-inner">
+      <p>A portfolio company I've written about in this series&thinsp;—&thinsp;the lakehouse founders&thinsp;—&thinsp;had this exact gap. The imagined shape: every <span class="sc">ai</span> agent with its own isolated compute environment. Real, important, probably two years from the mainstream buyer. The ruled shape: capital that needed something underwritable in eighteen&nbsp;months.</p>
+      <p>It took weeks of midnight threads and wrong-but-useful prototypes. What emerged was a near-term product&thinsp;—&thinsp;isolation shipped to teams already wrestling with multi-tenant workloads. Not the old cost play. Not the full vision. A smaller, sharper shape the constraint forced into existence&thinsp;—&thinsp;a path through the present that kept the deeper architecture&nbsp;alive.</p>
+      <p>This isn't compromise. Compromise averages two shapes into something that satisfies neither. The slice lets the near-term shape ship, earn the right to exist, buy time&thinsp;—&thinsp;while the deeper shape stays&nbsp;protected.</p>
+      <p>The constraint didn't just produce a near-term product. It produced an <em>opinion</em>&thinsp;—&thinsp;a specific, hard-won position about what to ship now that the founder would never have developed without the pressure. <mark class="hl">That opinion is the kind of thing that can't be replicated by anyone who skipped the&nbsp;friction.</mark></p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="8"><svg viewBox="0 0 52 52"><polygon points="26,4 49,18 49,38 26,50 3,38 3,18" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5"/><polygon class="d-inner" points="26,10 43,20 43,36 26,44 9,36 9,20" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">the waste</div></div>
+
+  <!-- ====== SECTION 5 — The Waste ====== -->
+  <section class="section" data-section="5">
+    <div class="section-inner">
+      <p>I've done this myself. Held the imagined shape as the lead in a board meeting where the enacted shape was saying something different&thinsp;—&thinsp;because the story I was telling investors depended on the old shape being right. I could feel the dissonance. I stayed with the story anyway. It cost us&nbsp;months.</p>
+      <p><mark class="hl">The friction was there. I chose not to work&nbsp;it.</mark></p>
+      <p>I've watched teams hand the weight to the measured shape too early, let the metrics decide before the product found its form. They optimized their way into a corner. These are the ways friction gets&nbsp;wasted.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="0"><svg viewBox="0 0 52 52"><polygon points="26,4 48,16 48,38 26,48 4,38 4,16" fill="none" stroke="var(--shape-ghost)" stroke-width="1"/><polygon class="d-inner" points="26,4 48,16 48,38 26,48 4,38 4,16" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity="0.4"/></svg><div class="divider-label">what compounds</div></div>
+
+  <!-- ====== SECTION 6 — What Compounds ====== -->
+  <section class="section" data-section="6">
+    <div class="section-inner">
+      <p>Look at what each of those rooms actually produced. Shared material. A better question. An opinion. None of them are answers. But they're not nothing, either. And none of them are&nbsp;consensus.</p>
+      <p>I used to think opinionated products came from opinionated founders. Strong vision in, strong product out. But watching these rooms, I don't think that's right. The founder who shipped the near-term product didn't walk in with a position on what to build first. That position got produced&thinsp;—&thinsp;by weeks of constraint pressing against vision until something crystallized that neither side carried in alone. <mark class="hl">The opinions aren't the input. They're the&nbsp;output.</mark></p>
+      <p>So the thing that makes a company hard to copy isn't what it knows. It's what it argued about. The specific frictions. The specific late-night threads where nobody could agree. That's the raw material. Arguments feel like waste&thinsp;—&thinsp;the thing you endure so you can get to the real work. But I think they <em>are</em> the real work. <mark class="hl">That's where the taste comes&nbsp;from.</mark></p>
+      <p>In the first post in this series, I wrote about taste. Not an innate gift&thinsp;—&thinsp;something assembled, slowly, from watching what holds and what cracks. I think this is what assembles it: specific friction. Specific tensions between specific people. Those opinions accumulate. They compound. And at some point the company has a way of seeing that's genuinely its own. You can't copy that. You had to be&nbsp;there.</p>
+      <p>But here's what I keep sitting with. Taste isn't something you have. It's something that's happening. <mark class="hl">It's being produced, right now, in whatever room you're in&thinsp;—&thinsp;or it&nbsp;isn't.</mark></p>
+      <p>This is why <span class="sc">ai</span> doesn't scare me the way it scares some people. When code and research and market maps all compress toward zero cost, the question isn't whether your company has taste. It's whether your company is still producing it. A team that resolved all its tensions, that found its shape and settled in&thinsp;—&thinsp;that team's taste is already dying. Not because they forgot anything. Because the friction that was making it went&nbsp;quiet.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider data-rotation="12"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="3 2.5"/><polygon class="d-inner" points="26,10 42,38 10,38" fill="none" stroke="var(--shape-stroke)" stroke-width="1"/></svg><div class="divider-label">the room</div></div>
+
+  <!-- ====== SECTION 7 — The Room ====== -->
+  <section class="section" data-section="7">
+    <div class="section-inner">
+      <p>I keep returning to the same image. The whiteboard. The anxiety. The founder gesturing at the future while someone pulls back to the&nbsp;present.</p>
+      <p><mark class="hl">The room isn't a problem to escape. It's where taste gets&nbsp;made.</mark></p>
+      <p>The moment it feels settled, something shifts. A new customer. A market turn. A founder who finally sees what they've been&nbsp;building.</p>
+    </div>
+  </section>
+
+  <section class="final-shapes" id="finalShapes">
+    <div class="final-shapes-wrap">
+      <svg viewBox="0 0 140 140">
+        <polygon points="70,6 132,38 132,102 70,134 8,102 8,38" fill="none" stroke="var(--shape-ghost)" stroke-width="1" stroke-dasharray="4 3"/>
+      </svg>
+      <svg viewBox="0 0 140 140">
+        <polygon id="cycleShape" points="70,30 110,45 115,85 85,115 40,105 35,55" fill="none" stroke="var(--accent)" stroke-width="1.3"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="closing" id="closingLine">
+    <p>Nothing resolves. But resolution was never the point. The point is what the friction produces&thinsp;—&thinsp;if you stay long enough, and if you're honest about what it's telling&nbsp;you.</p>
+  </div>
+
+
+</main>
+</div>
+
+<!-- ============================================
+     AGENT VIEW
+     ============================================ -->
+<div class="agent-view" id="agentView">
+<div class="md-h1"># The Room</div>
+<span class="md-sub">The friction that compounds</span>
+<span class="md-sub" style="margin-bottom:0.5em">Morris Clay · February 2026</span>
+
+<div class="md-p">*This post is part of <a href="https://morrisclay.com/blog/shape-work">Shape Work</a> — an ongoing series on seeing, naming, and navigating the forms products take. <a href="https://morrisclay.com/blog/the-shape-of-the-thing">Start here</a> if you're new.*</div>
+
+<hr class="md-rule">
+
+<div class="md-p">I keep ending up at the same whiteboard. A founder and I, two or three hours in, pulling their vision apart. Not because it's wrong — because it's too big to ship whole. The technology works. The demo is compelling. And the distance between what this thing could become and what the world will tolerate right now is making everyone in the room anxious.</div>
+
+<div class="md-p">You can feel it. The founder keeps gesturing at the future. Someone else keeps pulling back to the next eighteen months. Both are right. That's what makes it hard.</div>
+
+<div class="md-p">That anxiety is information. Two versions of the company pulling on each other — where this could go and what the world will underwrite right now — and the tension between them is trying to tell you something. The question isn't which one wins. It's whether the friction between them is producing anything — an opinion, a product, a direction neither side could have generated alone.</div>
+
+<div class="md-p">Most teams either collapse the tension — pick a shape and commit — or get stuck in it, the same argument circling week after week. There's a third option. Stay inside the friction long enough for it to produce something. Shape work starts when you stop choosing between them and start asking what each one is telling you.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">I've watched teams argue about product direction for months. The same conversation circling, each person reacting to a different imagined version of what the product should become. Then someone puts a prototype in the room and the argument changes in minutes. Not because the prototype is right — usually it isn't. Because it creates a shared felt experience that the room can react to together.</div>
+
+<div class="md-p">This is why I build prototypes for portfolio companies — not to show them the answer, but to put something in the room that can push back. A rough, provocative thing that shifts the conversation from "what should we build?" to "what do we think about *this*?"</div>
+
+<div class="md-p">The prototype didn't resolve the argument. It turned abstract disagreement into shared material. Before: everyone reacting to their own imagined shape, their own private version of the future. After: a common surface to push against. That's what productive friction looks like. The output wasn't an answer. It was a shared object that made the next conversation possible.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">I was in a room where the imagined shape and the measured shape had been arguing for weeks. The founder believed in the product. The dashboard said nobody else did. Same two shapes pressing against each other, wearing grooves but not moving.</div>
+
+<div class="md-p">I asked when the last time anyone had talked to the three users doing something unexpected with the product. Silence. The enacted shape — what was actually happening in the wild — hadn't been in the room at all.</div>
+
+<div class="md-p">A week later, the conversation was different. Not because the old tension resolved. Because a new tension replaced it — the enacted shape pressing against the imagined shape. The question shifted from "is the product working?" to "what are these users actually doing with it?"</div>
+
+<div class="md-p">You can feel the difference. When friction is doing its job, the room gets quieter. Someone says something they haven't said before. Positions move. When it's not, you hear the same arguments gaining volume. People get more certain, not less.</div>
+
+<div class="md-p">The move wasn't reducing friction — it was changing what the room pushed against. The old friction wore grooves. The new friction generated signal. A better question replaced a stuck one.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">A portfolio company I've written about in this series — the lakehouse founders — had this exact gap. The imagined shape: every AI agent with its own isolated compute environment. Real, important, probably two years from the mainstream buyer. The ruled shape: capital that needed something underwritable in eighteen months.</div>
+
+<div class="md-p">It took weeks of midnight threads and wrong-but-useful prototypes. What emerged was a near-term product — isolation shipped to teams already wrestling with multi-tenant workloads. Not the old cost play. Not the full vision. A smaller, sharper shape the constraint forced into existence — a path through the present that kept the deeper architecture alive.</div>
+
+<div class="md-p">This isn't compromise. Compromise averages two shapes into something that satisfies neither. The slice lets the near-term shape ship, earn the right to exist, buy time — while the deeper shape stays protected.</div>
+
+<div class="md-p">The constraint didn't just produce a near-term product. It produced an *opinion* — a specific, hard-won position about what to ship now that the founder would never have developed without the pressure. That opinion is the kind of thing that can't be replicated by anyone who skipped the friction.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">I've done this myself. Held the imagined shape as the lead in a board meeting where the enacted shape was saying something different — because the story I was telling investors depended on the old shape being right. I could feel the dissonance. I stayed with the story anyway. It cost us months.</div>
+
+<div class="md-p">The friction was there. I chose not to work it.</div>
+
+<div class="md-p">I've watched teams hand the weight to the measured shape too early, let the metrics decide before the product found its form. They optimized their way into a corner. These are the ways friction gets wasted.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">Look at what each of those rooms actually produced. Shared material. A better question. An opinion. None of them are answers. But they're not nothing, either. And none of them are consensus.</div>
+
+<div class="md-p">I used to think opinionated products came from opinionated founders. Strong vision in, strong product out. But watching these rooms, I don't think that's right. The founder who shipped the near-term product didn't walk in with a position on what to build first. That position got produced — by weeks of constraint pressing against vision until something crystallized that neither side carried in alone. The opinions aren't the input. They're the output.</div>
+
+<div class="md-p">So the thing that makes a company hard to copy isn't what it knows. It's what it argued about. The specific frictions. The specific late-night threads where nobody could agree. That's the raw material. Arguments feel like waste — the thing you endure so you can get to the real work. But I think they *are* the real work. That's where the taste comes from.</div>
+
+<div class="md-p">In the first post in this series, I wrote about taste. Not an innate gift — something assembled, slowly, from watching what holds and what cracks. I think this is what assembles it: specific friction. Specific tensions between specific people. Those opinions accumulate. They compound. And at some point the company has a way of seeing that's genuinely its own. You can't copy that. You had to be there.</div>
+
+<div class="md-p">But here's what I keep sitting with. Taste isn't something you have. It's something that's happening. It's being produced, right now, in whatever room you're in — or it isn't.</div>
+
+<div class="md-p">This is why AI doesn't scare me the way it scares some people. When code and research and market maps all compress toward zero cost, the question isn't whether your company has taste. It's whether your company is still producing it. A team that resolved all its tensions, that found its shape and settled in — that team's taste is already dying. Not because they forgot anything. Because the friction that was making it went quiet.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">I keep returning to the same image. The whiteboard. The anxiety. The founder gesturing at the future while someone pulls back to the present.</div>
+
+<div class="md-p">The room isn't a problem to escape. It's where taste gets made.</div>
+
+<div class="md-p">The moment it feels settled, something shifts. A new customer. A market turn. A founder who finally sees what they've been building.</div>
+
+<div class="md-p">Nothing resolves. But resolution was never the point. The point is what the friction produces — if you stay long enough, and if you're honest about what it's telling you.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">*Part 4 of an ongoing series. <a href="https://morrisclay.com/blog/the-shape-of-the-thing">The Shape of the Thing</a> makes the case. <a href="https://morrisclay.com/blog/the-seven-shapes">The Seven Shapes</a> names the shapes. <a href="https://morrisclay.com/blog/the-pull-between">The Pull Between</a> shows what happens when shapes collide. Next: how shapes move — drift, emergence, and the temporality of form.*</div>
+
+</div>
+
+<script>
+/* ================================
+   MODE TOGGLE
+   ================================ */
+document.getElementById('modeDock').addEventListener('click', e => {
+  const opt = e.target.closest('.dock-opt');
+  if (!opt) return;
+  document.querySelectorAll('.dock-opt').forEach(o => o.classList.remove('active'));
+  opt.classList.add('active');
+  document.body.className = 'mode-' + opt.dataset.mode;
+  window.scrollTo(0, 0);
+});
+
+/* ================================
+   HERO — central shape animation
+   Mouse-reactive, with ghost trail
+   ================================ */
+(function(){
+  const c = document.getElementById('heroShapeCanvas');
+  const wrap = document.getElementById('heroShapeWrap');
+  const heroEl = document.getElementById('heroSection');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = 400, H = 400;
+  c.width = W * dpr; c.height = H * dpr;
+  c.style.width = '100%'; c.style.height = '100%';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const cx = W/2, cy = H/2;
+
+  // Mouse influence
+  let mx = 0, my = 0, tmx = 0, tmy = 0;
+  document.addEventListener('mousemove', e => {
+    if (!heroEl) return;
+    const r = heroEl.getBoundingClientRect();
+    tmx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    tmy = ((e.clientY - r.top) / r.height - 0.5) * 2;
+  });
+
+  // Container: hexagon
+  function hexPts(r) {
+    const pts = [];
+    for (let i = 0; i < 6; i++) {
+      const a = (i/6) * Math.PI * 2 - Math.PI/2;
+      pts.push([cx + Math.cos(a)*r, cy + Math.sin(a)*r]);
+    }
+    return pts;
+  }
+
+  const containerR = 130;
+  const container = hexPts(containerR);
+
+  // Previous frame vertices for ghost trail
+  let prevVerts = [];
+
+  let t = 0;
+
+  function drawFrame() {
+    t += 0.006;
+
+    // Smooth mouse
+    mx += (tmx - mx) * 0.04;
+    my += (tmy - my) * 0.04;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Container — dashed hexagon
+    ctx.beginPath();
+    container.forEach((p, i) => i === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]));
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(145, 138, 126, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Ghost trail shape (delayed)
+    if (prevVerts.length) {
+      ctx.beginPath();
+      prevVerts.forEach((p, i) => i === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]));
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(92, 124, 90, 0.1)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Inner shape — morphing, rotating, mouse-reactive
+    const sides = 5;
+    const rot = t * 0.7;
+    const wobbleFreq = 0.8;
+    const breathe = Math.sin(t * 0.5) * 8;
+    const mouseInfluence = 12;
+
+    const verts = [];
+    ctx.beginPath();
+    for (let i = 0; i < sides; i++) {
+      const baseAngle = (i / sides) * Math.PI * 2 - Math.PI/2 + rot;
+      const rVar = 68 + breathe
+        + Math.sin(t * wobbleFreq + i * 2.1) * 22
+        + Math.cos(t * 1.3 + i * 0.7) * 12
+        + (Math.cos(baseAngle) * mx + Math.sin(baseAngle) * my) * mouseInfluence;
+      const px = cx + Math.cos(baseAngle) * rVar;
+      const py = cy + Math.sin(baseAngle) * rVar;
+      verts.push([px, py]);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(92, 124, 90, 0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(92, 124, 90, 0.025)';
+    ctx.fill();
+
+    // Vertex dots
+    verts.forEach(([px, py]) => {
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(92, 124, 90, 0.35)';
+      ctx.fill();
+    });
+
+    // Thin connecting lines from vertices to container center (subtle tension lines)
+    verts.forEach(([px, py], i) => {
+      const cp = container[i % container.length];
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(cp[0], cp[1]);
+      ctx.strokeStyle = 'rgba(92, 124, 90, 0.06)';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    });
+
+    // Save for ghost trail
+    prevVerts = verts;
+
+    // Subtle parallax on the shape wrapper
+    if (wrap) {
+      wrap.style.transform = `translate(${mx * -6}px, ${my * -6}px)`;
+    }
+
+    requestAnimationFrame(drawFrame);
+  }
+
+  requestAnimationFrame(drawFrame);
+
+  // Scroll parallax for hero shape
+  window.addEventListener('scroll', () => {
+    if (!heroEl || !wrap) return;
+    const sy = window.scrollY;
+    const hh = heroEl.offsetHeight;
+    if (sy < hh) {
+      const p = sy / hh;
+      wrap.style.opacity = 1 - p * 1.2;
+    }
+  }, { passive: true });
+})();
+
+/* ================================
+   HERO — scattered background shapes
+   ================================ */
+(function(){
+  const c = document.getElementById('scatterCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, S = [], t = 0;
+
+  function sz() {
+    const d = Math.min(devicePixelRatio || 1, 2);
+    const r = c.parentElement.getBoundingClientRect();
+    w = r.width; h = r.height;
+    c.width = w*d; c.height = h*d;
+    c.style.width = w+'px'; c.style.height = h+'px';
+    ctx.setTransform(d,0,0,d,0,0);
+  }
+
+  function init() {
+    S = [];
+    const n = Math.min(10, Math.floor(w/120));
+    for (let i = 0; i < n; i++) S.push({
+      x: Math.random()*w, y: Math.random()*h,
+      sz: 12+Math.random()*40, si: 3+Math.floor(Math.random()*4),
+      r: Math.random()*Math.PI*2, rs: (Math.random()-.5)*.004,
+      dx: (Math.random()-.5)*.08, dy: (Math.random()-.5)*.08,
+      ph: Math.random()*Math.PI*2, a: .025+Math.random()*.035
+    });
+  }
+
+  function draw(T) {
+    t = T; ctx.clearRect(0,0,w,h);
+    S.forEach(s => {
+      s.x+=s.dx; s.y+=s.dy; s.r+=s.rs;
+      if(s.x<-80)s.x=w+80; if(s.x>w+80)s.x=-80;
+      if(s.y<-80)s.y=h+80; if(s.y>h+80)s.y=-80;
+      ctx.save(); ctx.translate(s.x,s.y); ctx.rotate(s.r); ctx.beginPath();
+      for(let i=0;i<=s.si;i++){
+        const a=(i/s.si)*Math.PI*2-Math.PI/2;
+        const R=s.sz+Math.sin(t*.0008+s.ph+i)*2;
+        i===0?ctx.moveTo(Math.cos(a)*R,Math.sin(a)*R):ctx.lineTo(Math.cos(a)*R,Math.sin(a)*R);
+      }
+      ctx.closePath();
+      ctx.strokeStyle=`rgba(92,124,90,${s.a})`;
+      ctx.lineWidth=0.8; ctx.stroke(); ctx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  sz(); init();
+  window.addEventListener('resize',()=>{sz();init()});
+  requestAnimationFrame(draw);
+})();
+
+/* ================================
+   COMPANION + PROGRESS + NAV
+   ================================ */
+(function(){
+  const pTrack = document.getElementById('progressTrack');
+  const pFill = document.getElementById('progressFill');
+  const comp = document.getElementById('companionShape');
+  const compObj = document.getElementById('compObject');
+  const essay = document.getElementById('essayBody');
+  const homeNav = document.getElementById('homeNav');
+
+  const fit=[[50,5],[93,27],[93,73],[50,95],[7,73],[7,27]];
+  const mis=[[50,25],[75,35],[80,60],[60,80],[30,72],[25,42]];
+
+  function lp(a,b,t){return a.map((p,i)=>[p[0]+(b[i][0]-p[0])*t,p[1]+(b[i][1]-p[1])*t].join(',')).join(' ');}
+  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+
+  function tick(){
+    const sy=window.scrollY;
+    const dH=document.documentElement.scrollHeight-window.innerHeight;
+    const prog=Math.max(0,Math.min(1,sy/dH));
+
+    pFill.style.height=(prog*100)+'%';
+    pTrack.classList.toggle('visible',prog>0.02&&prog<0.98);
+
+    // Home nav: visible in hero, then stays visible but subtler
+    if(homeNav){
+      const heroH = window.innerHeight;
+      if(sy > heroH * 0.6) homeNav.style.opacity = '0.5';
+      else homeNav.style.opacity = '';
+    }
+
+    if(!essay)return;
+    const bTop=essay.offsetTop,bH=essay.offsetHeight;
+    const ep=Math.max(0,Math.min(1,(sy-bTop+window.innerHeight*.5)/bH));
+    compObj.setAttribute('points',lp(mis,fit,ease(ep)));
+
+    const inE=sy>bTop-window.innerHeight*.5&&sy<bTop+bH-window.innerHeight*.3;
+    comp.classList.toggle('visible',inE);
+
+    const wb=Math.sin(Date.now()*.0008)*(3-ease(ep)*3);
+    comp.style.transform=`translateY(-50%) rotate(${wb}deg)`;
+  }
+
+  window.addEventListener('scroll',tick,{passive:true});
+  tick();
+})();
+
+/* ================================
+   OBSERVERS
+   ================================ */
+(function(){
+  const io=(sel,opts,cb)=>{const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)cb(e.target)})},opts);document.querySelectorAll(sel).forEach(el=>o.observe(el));return o;};
+
+  io('.section p',{threshold:0.1,rootMargin:'0px 0px -25px 0px'},el=>el.classList.add('revealed'));
+  io('mark.hl',{threshold:0.9,rootMargin:'0px 0px -5% 0px'},el=>el.classList.add('lit'));
+
+  io('[data-divider]',{threshold:0.5},el=>{
+    el.classList.add('revealed');
+    const inner=el.querySelector('.d-inner');
+    if(inner)inner.style.transform=`rotate(${el.dataset.rotation||0}deg)`;
+  });
+
+  const pqL=document.querySelectorAll('.pq-line');
+  if(pqL.length){
+    const o=new IntersectionObserver(es=>{es.forEach(e=>{
+      if(e.isIntersecting){pqL.forEach((l,i)=>setTimeout(()=>l.classList.add('revealed'),i*280));o.disconnect();}
+    })},{threshold:0.4});
+    o.observe(pqL[0].parentElement);
+  }
+
+  const oE=document.querySelector('[data-reframe="old"]');
+  if(oE){let f=0;io('[data-reframe="old"]',{threshold:0.7},()=>{if(!f){f=1;oE.classList.add('struck')}});}
+
+  const nE=document.querySelector('[data-reframe="new"]');
+  if(nE){let f=0;io('[data-reframe="new"]',{threshold:0.7},()=>{if(!f){f=1;nE.classList.add('show')}});}
+
+  const we=document.querySelector('[data-emphasis]');
+  if(we) io('[data-emphasis]',{threshold:1.0},()=>{we.classList.add('breathe');setTimeout(()=>we.classList.remove('breathe'),800);});
+
+  // Closing line
+  const cl=document.getElementById('closingLine');
+  if(cl) io('#closingLine',{threshold:0.5},el=>el.classList.add('revealed'));
+})();
+
+/* ================================
+   FINAL — rapid shape cycling
+   ================================ */
+(function(){
+  const shape=document.getElementById('cycleShape');
+  const section=document.getElementById('finalShapes');
+  if(!shape||!section)return;
+
+  function rp(){
+    const cx=70,cy=70,pts=[];
+    for(let i=0;i<6;i++){
+      const a=(i/6)*Math.PI*2-Math.PI/2;
+      const r=25+Math.random()*42;
+      pts.push([Math.round(cx+Math.cos(a)*r),Math.round(cy+Math.sin(a)*r)]);
+    }
+    return pts;
+  }
+
+  let active=false,cur=rp(),tgt=rp(),mt=0;
+  const sp=0.022;
+
+  function lp(a,b,t){return a.map((p,i)=>[p[0]+(b[i][0]-p[0])*t,p[1]+(b[i][1]-p[1])*t].join(',')).join(' ');}
+  function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+
+  function go(){
+    if(!active)return;
+    mt+=sp;
+    if(mt>=1){cur=tgt;tgt=rp();mt=0;}
+    shape.setAttribute('points',lp(cur,tgt,ease(mt)));
+    requestAnimationFrame(go);
+  }
+
+  new IntersectionObserver(es=>{es.forEach(e=>{
+    if(e.isIntersecting&&!active){active=true;go();}
+    else if(!e.isIntersecting){active=false;}
+  })},{threshold:0.2}).observe(section);
+})();
+
+/* ================================
+   AUDIO PLAYER
+   ================================ */
+(function(){
+  const audio = document.getElementById('audioEl');
+  const player = document.getElementById('audioPlayer');
+  const btn = document.getElementById('audioBtn');
+  const bar = document.getElementById('audioBar');
+  const fill = document.getElementById('audioFill');
+  const time = document.getElementById('audioTime');
+  if (!audio || !btn) return;
+
+  function fmt(s) {
+    if (isNaN(s) || !isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  // Hide player if audio fails to load
+  audio.addEventListener('error', () => {
+    player.classList.add('hidden');
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    time.textContent = fmt(audio.duration);
+  });
+
+  btn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      btn.classList.add('playing');
+    } else {
+      audio.pause();
+      btn.classList.remove('playing');
+    }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    fill.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+    time.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+
+  audio.addEventListener('ended', () => {
+    btn.classList.remove('playing');
+    fill.style.width = '0%';
+    audio.currentTime = 0;
+    time.textContent = fmt(audio.duration);
+  });
+
+  // Speed toggle
+  const speedBtn = document.getElementById('audioSpeed');
+  const speeds = [1, 1.5, 2];
+  let speedIdx = 0;
+
+  if (speedBtn) {
+    speedBtn.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      audio.playbackRate = speeds[speedIdx];
+      speedBtn.textContent = speeds[speedIdx] + 'x';
+    });
+  }
+
+  bar.addEventListener('click', e => {
+    if (!audio.duration) return;
+    const rect = bar.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = pct * audio.duration;
+  });
+})();
+</script>
+
+</body>
+</html>
