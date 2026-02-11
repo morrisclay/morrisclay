@@ -568,7 +568,7 @@ body.mode-agent .footer-sections { display: none; }
 
   <!-- Human View -->
   <div class="bio human-view">
-    <p>I <a href="https://lunar.vc">invest in deep tech infrastructure</a> at inception stage, working with founders on the mother of all questions: <a href="/blog/shape-work"><em>what shape should this thing take?</em></a></p>
+    <p>I <a href="https://lunar.vc">invest in frontier tech infrastructure</a> at inception stage, working with founders on the mother of all questions: <a href="/blog/shape-work"><em>what shape should this thing take?</em></a></p>
     <p>Building something at the edge of what's possible?<br><a href="#" class="email-trigger">Let's talk.</a></p>
   </div>
 
@@ -581,7 +581,7 @@ Deep tech investor at [Lunar](https://lunar.vc) (inception stage)
 
 ## About
 
-I invest in deep tech infrastructure at inception stage, working with
+I invest in frontier tech infrastructure at inception stage, working with
 founders on the mother of all questions: *what shape should this thing take?*
 
 ## Portfolio
@@ -719,6 +719,11 @@ const today = new Date().toISOString().slice(0, 10);
 document.querySelectorAll('#writing-list li[data-launch]').forEach(li => {
   if (li.dataset.launch > today) li.style.display = 'none';
 });
+// Hide writing section entirely if no visible posts
+const visiblePosts = document.querySelectorAll('#writing-list li[data-launch]:not([style*="display: none"])');
+if (visiblePosts.length === 0) {
+  document.querySelector('.writing-section').style.display = 'none';
+}
 </script>
 
 <script is:inline>
