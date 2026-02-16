@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://morrisclay.com/sitemap-index.xml
+LLM: https://morrisclay.com/llm.txt

@@ -1,0 +1,36 @@
+# Morris Clay
+
+> Frontier tech investor at Lunar. Working with founders at inception stage on the mother of all questions: what shape should this thing take?
+
+## About
+
+I invest in frontier tech infrastructure at inception stage through [Lunar](https://lunar.vc). I work with founders on the fundamental question of product shape — how a technology should manifest as something people actually use.
+
+## Portfolio
+
+- [Bruin](https://getbruin.com/) — Data pipeline tooling
+- [Electric SQL](https://electric-sql.com/) — Local-first sync
+- [Hathora](https://hathora.dev/) — Game server infrastructure
+- [xorq](https://xorq.dev/) — Query federation
+- [Embucket](https://embucket.com/) — Lakehouse platform
+- & others
+
+## Writing
+
+Series: [Shape Work](/blog/shape-work/) — essays on the craft of giving technology its form.
+
+- [Shape Work](/blog/shape-work/shape-work)
+- [The Shape of the Thing](/blog/shape-work/the-shape-of-the-thing)
+- [The Seven Shapes](/blog/shape-work/the-seven-shapes)
+- [The Pull Between](/blog/shape-work/the-pull-between)
+- [The Room](/blog/shape-work/the-room)
+- [The Drift](/blog/shape-work/the-drift)
+- [The Simplest Move](/blog/shape-work/the-simplest-move)
+- [Acquired Taste](/blog/shape-work/acquired-taste)
+
+## Contact
+
+- Email: morris@lunarventures.eu
+- LinkedIn: https://www.linkedin.com/in/morris-clay/
+- Substack: https://morrisclay.substack.com/t/shape-work
+- Web: https://morrisclay.com

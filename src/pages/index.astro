@@ -285,12 +285,7 @@ body.form-open #canvas-container {
   transition: opacity 0.4s ease;
 }
 
-body.form-open .mode-dock {
-  opacity: 0.3;
-  transition: opacity 0.4s ease;
-}
-
-h1, .bio, .footer-sections, #canvas-container, .mode-dock {
+h1, .bio, .footer-sections, #canvas-container {
   transition: opacity 0.4s ease;
 }
 
@@ -383,68 +378,6 @@ h1, .bio, .footer-sections, #canvas-container, .mode-dock {
   color: var(--ink-soft);
 }
 
-
-/* Mode toggle dock */
-.mode-dock {
-  position: fixed;
-  bottom: 1.4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  gap: 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 300;
-  font-size: 0.5rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  user-select: none;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 20px;
-  padding: 2px;
-  box-shadow: 0 2px 20px rgba(43, 41, 38, 0.06);
-}
-
-.mode-dock .dock-opt {
-  padding: 0.5em 1.1em;
-  cursor: pointer;
-  color: var(--faded);
-  border-radius: 16px;
-  transition: color 0.3s ease, background 0.3s ease;
-  background: transparent;
-}
-
-.mode-dock .dock-opt.active {
-  color: var(--paper);
-  background: var(--ink);
-}
-
-.mode-dock .dock-opt:not(.active):hover {
-  color: var(--ink);
-}
-
-/* Mode-specific visibility */
-.agent-view { display: none; }
-body.mode-agent .human-view { display: none; }
-body.mode-agent .agent-view { display: block; }
-body.mode-agent #canvas-container { opacity: 0.15; }
-body.mode-agent h1 { display: none; }
-body.mode-agent .footer-sections { display: none; }
-
-.agent-markdown {
-  text-align: left;
-}
-
-.agent-markdown pre {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  line-height: 1.7;
-  color: var(--ink-soft);
-  white-space: pre-wrap;
-  margin: 0;
-}
 
 ::selection {
   background: rgba(92, 124, 90, 0.16);
@@ -559,8 +492,6 @@ body.mode-agent .footer-sections { display: none; }
   }
   .form-row { margin-bottom: 1.2rem; }
 
-  /* Mode dock — clear of content */
-  .mode-dock { bottom: 1.2rem; }
 }
 
 /* iPhone Pro range (393–430pt) */
@@ -599,7 +530,7 @@ body.mode-agent .footer-sections { display: none; }
 </style>
 <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 </head>
-<body class="mode-human">
+<body>
 
 <div id="canvas-container"></div>
 
@@ -607,52 +538,12 @@ body.mode-agent .footer-sections { display: none; }
   <h1><span class="first">Morris</span> <span class="last">Clay</span></h1>
 
   <!-- Human View -->
-  <div class="bio human-view">
-    <p>I <a href="https://lunar.vc">invest in frontier tech infrastructure</a> at inception stage, working with founders on the mother of all questions: <a href="/blog/shape-work/shape-work"><em>what shape should this thing take?</em></a></p>
+  <div class="bio">
+    <p>I <a href="https://lunar.vc">invest in frontier tech infrastructure</a> at inception stage, working with founders on the mother of all questions: <a href="/blog/shape-work/"><em>what shape should this thing take?</em></a></p>
     <p>Building something at the edge of what's possible?<br><a href="#" class="email-trigger">Let's talk.</a></p>
   </div>
 
-  <!-- Agent View -->
-  <div class="agent-view agent-markdown">
-<pre>
-# Morris Clay
-
-Deep tech investor at [Lunar](https://lunar.vc) (inception stage)
-
-## About
-
-I invest in frontier tech infrastructure at inception stage, working with
-founders on the mother of all questions: *what shape should this thing take?*
-
-## Portfolio
-
-- [Bruin](https://getbruin.com/) — Data pipeline tooling
-- [Electric SQL](https://electric-sql.com/) — Local-first sync
-- [Hathora](https://hathora.dev/) — Game server infrastructure
-- [xorq](https://xorq.dev/) — Query federation
-- [Embucket](https://embucket.com/) — Lakehouse platform
-- & others
-
-## Writing
-
-- [Shape Work](/blog/shape-work/shape-work) — Feb 16, 2026
-- [The Shape of the Thing](/blog/shape-work/the-shape-of-the-thing) — Feb 17, 2026
-- [The Seven Shapes](/blog/shape-work/the-seven-shapes) — Feb 18, 2026
-- [The Pull Between](/blog/shape-work/the-pull-between) — Feb 19, 2026
-- [The Room](/blog/shape-work/the-room) — Feb 20, 2026
-- [The Drift](/blog/shape-work/the-drift) — Feb 21, 2026
-- [The Simplest Move](/blog/shape-work/the-simplest-move) — Feb 22, 2026
-- [Acquired Taste](/blog/shape-work/acquired-taste) — Feb 23, 2026
-
-## Contact
-
-- Email: morris@lunarventures.eu
-- LinkedIn: https://www.linkedin.com/in/morris-clay/
-- Substack: https://morrisclay.substack.com/t/shape-work
-</pre>
-  </div>
-
-  <nav class="links human-view" id="nav-links">
+  <nav class="links" id="nav-links">
     <a href="#" id="email-toggle">Email <span class="shortcut">E</span></a>
     <span class="divider"></span>
     <a href="https://www.linkedin.com/in/morris-clay/" id="linkedin-link" target="_blank">LinkedIn <span class="shortcut">L</span></a>
@@ -731,21 +622,8 @@ founders on the mother of all questions: *what shape should this thing take?*
   </footer>
 </div>
 
-<div class="mode-dock" id="modeDock">
-  <div class="dock-opt active" data-mode="human">Human</div>
-  <div class="dock-opt" data-mode="agent">Agent</div>
-</div>
 
 <script is:inline>
-// Mode toggle
-document.getElementById('modeDock').addEventListener('click', e => {
-  const opt = e.target.closest('.dock-opt');
-  if (!opt) return;
-  document.querySelectorAll('.dock-opt').forEach(o => o.classList.remove('active'));
-  opt.classList.add('active');
-  document.body.className = 'mode-' + opt.dataset.mode;
-});
-
 // Footer accordion (mobile only)
 document.querySelectorAll('.footer-sections h2').forEach(h2 => {
   h2.addEventListener('click', () => {
