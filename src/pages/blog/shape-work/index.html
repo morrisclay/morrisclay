@@ -82,6 +82,37 @@ body {
 
 .home-nav a:hover { color: var(--ink); }
 
+.subscribe-nav {
+  position: fixed;
+  top: 1.4rem;
+  right: 1.6rem;
+  z-index: 300;
+}
+
+.subscribe-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  padding: 0.5em 1.2em;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.subscribe-nav a:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+  background: rgba(43, 41, 38, 0.04);
+}
+
+@media (max-width: 640px) {
+  .subscribe-nav { top: 1rem; right: 1.4rem; }
+}
+
 .home-nav svg {
   width: 12px;
   height: 12px;
@@ -182,7 +213,10 @@ body {
   border-bottom: 1px solid var(--rule);
 }
 
-.post-list li[data-publish] { display: none; }
+.post-list li[data-publish] { opacity: 0.35; pointer-events: none; }
+.post-list li[data-publish] .post-arrow { display: none; }
+.post-list li.published { opacity: 1; pointer-events: auto; }
+.post-list li.published .post-arrow { display: block; }
 
 .post-list a {
   display: flex;
@@ -279,6 +313,10 @@ body::after {
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     Morris Clay
   </a>
+</nav>
+
+<nav class="subscribe-nav">
+  <a href="https://morrisclay.substack.com/t/shape-work" target="_blank">Subscribe</a>
 </nav>
 
 <header class="series-header">
@@ -380,7 +418,7 @@ body::after {
 (function(){
   var now = new Date();
   document.querySelectorAll('.post-list li[data-publish]').forEach(function(li){
-    if (now >= new Date(li.dataset.publish + 'T00:00:00')) li.style.display = '';
+    if (now >= new Date(li.dataset.publish + 'T00:00:00')) li.classList.add('published');
   });
 })();
 </script>
