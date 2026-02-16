@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Seven Shapes — Morris Clay</title>
+<meta name="description" content="A taxonomy of form. Every product holds seven shapes at once — imagined, founder, made, measured, felt, ruled, enacted. Naming them is how you start to see.">
+<meta name="author" content="Morris Clay">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://morrisclay.com/blog/shape-work/the-seven-shapes">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Morris Clay" href="https://morrisclay.com/feed.xml">
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Seven Shapes">
+<meta property="og:description" content="A taxonomy of form. Every product holds seven shapes at once — imagined, founder, made, measured, felt, ruled, enacted. Naming them is how you start to see.">
+<meta property="og:url" content="https://morrisclay.com/blog/the-seven-shapes">
+<meta property="og:site_name" content="Morris Clay">
+<meta property="og:image" content="https://morrisclay.com/og/the-seven-shapes.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-02-18T12:00:00Z">
+<meta property="article:author" content="Morris Clay">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Seven Shapes">
+<meta name="twitter:description" content="A taxonomy of form. Every product holds seven shapes at once — imagined, founder, made, measured, felt, ruled, enacted. Naming them is how you start to see.">
+<meta name="twitter:image" content="https://morrisclay.com/og/the-seven-shapes.png">
+<!-- JSON-LD Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Seven Shapes",
+  "description": "A taxonomy of form. Every product holds seven shapes at once — imagined, founder, made, measured, felt, ruled, enacted. Naming them is how you start to see.",
+  "datePublished": "2026-02-18T12:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Morris Clay",
+    "url": "https://morrisclay.com"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Morris Clay",
+    "url": "https://morrisclay.com"
+  },
+  "url": "https://morrisclay.com/blog/shape-work/the-seven-shapes",
+  "image": "https://morrisclay.com/og/the-seven-shapes.png",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Shape Work",
+    "url": "https://morrisclay.com/blog/shape-work"
+  },
+  "position": 3,
+  "about": ["Product Shape", "Frontier Technology", "Venture Capital"]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #2b2926;
+  --ink-soft: #3d3a36;
+  --paper: #f0ece4;
+  --paper-deep: #e6e1d7;
+  --faded: #918a7e;
+  --rule: #cdc6b8;
+  --accent: #5c7c5a;
+  --accent-deep: #4a6548;
+  --accent-light: rgba(92, 124, 90, 0.08);
+  --shape-stroke: rgba(92, 124, 90, 0.25);
+  --shape-ghost: rgba(145, 138, 126, 0.28);
+  --highlight: rgba(92, 124, 90, 0.09);
+  --measure: 34em;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  hanging-punctuation: first last;
+  scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+body {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+  line-height: 1.72;
+  letter-spacing: 0.004em;
+  overflow-x: hidden;
+}
+
+/* ================================
+   BOTTOM TOGGLE
+   ================================ */
+.mode-dock {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  user-select: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2px;
+  box-shadow: 0 2px 20px rgba(43, 41, 38, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.mode-dock .dock-opt {
+  padding: 0.5em 1.1em;
+  cursor: pointer;
+  color: var(--faded);
+  border-radius: 16px;
+  transition: color 0.3s ease, background 0.3s ease;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.mode-dock .dock-opt.active {
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.mode-dock .dock-opt:not(.active):hover {
+  color: var(--ink);
+}
+
+/* ================================
+   PROGRESS
+   ================================ */
+.progress-track {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 100vh;
+  background: var(--rule);
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.progress-track.visible { opacity: 0.5; }
+
+.progress-fill {
+  width: 100%;
+  background: var(--accent);
+  height: 0%;
+  transition: height 0.08s linear;
+}
+
+/* ================================
+   GRAIN
+   ================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* ================================
+   HOME NAV
+   ================================ */
+.home-nav {
+  position: fixed;
+  top: 1.4rem;
+  left: 1.6rem;
+  z-index: 300;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+  transition: opacity 0.4s ease;
+}
+
+.home-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--faded);
+  transition: color 0.3s ease;
+  padding: 0.5em 0;
+}
+
+.home-nav a:hover { color: var(--ink); }
+
+.home-nav svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+  transition: transform 0.3s ease;
+}
+
+.home-nav a:hover svg { transform: translateX(-2px); }
+
+/* ================================
+   HERO
+   ================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  gap: 0;
+}
+
+/* ================================
+   HERO IMAGE (illustrated version)
+   ================================ */
+.hero-image-wrap {
+  margin-top: -4rem;
+  position: relative;
+  width: 380px;
+  height: 380px;
+  margin-bottom: -2.8rem;
+  opacity: 0;
+  animation: fadeIn 1.4s ease 0.15s forwards;
+  z-index: 0;
+  will-change: transform;
+  transition: transform 0.05s linear;
+}
+
+.hero-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at center, black 35%, transparent 68%);
+  mask-image: radial-gradient(ellipse 50% 50% at center, black 35%, transparent 68%);
+  filter: contrast(1.08) saturate(0.85);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 640px) {
+  .hero-image-wrap {
+  margin-top: -4rem; width: 300px; height: 300px; margin-bottom: -2.2rem; }
+}
+
+.hero-shape {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 2.4rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 0.2s forwards;
+  will-change: transform;
+}
+
+.hero-shape canvas { width: 100%; height: 100%; }
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+.hero-scatter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-scatter canvas { width: 100%; height: 100%; display: block; }
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 620px;
+}
+
+.hero h1 {
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 0.35em;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+.hero-sub {
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  line-height: 1.55;
+  color: var(--faded);
+  margin-bottom: 1.8em;
+  opacity: 0;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+
+.hero-byline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faded);
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+}
+
+.hero-byline .by-sep {
+  width: 16px;
+  height: 1px;
+  background: var(--rule);
+  display: inline-block;
+}
+
+.hero-byline a {
+  color: var(--faded);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hero-byline a:hover { color: var(--ink); }
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1.8s forwards;
+}
+
+.scroll-cue-line {
+  width: 1px;
+  height: 32px;
+  background: var(--rule);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-cue-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollDrop 2.2s ease-in-out infinite 2.2s;
+}
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollDrop { 0% { top: -100%; } 50% { top: 100%; } 100% { top: 100%; } }
+
+/* ================================
+   COMPANION SHAPE
+   ================================ */
+.companion-shape {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  right: calc(50% - 20em - 110px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 68px;
+  height: 68px;
+}
+
+.companion-shape.visible { opacity: 1; }
+
+/* ================================
+   ESSAY
+   ================================ */
+.essay-body { position: relative; z-index: 3; padding-bottom: 2rem; }
+
+.section { position: relative; padding: 0 1.5rem; }
+.section-inner { max-width: var(--measure); margin: 0 auto; }
+
+.section p {
+  margin-bottom: 1.15em;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.section p.revealed { opacity: 1; transform: translateY(0); }
+
+em { font-style: italic; letter-spacing: 0.008em; }
+
+.section a {
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 0.15em;
+  transition: text-decoration-color 0.3s ease;
+}
+
+.section a:hover { text-decoration-color: var(--accent-deep); }
+
+.sc {
+  font-variant: small-caps;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-size: 0.92em;
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-weight: 500;
+  font-size: 4.1em;
+  line-height: 0.78;
+  margin-right: 0.08em;
+  margin-top: 0.06em;
+  color: var(--ink);
+}
+
+mark.hl {
+  background: transparent;
+  color: inherit;
+  padding: 0.04em 0.12em;
+  margin: -0.04em -0.12em;
+  border-radius: 2px;
+  transition: background 0.9s ease;
+}
+
+mark.hl.lit { background: var(--highlight); }
+
+/* Dividers */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 0;
+  position: relative;
+}
+
+.divider svg {
+  width: 46px;
+  height: 46px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.divider.revealed svg { opacity: 1; }
+
+.divider .d-inner {
+  transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.divider-label {
+  position: absolute;
+  top: calc(50% + 68px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.46rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--rule);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s, color 0.8s ease;
+}
+
+.divider.revealed .divider-label { opacity: 1; color: var(--faded); }
+
+/* Pull quote */
+.pull-quote-section {
+  padding: 7rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.pull-quote {
+  max-width: 20em;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  line-height: 1.4;
+  color: var(--accent-deep);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.pq-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.pq-line.revealed { opacity: 1; transform: translateY(0); }
+
+/* Reframe */
+.reframe-old {
+  position: relative;
+  transition: color 0.5s ease;
+}
+
+.reframe-old.struck { color: var(--rule); }
+
+.reframe-old.struck::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--faded);
+  animation: strikeIn 0.6s ease forwards;
+}
+
+@keyframes strikeIn { from { width: 0; } to { width: 100%; } }
+
+.reframe-new {
+  color: var(--accent-deep);
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.3s;
+}
+
+.reframe-new.show { opacity: 1; }
+
+/* Word emphasis */
+.word-emphasis {
+  display: inline-block;
+  font-style: italic;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), letter-spacing 0.7s ease;
+}
+
+.word-emphasis.breathe {
+  transform: scale(1.12);
+  letter-spacing: 0.05em;
+}
+
+
+
+.closing p {
+  max-width: var(--measure);
+  margin: 0 auto;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--faded);
+  line-height: 1.6;
+}
+
+.disclaimer {
+  text-align: center;
+  padding: 0 1.5rem 6rem;
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.disclaimer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  color: var(--rule);
+  line-height: 1.7;
+}
+
+/* ================================
+   SERIES NAV
+   ================================ */
+.series-nav {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
+  text-align: center;
+}
+
+.series-nav p {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  color: var(--faded);
+  line-height: 1.9;
+  font-style: italic;
+}
+
+.series-nav a {
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 0.15em;
+  transition: text-decoration-color 0.3s ease;
+}
+
+.series-nav a:hover { text-decoration-color: var(--accent-deep); }
+
+/* ================================
+   AGENT VIEW
+   ================================ */
+.agent-view {
+  display: none;
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.76rem;
+  line-height: 1.85;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.agent-view .md-h1 {
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2em;
+}
+
+.agent-view .md-h2 {
+  font-weight: 400;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2em;
+  margin-top: 1.5em;
+}
+
+.agent-view .md-sub {
+  font-style: italic;
+  color: var(--faded);
+  margin-bottom: 2.5em;
+  display: block;
+}
+
+.agent-view .md-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2em 0;
+}
+
+.agent-view .md-p { margin-bottom: 1.2em; }
+
+body.mode-agent .human-view { display: none; }
+body.mode-agent .agent-view { display: block; }
+body.mode-agent .companion-shape,
+body.mode-agent .progress-track,
+body.mode-agent .home-nav,
+body.mode-agent .grain { display: none; }
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 1100px) {
+  .companion-shape { right: 1.2rem; width: 52px; height: 52px; }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --pad-x: max(2rem, env(safe-area-inset-left, 0px) + 1.4rem);
+  }
+  html { font-size: 16.5px; }
+  .home-nav { top: 1rem; left: var(--pad-x); }
+  .hero { min-height: 580px; }
+  .hero-shape { width: 150px; height: 150px; margin-bottom: 1.8rem; }
+  .hero-content { padding: 0 var(--pad-x); }
+  .hero-byline { gap: 0.8em; font-size: 0.48rem; }
+  .companion-shape { display: none; }
+  .section { padding: 0 var(--pad-x); }
+  .divider svg { width: 38px; height: 38px; }
+  /* art-divider-label-responsive */
+  .divider-label { top: calc(50% + 58px); }
+  .pull-quote-section { padding: 5rem var(--pad-x); min-height: 40vh; }
+  .disclaimer { padding: 0 var(--pad-x) 6rem; }
+  .series-nav { padding: 0 var(--pad-x) 6rem; }
+  .agent-view { padding: 4rem var(--pad-x) 6rem; }
+  .mode-dock { bottom: max(1rem, env(safe-area-inset-bottom, 0px) + 0.5rem); }
+}
+
+/* iPhone Pro range (393–430pt) */
+@media (max-width: 440px) {
+  :root { --pad-x: max(2.4rem, env(safe-area-inset-left, 0px) + 1.6rem); }
+  html { font-size: 16px; }
+  .hero h1 { font-size: 2.3rem; }
+  .hero-sub { font-size: 0.85rem; }
+  .hero-shape { width: 130px; height: 130px; margin-bottom: 1.5rem; }
+}
+
+/* iPhone SE / small screens (375pt and below) */
+@media (max-width: 380px) {
+  :root { --pad-x: max(1.8rem, env(safe-area-inset-left, 0px) + 1.2rem); }
+  html { font-size: 15.5px; }
+  .hero h1 { font-size: 2rem; }
+}
+
+::selection { background: rgba(92, 124, 90, 0.16); color: inherit; }
+
+/* ================================
+   AUDIO PLAYER
+   ================================ */
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin: 1.8em auto 0;
+  max-width: 240px;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.5s forwards;
+}
+
+.audio-player.hidden { display: none; }
+
+.audio-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.audio-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.audio-btn svg {
+  width: 10px;
+  height: 10px;
+  fill: var(--faded);
+  stroke: none;
+  transition: fill 0.3s ease;
+}
+
+.audio-btn:hover svg { fill: var(--accent); }
+
+.audio-btn .icon-pause { display: none; }
+.audio-btn.playing .icon-play { display: none; }
+.audio-btn.playing .icon-pause { display: block; }
+
+.audio-track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  min-width: 0;
+}
+
+.audio-bar {
+  flex: 1;
+  height: 2px;
+  background: var(--rule);
+  border-radius: 1px;
+  cursor: pointer;
+  position: relative;
+}
+
+.audio-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  border-radius: 1px;
+}
+
+.audio-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.46rem;
+  letter-spacing: 0.08em;
+  color: var(--faded);
+  white-space: nowrap;
+}
+
+.audio-speed {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.44rem;
+  letter-spacing: 0.04em;
+  color: var(--faded);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  min-width: 2.4em;
+  text-align: center;
+}
+
+.audio-speed:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ================================
+   ART DETAIL DIVIDERS
+   ================================ */
+.divider .art-crop {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1s ease;
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 68%);
+  mask-image: radial-gradient(circle at center, black 30%, transparent 68%);
+  mix-blend-mode: multiply;
+  filter: contrast(1.1) saturate(0.82);
+}
+
+.divider.revealed .art-crop { opacity: 1; }
+
+.divider .art-crop img,
+.divider .art-crop video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hide companion shape — art dividers provide visual rhythm */
+.companion-shape { display: none !important; }
+
+@media (max-width: 768px) {
+  .divider .art-crop { width: 100px; height: 100px; }
+}
+
+@media (max-width: 440px) {
+  .divider .art-crop { width: 80px; height: 80px; }
+}
+
+
+
+/* ================================
+   REDUCED MOTION
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+  .hero-image-wrap { animation: none; opacity: 1; }
+  .section, .divider { animation: none; opacity: 1; }
+}
+
+/* ================================
+   POST NAVIGATION
+   ================================ */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  gap: 2rem;
+}
+
+.post-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--faded);
+  transition: color 0.3s ease;
+  max-width: 45%;
+}
+
+.post-nav a:hover {
+  color: var(--accent);
+}
+
+.post-nav .nav-label {
+  display: block;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--rule);
+  margin-bottom: 0.3em;
+}
+
+.post-nav .nav-title {
+  display: block;
+}
+
+.post-nav .nav-next {
+  text-align: right;
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .post-nav { padding: 2rem var(--pad-x) 3rem; }
+}
+
+/* ================================
+   SUBTLE PAPER GRAIN
+   ================================ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.032;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+</style>
+</head>
+<body class="mode-human">
+
+<!-- Home nav -->
+<nav class="home-nav" id="homeNav">
+  <a href="https://morrisclay.com">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Morris Clay
+  </a>
+</nav>
+
+<!-- Bottom toggle -->
+<div class="mode-dock" id="modeDock">
+  <div class="dock-opt active" data-mode="human">Human</div>
+  <div class="dock-opt" data-mode="agent">Agent</div>
+</div>
+
+
+<div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+<div class="grain"></div>
+
+<div class="companion-shape" id="companionShape">
+  <svg viewBox="0 0 100 100">
+    <polygon id="compContainer" points="50,5 93,27 93,73 50,95 7,73 7,27" fill="none" stroke="var(--shape-ghost)" stroke-width="1"/>
+    <polygon id="compObject" points="50,25 75,35 80,60 60,80 30,72 25,42" fill="none" stroke="var(--shape-stroke)" stroke-width="1.2"/>
+  </svg>
+</div>
+
+<!-- ============================================
+     HUMAN VIEW
+     ============================================ -->
+<div class="human-view">
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-image-wrap" id="heroImageWrap">
+    <img src="/images/shape-work/the-seven-shapes-light.png" alt="" loading="eager">
+  </div>
+  <div class="hero-content">
+    <h1>The Seven&nbsp;Shapes</h1>
+    <p class="hero-sub">A taxonomy of&nbsp;form</p>
+    <div class="hero-byline">
+      <a href="https://morrisclay.com">Morris Clay</a>
+      <span class="by-sep"></span>
+      <span>February 2026</span>
+    </div>
+    <div class="audio-player" id="audioPlayer">
+      <audio id="audioEl" preload="metadata" src="/audio/the-seven-shapes.mp3"></audio>
+      <button class="audio-btn" id="audioBtn" aria-label="Play audio">
+        <svg class="icon-play" viewBox="0 0 16 16"><polygon points="5,2 14,8 5,14"/></svg>
+        <svg class="icon-pause" viewBox="0 0 16 16"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></svg>
+      </button>
+      <div class="audio-track">
+        <div class="audio-bar" id="audioBar">
+          <div class="audio-bar-fill" id="audioFill"></div>
+        </div>
+        <span class="audio-time" id="audioTime"></span>
+      </div>
+      <button class="audio-speed" id="audioSpeed" aria-label="Playback speed">1x</button>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><div class="scroll-cue-line"></div></div>
+</section>
+
+<!-- ESSAY -->
+<main class="essay-body" id="essayBody">
+
+  <!-- ====== SECTION 1 — Intro ====== -->
+  <section class="section" data-section="1">
+    <div class="section-inner" style="padding-top:6rem">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.55rem;letter-spacing:0.04em;color:var(--faded);line-height:1.7;font-style:italic;margin-bottom:2em;opacity:0;transform:translateY(18px);transition:opacity 0.75s ease, transform 0.75s ease;">This post is part of <a href="https://morrisclay.com/blog/shape-work">Shape Work</a>&thinsp;—&thinsp;an ongoing series on seeing, naming, and navigating the forms products take. <a href="https://morrisclay.com/blog/the-shape-of-the-thing">Start here</a> if you're&nbsp;new.</p>
+      <p class="drop-cap">You've been in this room. The product argument that won't resolve. Not because anyone's wrong&thinsp;—&thinsp;because everyone's talking about a different product. Same technology. Same demo. Same company name on the slide. Completely different shapes in each person's&nbsp;head.</p>
+      <p>I invest in frontier tech at the earliest stages. Shape&thinsp;—&thinsp;how a technology is packaged, who encounters it first, what it looks like when they do&thinsp;—&thinsp;is the most consequential and least examined decision a company makes. But here's what makes it harder than it sounds: <mark class="hl">shape is never singular.</mark> Every product is made of multiple shapes, held by different people, pulling in different directions, each one&nbsp;legitimate.</p>
+      <p>One of my portfolio companies builds a lakehouse&thinsp;—&thinsp;Snowflake-compatible, runs in your own cloud. For months we'd been circling competing shapes. Cost play? Drop-in replacement? Isolation story? The founder pitched them differently to different audiences. Not always landing. The board saw one shape, design partners saw another, the developer community was imagining a&nbsp;third.</p>
+      <p>Then a demo. The founder ran the lakehouse as a serverless function&thinsp;—&thinsp;fully featured, ephemeral, against real-world workloads. And I could feel it: <em>that stays in my cloud. That runs against my data, in my own infrastructure. That's a lakehouse per agent. Disposable.</em> The technology hadn't changed. But I had&thinsp;—&thinsp;I'd spent months wrangling agent isolation in my own dev work, and the shape the founder had been holding resolved into something I could feel&thinsp;—&thinsp;because I finally had something in my own hands to match it&nbsp;against.</p>
+      <p>Later, I laid the case out in a meeting&thinsp;—&thinsp;not from my dev experience, which was where the conviction actually lived, but from the funding landscape and buyer urgency. The room moved. Not because anyone suddenly felt what I felt. Because the shape resolved something different for each person simultaneously. The investors saw a fundable category. The engineering team recognized what they'd already been building. The founder connected it to a pattern from a previous exit. Same place, different doors&nbsp;in.</p>
+      <p>The convergence felt like discovery. It wasn't&thinsp;—&thinsp;six months earlier, the same room would have crystallized a different shape from the same technology. What aligned was <mark class="hl">timing, not&nbsp;truth.</mark></p>
+      <p>The form your technology takes isn't decided. It's negotiated&thinsp;—&thinsp;between the founder's vision and the investor's pattern, between what the system can do and what the first customer needs, between the dashboard's story and the feeling in your hands when you use the thing. <mark class="hl">The tension between those shapes isn't a problem to fix.</mark> It's the most information-rich signal your company&nbsp;produces.</p>
+      <p>Here are seven shapes I keep finding. They're not cleanly separable&thinsp;—&thinsp;every imagined shape is already felt, every measured shape is already ruled. But naming them is how you start to see what's happening in the&nbsp;room.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d1.png" alt=""></div><div class="divider-label">imagined</div></div>
+
+  <!-- ====== SECTION 2 — The Imagined Shape ====== -->
+  <section class="section" data-section="2">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">The imagined shape</p>
+      <p>Before anything ships, there's a shape in someone's mind. The founder holds it&thinsp;—&thinsp;sometimes an architecture diagram, sometimes just a feeling about how the world should work. Heavy with possibility. More complete than the product will ever actually be&thinsp;—&thinsp;and nothing like what it will&nbsp;become.</p>
+      <p>The imagined shape is what gets people to show up. What makes an investor lean forward before the spreadsheet makes sense. It doesn't close a specification&thinsp;—&thinsp;<mark class="hl">it opens a&nbsp;world.</mark></p>
+      <p>But it's never just yours. A founder shows me a novel compute primitive and I'm already seeing a developer platform&thinsp;—&thinsp;bottom-up adoption, self-serve, usage-based pricing. They're seeing enterprise infrastructure&thinsp;—&thinsp;top-down sales, security-first, long contracts. Same technology. Same excitement in both our voices. We're imagining different companies. And we might never find out unless the product forces us to&nbsp;reconcile.</p>
+      <p>Communities imagine too&thinsp;—&thinsp;and they move fast. When a new primitive surfaces, the ecosystem starts placing it before you've finished your docs. Comparison tables materialize. Conference talks slot it into existing grooves. <mark class="hl">The frame sets before you can shape&nbsp;it.</mark> And once it hardens, it becomes the box your product lives in whether you built it or not. The founders who navigate this well don't fight the analogy. They find the one detail where it breaks and make that the&nbsp;wedge.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d2.png" alt=""></div><div class="divider-label">founder</div></div>
+
+  <!-- ====== SECTION 3 — The Founder Shape ====== -->
+  <section class="section" data-section="3">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">The founder shape</p>
+      <p>Underneath the imagined shape, there's something older. The founder's biography. Not a pattern they repeat&thinsp;—&thinsp;a sensitivity. The product of specific encounters that trained them to notice what the rest of the room hasn't lived&nbsp;through.</p>
+      <p>You can feel this in a pitch before you can name it. A founder leans into a particular detail&thinsp;—&thinsp;isolation, observability, latency at the edge&thinsp;—&thinsp;with a weight that's disproportionate to the slide they're on. They're not arguing from the deck. <mark class="hl">They're arguing from scar&nbsp;tissue.</mark></p>
+      <p>That lakehouse founder. His previous company was in virtualization&thinsp;—&thinsp;container isolation, secure execution environments, the architecture of keeping things separate. When isolation emerged as the winning shape, it didn't land for him the way it landed for the investors, who saw a category, or for me, coming from my own dev frustrations. It landed as recognition. <mark class="hl"><em>I've built this before.</em></mark> <em>I know what it feels like from the&nbsp;inside.</em></p>
+      <p>This is why founders sometimes hold a shape with what looks like irrational tenacity. They can't always articulate why. The conviction lives in experience metabolized into instinct&thinsp;—&thinsp;and the argument they make is often weaker than the knowing behind it. When I see a founder who won't let go of a positioning the market seems to be rejecting, the first question isn't whether they're wrong. It's what shape they're carrying from&nbsp;before.</p>
+      <p>The risk is real. The same grain that produces conviction can produce blindness. The best founders hold their biography loosely enough to let it inform without dictating. They know where their grain comes from. They know when to cut against&nbsp;it.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d3.png" alt=""></div><div class="divider-label">made</div></div>
+
+  <!-- ====== SECTION 4 — The Made Shape ====== -->
+  <section class="section" data-section="4">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">The made shape</p>
+      <p>Then there's what the engineering team actually built. Not the imagined shape. Not the positioning. The real architecture&thinsp;—&thinsp;the technical decisions that crystallized in the codebase, one pull request at a time, while everyone else was arguing about&nbsp;narrative.</p>
+      <p>You've seen the gap. The pitch deck says "platform." The code says "three services held together with duct tape and a very good demo." The distance between the imagined shape and the made shape is where the most honest product conversations live, and most teams avoid looking at it&nbsp;directly.</p>
+      <p>With the lakehouse company, the team had already built isolation before anyone in the room agreed it was the strategy. When we converged, we weren't choosing a direction&thinsp;—&thinsp;we were recognizing one. The engineering team's hands had been shaping one version of the product while the rest of us were still negotiating&nbsp;another.</p>
+      <p>The made shape has a weight the other shapes don't&thinsp;—&thinsp;not because it's more real, but because it's more expensive to change. It's what the system can actually do today, and what it would cost to make it do something different tomorrow. Sometimes it leads&thinsp;—&thinsp;engineers build toward a capability the market hasn't named yet, and one day someone asks "wait, can it do X?" and the answer is "<mark class="hl">it's been doing X for months.</mark>" Sometimes it lags, and the team knows, in the way you know a bridge is carrying more weight than it should, that the architecture can't support what's being&nbsp;promised.</p>
+      <p>I've watched this happen&thinsp;—&thinsp;engineers resisting a pivot that everyone else in the room has agreed on, and the resistance reading as stubbornness, when what they were actually feeling was the weight of constraints the rest of us couldn't see. If they're pulling toward something nobody asked for, pay attention. <mark class="hl">They might be the first people in the room responding to a shape that hasn't been named&nbsp;yet.</mark></p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d4.png" alt=""></div><div class="divider-label">measured</div></div>
+
+  <!-- ====== SECTION 5 — The Measured Shape ====== -->
+  <section class="section" data-section="5">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">The measured shape</p>
+      <p>Every metric is a choice about what to make visible. And what you make visible is what you end up protecting&thinsp;—&thinsp;sometimes at the expense of everything you can't&nbsp;see.</p>
+      <p>In that lakehouse board meeting, the numbers told their version. Technical completeness was high&thinsp;—&thinsp;the team had been shipping features, closing gaps, building toward a spec that looked like progress on every dashboard. But what the board wanted to see&thinsp;—&thinsp;the outside world pulling on the product&thinsp;—&thinsp;wasn't there yet. The measured shape said <em>progress</em>. The room felt <em>stuck</em>. Both were&nbsp;true.</p>
+      <p>This is the trap. A team will reorganize around a dashboard, hire against a curve, kill a feature the numbers say isn't working&thinsp;—&thinsp;all in service of a shape that might be the wrong one. Not because the data is lying. Because the data is answering a question nobody stopped to examine. The measured shape isn't the whole product&thinsp;—&thinsp;it's one cross-section, taken from one angle. <mark class="hl">Mistake it for the full picture and you'll optimize your way into a corner</mark> without understanding how you got&nbsp;there.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d5.png" alt=""></div><div class="divider-label">felt</div></div>
+
+  <!-- ====== SECTION 6 — The Felt Shape ====== -->
+  <section class="section" data-section="6">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">The felt shape</p>
+      <p>A developer installs your tool. Runs a first query. Gets the result they expected. First touch to first success&thinsp;—&thinsp;that moment determines almost everything about whether they come back. It's not on any dashboard. It lives in the nervous&nbsp;system.</p>
+      <p>Then there's the deeper layer&thinsp;—&thinsp;the felt shape that builds over weeks. Keyboard shortcuts becoming reflexes. Navigation sinking into muscle memory. Your hands learning the product so your mind can stay on the&nbsp;problem.</p>
+      <p>Linear does this. Project management&thinsp;—&thinsp;one of the most crowded categories in software. But using it feels like playing an instrument. Every interaction fast enough that there's no gap between wanting and having. After a few weeks, the shape isn't something you see. It's something your fingers know. The product folds into your body until the boundary between tool and habit disappears. Switching feels like wearing someone else's shoes. Not wrong. Just off. Everywhere,&nbsp;slightly.</p>
+      <p>That's <mark class="hl">lock-in at the level of the body.</mark> Not a rational preference. A physical&nbsp;one.</p>
+      <p>Here's what surprised me about that lakehouse room. I arrived at my conviction through felt experience&thinsp;—&thinsp;months of fighting agent isolation with my own hands. But I sold it through market analysis and funding logic. The thing that created my certainty isn't the thing I used to transmit it. Most felt knowledge works this way. The room accepts data and strategy. <mark class="hl">The body knows&nbsp;first.</mark></p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d6.png" alt=""></div><div class="divider-label">ruled</div></div>
+
+  <!-- ====== SECTION 7 — The Ruled Shape ====== -->
+  <section class="section" data-section="7">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">The ruled shape</p>
+      <p>Capital has a&nbsp;shape.</p>
+      <p>The old positioning for the lakehouse&thinsp;—&thinsp;drop-in replacement for the dominant incumbent&thinsp;—&thinsp;had a structural dependency chain. Feature parity requires massive engineering, which requires significant capital, which requires a go-to-market steep enough to justify it: the largest customers, complex procurement, long evaluation cycles. The shape of the capital requirement was determining the shape of the&nbsp;product.</p>
+      <p>The new shape dissolved that chain. Isolated, ephemeral compute doesn't need feature parity. The market is broader. The customers are more forward-leaning. And isolation is a fundable category right now&thinsp;—&thinsp;investor attention has its own ruled shape. The same technology, repositioned, suddenly&nbsp;fit.</p>
+      <p>This is where investors have to be honest with themselves. Every round reshapes a company's possibility space. The question isn't whether you're shaping&thinsp;—&thinsp;you are, every time you write a term sheet or set an expectation in a board meeting. The question is whether you can see the shape you're&nbsp;imposing.</p>
+      <p>Your board's patience is a ruled shape. Your runway is a ruled shape. <span class="sc">soc</span>2, <span class="sc">hipaa</span>, FedRAMP&thinsp;—&thinsp;ruled shape. A clause in a contributor agreement that freezes an enterprise deal&thinsp;—&thinsp;ruled shape. None of these are about your product's capability. All of them determine what your product is allowed to&nbsp;become.</p>
+      <p><mark class="hl">The ruled shape is product. It ships whether you design it or&nbsp;not.</mark></p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d7.png" alt=""></div><div class="divider-label">enacted</div></div>
+
+  <!-- ====== SECTION 8 — The Enacted Shape ====== -->
+  <section class="section" data-section="8">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">The enacted shape</p>
+      <p>Your tool was designed as a pipeline orchestrator&thinsp;—&thinsp;your biggest customers are running it as a cron job replacement. Your perception <span class="sc">sdk</span> was built for autonomous vehicles&thinsp;—&thinsp;a team in agriculture is using it to monitor crop health from drones. You designed for human users. Agents are calling your <span class="sc">api</span>.</p>
+      <p>You didn't plan any of&nbsp;this.</p>
+      <p>That's the enacted shape&thinsp;—&thinsp;what your product actually becomes once it leaves your hands. The shape that emerges through use rather than intention. Not what anyone planned&thinsp;—&thinsp;<mark class="hl">what actually happened, so&nbsp;far.</mark></p>
+      <p>The products that endure tend to be the ones whose enacted shape outgrows their imagined shape. They get composed, embedded, bent into forms their creators never anticipated. That bending is the most honest feedback you'll ever get. The market showing you what it needs. Not in words. In&nbsp;behavior.</p>
+      <p>But enacted shape has a harder edge. You built ten capabilities, carefully integrated. Your users adopt two. Those two bear all the weight. The stress concentrates&thinsp;—&thinsp;the parts that get used heavily strain under loads they weren't designed to carry alone, while the rest of your surface area sits idle. The product the market wants might be a fraction of the product you built. And that fraction might need to be much stronger than it currently&nbsp;is.</p>
+      <p><mark class="hl">Non-use is enacted shape too.</mark> The features nobody touches. The integration nobody enables. The gap between what you imagined and what the world actually made of it. That's where the sharpest insights live&thinsp;—&thinsp;if you're willing to&nbsp;look.</p>
+    </div>
+  </section>
+
+  <div class="divider" data-divider><div class="art-crop"><img src="/images/shape-work/dividers/the-seven-shapes-d8.png" alt=""></div><div class="divider-label">seeing the room</div></div>
+
+  <!-- ====== SECTION 9 — Seeing the Room ====== -->
+  <section class="section" data-section="9">
+    <div class="section-inner">
+      <p style="font-family:'JetBrains Mono',monospace;font-weight:300;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faded);margin-bottom:1.2em;">Seeing the room</p>
+      <p>When a product argument won't resolve, it's almost always because the people in the room are each inside a different&nbsp;shape.</p>
+      <p>I watched it happen with that lakehouse company. The board was inside the measured shape, asking why traction metrics were flat. The founder was inside the founder shape, holding a conviction rooted in years of virtualization work&thinsp;—&thinsp;sure about something he couldn't fully articulate. I was inside the felt shape, months of wrestling agent isolation with my own hands translating into a certainty I could only justify through the ruled shape, through market analysis and funding logic. The engineering team was inside the made shape&thinsp;—&thinsp;they'd already built the answer, quietly, one commit at a time. And the enacted shape was arriving from outside the room entirely: the market drifting toward agent isolation, whether any of us named it or&nbsp;not.</p>
+      <p>Every person in that room inside a different shape. Same technology. And the argument that had been circling for months wasn't about strategy&thinsp;—&thinsp;it was about the fact that each of us was standing inside a different product and none of us knew&nbsp;it.</p>
+      <p>The move that unsticks it isn't choosing a winner. It's seeing that they're different. The moment someone in the room can name the gap&thinsp;—&thinsp;not to resolve it, but to make it visible&thinsp;—&thinsp;the conversation changes. Not because anyone was wrong. Because the room can finally see why it was&nbsp;stuck.</p>
+      <p>I keep coming back to that moment. Not because it was smooth&thinsp;—&thinsp;it wasn't. But because it was the first time I could feel all the shapes at once, pulling in their different directions, and recognize that <mark class="hl">the tension itself was the most information-rich signal in the&nbsp;room.</mark></p>
+      <p>Most product arguments aren't about the product. They're about which shape each person is inside. And the room can't move until someone names what's&nbsp;happening.</p>
+      <p>That's what this taxonomy is for. Not to classify. To see. These seven shapes aren't a checklist&thinsp;—&thinsp;they're a way of paying attention to what's already in the room, pulling in directions nobody has words for yet. And the practice of navigating between them&thinsp;—&thinsp;of holding the full picture without collapsing it&thinsp;—&thinsp;builds something over time. I'll come back to&nbsp;what.</p>
+      <p><mark class="hl">The naming doesn't resolve the tension. It shouldn't.</mark> The tension between shapes is the most honest thing your company produces. But you have to see it to stay with it. And staying with it&thinsp;—&thinsp;not collapsing it, not optimizing it away, not letting the loudest voice in the room flatten it into a single story&thinsp;—&thinsp;that's the&nbsp;work.</p>
+    </div>
+  </section>
+
+
+  <div class="series-nav">
+    <p>Part 2 of an ongoing series. <a href="https://morrisclay.com/blog/shape-work">Shape Work</a> introduces the discipline. <a href="https://morrisclay.com/blog/the-shape-of-the-thing">The Shape of the Thing</a> makes the case. Next: what happens when shapes don't&nbsp;agree.</p>
+  </div>
+
+  <nav class="post-nav">
+    <a class="nav-prev" href="/blog/shape-work/the-shape-of-the-thing"><span class="nav-label">&larr; Previous</span><span class="nav-title">The Shape of the Thing</span></a>
+    <a class="nav-next" href="/blog/shape-work/the-pull-between"><span class="nav-label">Next &rarr;</span><span class="nav-title">The Pull Between</span></a>
+  </nav>
+
+</main>
+</div>
+
+<!-- ============================================
+     AGENT VIEW
+     ============================================ -->
+<div class="agent-view" id="agentView">
+<div class="md-h1"># The Seven Shapes</div>
+<span class="md-sub">A taxonomy of form</span>
+<span class="md-sub" style="margin-bottom:0.5em">Morris Clay · February 2026</span>
+
+<div class="md-p" style="font-style:italic;color:var(--faded)">This post is part of [Shape Work](https://morrisclay.com/blog/shape-work) — an ongoing series on seeing, naming, and navigating the forms products take. [Start here](https://morrisclay.com/blog/the-shape-of-the-thing) if you're new.</div>
+
+<hr class="md-rule">
+
+<div class="md-p">You've been in this room. The product argument that won't resolve. Not because anyone's wrong — because everyone's talking about a different product. Same technology. Same demo. Same company name on the slide. Completely different shapes in each person's head.</div>
+
+<div class="md-p">I invest in frontier tech at the earliest stages. Shape — how a technology is packaged, who encounters it first, what it looks like when they do — is the most consequential and least examined decision a company makes. But here's what makes it harder than it sounds: shape is never singular. Every product is made of multiple shapes, held by different people, pulling in different directions, each one legitimate.</div>
+
+<div class="md-p">One of my portfolio companies builds a lakehouse — Snowflake-compatible, runs in your own cloud. For months we'd been circling competing shapes. Cost play? Drop-in replacement? Isolation story? The founder pitched them differently to different audiences. Not always landing. The board saw one shape, design partners saw another, the developer community was imagining a third.</div>
+
+<div class="md-p">Then a demo. The founder ran the lakehouse as a serverless function — fully featured, ephemeral, against real-world workloads. And I could feel it: *that stays in my cloud. That runs against my data, in my own infrastructure. That's a lakehouse per agent. Disposable.* The technology hadn't changed. But I had — I'd spent months wrangling agent isolation in my own dev work, and the shape the founder had been holding resolved into something I could feel — because I finally had something in my own hands to match it against.</div>
+
+<div class="md-p">Later, I laid the case out in a meeting — not from my dev experience, which was where the conviction actually lived, but from the funding landscape and buyer urgency. The room moved. Not because anyone suddenly felt what I felt. Because the shape resolved something different for each person simultaneously. The investors saw a fundable category. The engineering team recognized what they'd already been building. The founder connected it to a pattern from a previous exit. Same place, different doors in.</div>
+
+<div class="md-p">The convergence felt like discovery. It wasn't — six months earlier, the same room would have crystallized a different shape from the same technology. What aligned was timing, not truth.</div>
+
+<div class="md-p">The form your technology takes isn't decided. It's negotiated — between the founder's vision and the investor's pattern, between what the system can do and what the first customer needs, between the dashboard's story and the feeling in your hands when you use the thing. The tension between those shapes isn't a problem to fix. It's the most information-rich signal your company produces.</div>
+
+<div class="md-p">Here are seven shapes I keep finding. They're not cleanly separable — every imagined shape is already felt, every measured shape is already ruled. But naming them is how you start to see what's happening in the room.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## The imagined shape</div>
+
+<div class="md-p">Before anything ships, there's a shape in someone's mind. The founder holds it — sometimes an architecture diagram, sometimes just a feeling about how the world should work. Heavy with possibility. More complete than the product will ever actually be — and nothing like what it will become.</div>
+
+<div class="md-p">The imagined shape is what gets people to show up. What makes an investor lean forward before the spreadsheet makes sense. It doesn't close a specification — it opens a world.</div>
+
+<div class="md-p">But it's never just yours. A founder shows me a novel compute primitive and I'm already seeing a developer platform — bottom-up adoption, self-serve, usage-based pricing. They're seeing enterprise infrastructure — top-down sales, security-first, long contracts. Same technology. Same excitement in both our voices. We're imagining different companies. And we might never find out unless the product forces us to reconcile.</div>
+
+<div class="md-p">Communities imagine too — and they move fast. When a new primitive surfaces, the ecosystem starts placing it before you've finished your docs. Comparison tables materialize. Conference talks slot it into existing grooves. The frame sets before you can shape it. And once it hardens, it becomes the box your product lives in whether you built it or not. The founders who navigate this well don't fight the analogy. They find the one detail where it breaks and make that the wedge.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## The founder shape</div>
+
+<div class="md-p">Underneath the imagined shape, there's something older. The founder's biography. Not a pattern they repeat — a sensitivity. The product of specific encounters that trained them to notice what the rest of the room hasn't lived through.</div>
+
+<div class="md-p">You can feel this in a pitch before you can name it. A founder leans into a particular detail — isolation, observability, latency at the edge — with a weight that's disproportionate to the slide they're on. They're not arguing from the deck. They're arguing from scar tissue.</div>
+
+<div class="md-p">That lakehouse founder. His previous company was in virtualization — container isolation, secure execution environments, the architecture of keeping things separate. When isolation emerged as the winning shape, it didn't land for him the way it landed for the investors, who saw a category, or for me, coming from my own dev frustrations. It landed as recognition. *I've built this before. I know what it feels like from the inside.*</div>
+
+<div class="md-p">This is why founders sometimes hold a shape with what looks like irrational tenacity. They can't always articulate why. The conviction lives in experience metabolized into instinct — and the argument they make is often weaker than the knowing behind it. When I see a founder who won't let go of a positioning the market seems to be rejecting, the first question isn't whether they're wrong. It's what shape they're carrying from before.</div>
+
+<div class="md-p">The risk is real. The same grain that produces conviction can produce blindness. The best founders hold their biography loosely enough to let it inform without dictating. They know where their grain comes from. They know when to cut against it.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## The made shape</div>
+
+<div class="md-p">Then there's what the engineering team actually built. Not the imagined shape. Not the positioning. The real architecture — the technical decisions that crystallized in the codebase, one pull request at a time, while everyone else was arguing about narrative.</div>
+
+<div class="md-p">You've seen the gap. The pitch deck says "platform." The code says "three services held together with duct tape and a very good demo." The distance between the imagined shape and the made shape is where the most honest product conversations live, and most teams avoid looking at it directly.</div>
+
+<div class="md-p">With the lakehouse company, the team had already built isolation before anyone in the room agreed it was the strategy. When we converged, we weren't choosing a direction — we were recognizing one. The engineering team's hands had been shaping one version of the product while the rest of us were still negotiating another.</div>
+
+<div class="md-p">The made shape has a weight the other shapes don't — not because it's more real, but because it's more expensive to change. It's what the system can actually do today, and what it would cost to make it do something different tomorrow. Sometimes it leads — engineers build toward a capability the market hasn't named yet, and one day someone asks "wait, can it do X?" and the answer is "it's been doing X for months." Sometimes it lags, and the team knows, in the way you know a bridge is carrying more weight than it should, that the architecture can't support what's being promised.</div>
+
+<div class="md-p">I've watched this happen — engineers resisting a pivot that everyone else in the room has agreed on, and the resistance reading as stubbornness, when what they were actually feeling was the weight of constraints the rest of us couldn't see. If they're pulling toward something nobody asked for, pay attention. They might be the first people in the room responding to a shape that hasn't been named yet.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## The measured shape</div>
+
+<div class="md-p">Every metric is a choice about what to make visible. And what you make visible is what you end up protecting — sometimes at the expense of everything you can't see.</div>
+
+<div class="md-p">In that lakehouse board meeting, the numbers told their version. Technical completeness was high — the team had been shipping features, closing gaps, building toward a spec that looked like progress on every dashboard. But what the board wanted to see — the outside world pulling on the product — wasn't there yet. The measured shape said *progress*. The room felt *stuck*. Both were true.</div>
+
+<div class="md-p">This is the trap. A team will reorganize around a dashboard, hire against a curve, kill a feature the numbers say isn't working — all in service of a shape that might be the wrong one. Not because the data is lying. Because the data is answering a question nobody stopped to examine. The measured shape isn't the whole product — it's one cross-section, taken from one angle. Mistake it for the full picture and you'll optimize your way into a corner without understanding how you got there.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## The felt shape</div>
+
+<div class="md-p">A developer installs your tool. Runs a first query. Gets the result they expected. First touch to first success — that moment determines almost everything about whether they come back. It's not on any dashboard. It lives in the nervous system.</div>
+
+<div class="md-p">Then there's the deeper layer — the felt shape that builds over weeks. Keyboard shortcuts becoming reflexes. Navigation sinking into muscle memory. Your hands learning the product so your mind can stay on the problem.</div>
+
+<div class="md-p">Linear does this. Project management — one of the most crowded categories in software. But using it feels like playing an instrument. Every interaction fast enough that there's no gap between wanting and having. After a few weeks, the shape isn't something you see. It's something your fingers know. The product folds into your body until the boundary between tool and habit disappears. Switching feels like wearing someone else's shoes. Not wrong. Just off. Everywhere, slightly.</div>
+
+<div class="md-p">That's lock-in at the level of the body. Not a rational preference. A physical one.</div>
+
+<div class="md-p">Here's what surprised me about that lakehouse room. I arrived at my conviction through felt experience — months of fighting agent isolation with my own hands. But I sold it through market analysis and funding logic. The thing that created my certainty isn't the thing I used to transmit it. Most felt knowledge works this way. The room accepts data and strategy. The body knows first.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## The ruled shape</div>
+
+<div class="md-p">Capital has a shape.</div>
+
+<div class="md-p">The old positioning for the lakehouse — drop-in replacement for the dominant incumbent — had a structural dependency chain. Feature parity requires massive engineering, which requires significant capital, which requires a go-to-market steep enough to justify it: the largest customers, complex procurement, long evaluation cycles. The shape of the capital requirement was determining the shape of the product.</div>
+
+<div class="md-p">The new shape dissolved that chain. Isolated, ephemeral compute doesn't need feature parity. The market is broader. The customers are more forward-leaning. And isolation is a fundable category right now — investor attention has its own ruled shape. The same technology, repositioned, suddenly fit.</div>
+
+<div class="md-p">This is where investors have to be honest with themselves. Every round reshapes a company's possibility space. The question isn't whether you're shaping — you are, every time you write a term sheet or set an expectation in a board meeting. The question is whether you can see the shape you're imposing.</div>
+
+<div class="md-p">Your board's patience is a ruled shape. Your runway is a ruled shape. SOC2, HIPAA, FedRAMP — ruled shape. A clause in a contributor agreement that freezes an enterprise deal — ruled shape. None of these are about your product's capability. All of them determine what your product is allowed to become.</div>
+
+<div class="md-p">The ruled shape is product. It ships whether you design it or not.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## The enacted shape</div>
+
+<div class="md-p">Your tool was designed as a pipeline orchestrator — your biggest customers are running it as a cron job replacement. Your perception SDK was built for autonomous vehicles — a team in agriculture is using it to monitor crop health from drones. You designed for human users. Agents are calling your API.</div>
+
+<div class="md-p">You didn't plan any of this.</div>
+
+<div class="md-p">That's the enacted shape — what your product actually becomes once it leaves your hands. The shape that emerges through use rather than intention. Not what anyone planned — what actually happened, so far.</div>
+
+<div class="md-p">The products that endure tend to be the ones whose enacted shape outgrows their imagined shape. They get composed, embedded, bent into forms their creators never anticipated. That bending is the most honest feedback you'll ever get. The market showing you what it needs. Not in words. In behavior.</div>
+
+<div class="md-p">But enacted shape has a harder edge. You built ten capabilities, carefully integrated. Your users adopt two. Those two bear all the weight. The stress concentrates — the parts that get used heavily strain under loads they weren't designed to carry alone, while the rest of your surface area sits idle. The product the market wants might be a fraction of the product you built. And that fraction might need to be much stronger than it currently is.</div>
+
+<div class="md-p">Non-use is enacted shape too. The features nobody touches. The integration nobody enables. The gap between what you imagined and what the world actually made of it. That's where the sharpest insights live — if you're willing to look.</div>
+
+<hr class="md-rule">
+
+<div class="md-h2">## Seeing the room</div>
+
+<div class="md-p">When a product argument won't resolve, it's almost always because the people in the room are each inside a different shape.</div>
+
+<div class="md-p">I watched it happen with that lakehouse company. The board was inside the measured shape, asking why traction metrics were flat. The founder was inside the founder shape, holding a conviction rooted in years of virtualization work — sure about something he couldn't fully articulate. I was inside the felt shape, months of wrestling agent isolation with my own hands translating into a certainty I could only justify through the ruled shape, through market analysis and funding logic. The engineering team was inside the made shape — they'd already built the answer, quietly, one commit at a time. And the enacted shape was arriving from outside the room entirely: the market drifting toward agent isolation, whether any of us named it or not.</div>
+
+<div class="md-p">Every person in that room inside a different shape. Same technology. And the argument that had been circling for months wasn't about strategy — it was about the fact that each of us was standing inside a different product and none of us knew it.</div>
+
+<div class="md-p">The move that unsticks it isn't choosing a winner. It's seeing that they're different. The moment someone in the room can name the gap — not to resolve it, but to make it visible — the conversation changes. Not because anyone was wrong. Because the room can finally see why it was stuck.</div>
+
+<div class="md-p">I keep coming back to that moment. Not because it was smooth — it wasn't. But because it was the first time I could feel all the shapes at once, pulling in their different directions, and recognize that the tension itself was the most information-rich signal in the room.</div>
+
+<div class="md-p">Most product arguments aren't about the product. They're about which shape each person is inside. And the room can't move until someone names what's happening.</div>
+
+<div class="md-p">That's what this taxonomy is for. Not to classify. To see. These seven shapes aren't a checklist — they're a way of paying attention to what's already in the room, pulling in directions nobody has words for yet. And the practice of navigating between them — of holding the full picture without collapsing it — builds something over time. I'll come back to what.</div>
+
+<div class="md-p">The naming doesn't resolve the tension. It shouldn't. The tension between shapes is the most honest thing your company produces. But you have to see it to stay with it. And staying with it — not collapsing it, not optimizing it away, not letting the loudest voice in the room flatten it into a single story — that's the work.</div>
+
+<hr class="md-rule">
+
+<div class="md-p" style="font-style:italic;color:var(--faded)">Part 2 of an ongoing series. <a href="https://morrisclay.com/blog/shape-work">Shape Work</a> introduces the discipline. <a href="https://morrisclay.com/blog/the-shape-of-the-thing">The Shape of the Thing</a> makes the case. Next: what happens when shapes don't agree.</div>
+
+</div>
+
+<script>
+/* ================================
+   MODE TOGGLE
+   ================================ */
+document.getElementById('modeDock').addEventListener('click', e => {
+  const opt = e.target.closest('.dock-opt');
+  if (!opt) return;
+  document.querySelectorAll('.dock-opt').forEach(o => o.classList.remove('active'));
+  opt.classList.add('active');
+  document.body.className = 'mode-' + opt.dataset.mode;
+  window.scrollTo(0, 0);
+});
+
+/* ================================
+   HERO — central shape animation
+   Mouse-reactive, with ghost trail
+   ================================ */
+(function(){
+  const c = document.getElementById('heroShapeCanvas');
+  const wrap = document.getElementById('heroShapeWrap');
+  const heroEl = document.getElementById('heroSection');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = 400, H = 400;
+  c.width = W * dpr; c.height = H * dpr;
+  c.style.width = '100%'; c.style.height = '100%';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const cx = W/2, cy = H/2;
+
+  // Mouse influence
+  let mx = 0, my = 0, tmx = 0, tmy = 0;
+  document.addEventListener('mousemove', e => {
+    if (!heroEl) return;
+    const r = heroEl.getBoundingClientRect();
+    tmx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    tmy = ((e.clientY - r.top) / r.height - 0.5) * 2;
+  });
+
+  // Container: hexagon
+  function hexPts(r) {
+    const pts = [];
+    for (let i = 0; i < 6; i++) {
+      const a = (i/6) * Math.PI * 2 - Math.PI/2;
+      pts.push([cx + Math.cos(a)*r, cy + Math.sin(a)*r]);
+    }
+    return pts;
+  }
+
+  const containerR = 130;
+  const container = hexPts(containerR);
+
+  // Previous frame vertices for ghost trail
+  let prevVerts = [];
+
+  let t = 0;
+
+  function drawFrame() {
+    t += 0.006;
+
+    // Smooth mouse
+    mx += (tmx - mx) * 0.04;
+    my += (tmy - my) * 0.04;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Container — dashed hexagon
+    ctx.beginPath();
+    container.forEach((p, i) => i === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]));
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(145, 138, 126, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Ghost trail shape (delayed)
+    if (prevVerts.length) {
+      ctx.beginPath();
+      prevVerts.forEach((p, i) => i === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]));
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(92, 124, 90, 0.1)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Inner shape — morphing, rotating, mouse-reactive
+    const sides = 5;
+    const rot = t * 0.7;
+    const wobbleFreq = 0.8;
+    const breathe = Math.sin(t * 0.5) * 8;
+    const mouseInfluence = 12;
+
+    const verts = [];
+    ctx.beginPath();
+    for (let i = 0; i < sides; i++) {
+      const baseAngle = (i / sides) * Math.PI * 2 - Math.PI/2 + rot;
+      const rVar = 68 + breathe
+        + Math.sin(t * wobbleFreq + i * 2.1) * 22
+        + Math.cos(t * 1.3 + i * 0.7) * 12
+        + (Math.cos(baseAngle) * mx + Math.sin(baseAngle) * my) * mouseInfluence;
+      const px = cx + Math.cos(baseAngle) * rVar;
+      const py = cy + Math.sin(baseAngle) * rVar;
+      verts.push([px, py]);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(92, 124, 90, 0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(92, 124, 90, 0.025)';
+    ctx.fill();
+
+    // Vertex dots
+    verts.forEach(([px, py]) => {
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(92, 124, 90, 0.35)';
+      ctx.fill();
+    });
+
+    // Thin connecting lines from vertices to container center (subtle tension lines)
+    verts.forEach(([px, py], i) => {
+      const cp = container[i % container.length];
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(cp[0], cp[1]);
+      ctx.strokeStyle = 'rgba(92, 124, 90, 0.06)';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    });
+
+    // Save for ghost trail
+    prevVerts = verts;
+
+    // Subtle parallax on the shape wrapper
+    if (wrap) {
+      wrap.style.transform = `translate(${mx * -6}px, ${my * -6}px)`;
+    }
+
+    requestAnimationFrame(drawFrame);
+  }
+
+  requestAnimationFrame(drawFrame);
+
+  // Scroll parallax for hero shape
+  window.addEventListener('scroll', () => {
+    if (!heroEl || !wrap) return;
+    const sy = window.scrollY;
+    const hh = heroEl.offsetHeight;
+    if (sy < hh) {
+      const p = sy / hh;
+      wrap.style.opacity = 1 - p * 1.2;
+    }
+  }, { passive: true });
+})();
+
+/* ================================
+   HERO — scattered background shapes
+   ================================ */
+(function(){
+  const c = document.getElementById('scatterCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, S = [], t = 0;
+
+  function sz() {
+    const d = Math.min(devicePixelRatio || 1, 2);
+    const r = c.parentElement.getBoundingClientRect();
+    w = r.width; h = r.height;
+    c.width = w*d; c.height = h*d;
+    c.style.width = w+'px'; c.style.height = h+'px';
+    ctx.setTransform(d,0,0,d,0,0);
+  }
+
+  function init() {
+    S = [];
+    const n = Math.min(10, Math.floor(w/120));
+    for (let i = 0; i < n; i++) S.push({
+      x: Math.random()*w, y: Math.random()*h,
+      sz: 12+Math.random()*40, si: 3+Math.floor(Math.random()*4),
+      r: Math.random()*Math.PI*2, rs: (Math.random()-.5)*.004,
+      dx: (Math.random()-.5)*.08, dy: (Math.random()-.5)*.08,
+      ph: Math.random()*Math.PI*2, a: .025+Math.random()*.035
+    });
+  }
+
+  function draw(T) {
+    t = T; ctx.clearRect(0,0,w,h);
+    S.forEach(s => {
+      s.x+=s.dx; s.y+=s.dy; s.r+=s.rs;
+      if(s.x<-80)s.x=w+80; if(s.x>w+80)s.x=-80;
+      if(s.y<-80)s.y=h+80; if(s.y>h+80)s.y=-80;
+      ctx.save(); ctx.translate(s.x,s.y); ctx.rotate(s.r); ctx.beginPath();
+      for(let i=0;i<=s.si;i++){
+        const a=(i/s.si)*Math.PI*2-Math.PI/2;
+        const R=s.sz+Math.sin(t*.0008+s.ph+i)*2;
+        i===0?ctx.moveTo(Math.cos(a)*R,Math.sin(a)*R):ctx.lineTo(Math.cos(a)*R,Math.sin(a)*R);
+      }
+      ctx.closePath();
+      ctx.strokeStyle=`rgba(92,124,90,${s.a})`;
+      ctx.lineWidth=0.8; ctx.stroke(); ctx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  sz(); init();
+  window.addEventListener('resize',()=>{sz();init()});
+  requestAnimationFrame(draw);
+})();
+
+/* ================================
+   COMPANION + PROGRESS + NAV
+   ================================ */
+(function(){
+  const pTrack = document.getElementById('progressTrack');
+  const pFill = document.getElementById('progressFill');
+  const comp = document.getElementById('companionShape');
+  const compObj = document.getElementById('compObject');
+  const essay = document.getElementById('essayBody');
+  const homeNav = document.getElementById('homeNav');
+
+  const fit=[[50,5],[93,27],[93,73],[50,95],[7,73],[7,27]];
+  const mis=[[50,25],[75,35],[80,60],[60,80],[30,72],[25,42]];
+
+  function lp(a,b,t){return a.map((p,i)=>[p[0]+(b[i][0]-p[0])*t,p[1]+(b[i][1]-p[1])*t].join(',')).join(' ');}
+  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+
+  function tick(){
+    const sy=window.scrollY;
+    const dH=document.documentElement.scrollHeight-window.innerHeight;
+    const prog=Math.max(0,Math.min(1,sy/dH));
+
+    pFill.style.height=(prog*100)+'%';
+    pTrack.classList.toggle('visible',prog>0.02&&prog<0.98);
+
+    // Home nav: visible in hero, then stays visible but subtler
+    if(homeNav){
+      const heroH = window.innerHeight;
+      if(sy > heroH * 0.6) homeNav.style.opacity = '0.5';
+      else homeNav.style.opacity = '';
+    }
+
+    if(!essay)return;
+    const bTop=essay.offsetTop,bH=essay.offsetHeight;
+    const ep=Math.max(0,Math.min(1,(sy-bTop+window.innerHeight*.5)/bH));
+    compObj.setAttribute('points',lp(mis,fit,ease(ep)));
+
+    const inE=sy>bTop-window.innerHeight*.5&&sy<bTop+bH-window.innerHeight*.3;
+    comp.classList.toggle('visible',inE);
+
+    const wb=Math.sin(Date.now()*.0008)*(3-ease(ep)*3);
+    comp.style.transform=`translateY(-50%) rotate(${wb}deg)`;
+  }
+
+  window.addEventListener('scroll',tick,{passive:true});
+  tick();
+})();
+
+/* ================================
+   OBSERVERS
+   ================================ */
+(function(){
+  const io=(sel,opts,cb)=>{const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)cb(e.target)})},opts);document.querySelectorAll(sel).forEach(el=>o.observe(el));return o;};
+
+  io('.section p',{threshold:0.1,rootMargin:'0px 0px -25px 0px'},el=>el.classList.add('revealed'));
+  io('mark.hl',{threshold:0.9,rootMargin:'0px 0px -5% 0px'},el=>el.classList.add('lit'));
+
+  io('[data-divider]',{threshold:0.5},el=>{
+    el.classList.add('revealed');
+    const inner=el.querySelector('.d-inner');
+    if(inner)inner.style.transform=`rotate(${el.dataset.rotation||0}deg)`;
+  });
+
+  const pqL=document.querySelectorAll('.pq-line');
+  if(pqL.length){
+    const o=new IntersectionObserver(es=>{es.forEach(e=>{
+      if(e.isIntersecting){pqL.forEach((l,i)=>setTimeout(()=>l.classList.add('revealed'),i*280));o.disconnect();}
+    })},{threshold:0.4});
+    o.observe(pqL[0].parentElement);
+  }
+
+  const oE=document.querySelector('[data-reframe="old"]');
+  if(oE){let f=0;io('[data-reframe="old"]',{threshold:0.7},()=>{if(!f){f=1;oE.classList.add('struck')}});}
+
+  const nE=document.querySelector('[data-reframe="new"]');
+  if(nE){let f=0;io('[data-reframe="new"]',{threshold:0.7},()=>{if(!f){f=1;nE.classList.add('show')}});}
+
+  const we=document.querySelector('[data-emphasis]');
+  if(we) io('[data-emphasis]',{threshold:1.0},()=>{we.classList.add('breathe');setTimeout(()=>we.classList.remove('breathe'),800);});
+
+})();
+
+
+/* ================================
+   AUDIO PLAYER
+   ================================ */
+(function(){
+  const audio = document.getElementById('audioEl');
+  const player = document.getElementById('audioPlayer');
+  const btn = document.getElementById('audioBtn');
+  const bar = document.getElementById('audioBar');
+  const fill = document.getElementById('audioFill');
+  const time = document.getElementById('audioTime');
+  if (!audio || !btn) return;
+
+  function fmt(s) {
+    if (isNaN(s) || !isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  // Hide player if audio fails to load
+  audio.addEventListener('error', () => {
+    player.classList.add('hidden');
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    time.textContent = fmt(audio.duration);
+  });
+
+  btn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      btn.classList.add('playing');
+    } else {
+      audio.pause();
+      btn.classList.remove('playing');
+    }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    fill.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+    time.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+
+  audio.addEventListener('ended', () => {
+    btn.classList.remove('playing');
+    fill.style.width = '0%';
+    audio.currentTime = 0;
+    time.textContent = fmt(audio.duration);
+  });
+
+  // Speed toggle
+  const speedBtn = document.getElementById('audioSpeed');
+  const speeds = [1, 1.5, 2];
+  let speedIdx = 0;
+
+  if (speedBtn) {
+    speedBtn.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      audio.playbackRate = speeds[speedIdx];
+      speedBtn.textContent = speeds[speedIdx] + 'x';
+    });
+  }
+
+  bar.addEventListener('click', e => {
+    if (!audio.duration) return;
+    const rect = bar.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = pct * audio.duration;
+  });
+})();
+</script>
+
+<script>
+// === Hero parallax + scroll-driven video ===
+(function(){
+  var wrap = document.querySelector('.hero-image-wrap');
+  if (!wrap) return;
+  var video = wrap.querySelector('video');
+  var ticking = false;
+  var duration = 0;
+  var scrollRange = 800;
+
+  if (video) {
+    video.addEventListener('loadedmetadata', function() {
+      duration = video.duration || 0;
+    });
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        var y = window.scrollY;
+        var rate = 0.32;
+        wrap.style.transform = 'translateY(' + (y * rate) + 'px) scale(' + (1 + y * 0.0001) + ')';
+        wrap.style.opacity = Math.max(0, 1 - y * 0.0014);
+
+        if (video && duration > 0) {
+          var pct = Math.min(1, Math.max(0, y / scrollRange));
+          var target = pct * duration;
+          if (Math.abs(video.currentTime - target) > 0.05) {
+            video.currentTime = target;
+          }
+        }
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

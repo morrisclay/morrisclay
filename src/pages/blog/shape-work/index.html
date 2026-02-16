@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shape Work — Morris Clay</title>
+<meta name="description" content="A series on the discipline of product shape. The most consequential decisions in frontier tech aren't about technology — they're about shape.">
+<meta name="author" content="Morris Clay">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://morrisclay.com/blog/shape-work/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Morris Clay" href="https://morrisclay.com/feed.xml">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shape Work — Morris Clay">
+<meta property="og:description" content="A series on the discipline of product shape.">
+<meta property="og:url" content="https://morrisclay.com/blog/shape-work/">
+<meta property="og:site_name" content="Morris Clay">
+<meta property="og:image" content="https://morrisclay.com/og/shape-work.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shape Work — Morris Clay">
+<meta name="twitter:description" content="A series on the discipline of product shape.">
+<meta name="twitter:image" content="https://morrisclay.com/og/shape-work.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #2b2926;
+  --ink-soft: #3d3a36;
+  --paper: #f0ece4;
+  --paper-deep: #e6e1d7;
+  --faded: #918a7e;
+  --rule: #cdc6b8;
+  --accent: #5c7c5a;
+  --accent-deep: #4a6548;
+  --measure: 34em;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+body {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+  line-height: 1.72;
+  letter-spacing: 0.004em;
+}
+
+.home-nav {
+  padding: 1.8rem 2rem;
+}
+
+.home-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--faded);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  transition: color 0.3s ease;
+}
+
+.home-nav a:hover { color: var(--ink); }
+
+.home-nav svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+/* ================================
+   HEADER
+   ================================ */
+.series-header {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 4rem 1.5rem 2rem;
+  text-align: center;
+}
+
+.series-header h1 {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-size: 2.4rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 0.6em;
+}
+
+.series-header .series-sub {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  max-width: 28em;
+  margin: 0 auto 1em;
+  line-height: 1.6;
+}
+
+.series-header .series-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faded);
+}
+
+.series-header .series-meta a {
+  color: var(--faded);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.series-header .series-meta a:hover { color: var(--accent); }
+
+/* ================================
+   HERO IMAGE
+   ================================ */
+.series-hero {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 3rem;
+}
+
+.series-hero-img {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.series-hero-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at center, black 35%, transparent 68%);
+  mask-image: radial-gradient(ellipse 50% 50% at center, black 35%, transparent 68%);
+  filter: contrast(1.08) saturate(0.85);
+}
+
+/* ================================
+   POST LIST
+   ================================ */
+.post-list {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
+  list-style: none;
+}
+
+.post-list li {
+  border-top: 1px solid var(--rule);
+}
+
+.post-list li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.post-list a {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2em;
+  padding: 1.4em 0;
+  text-decoration: none;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+
+.post-list a:hover {
+  color: var(--accent);
+}
+
+.post-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: var(--faded);
+  flex-shrink: 0;
+  min-width: 2.2em;
+  text-align: right;
+}
+
+.post-info {
+  flex: 1;
+}
+
+.post-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  display: block;
+}
+
+.post-desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  color: var(--faded);
+  display: block;
+  margin-top: 0.3em;
+}
+
+.post-arrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.65rem;
+  color: var(--rule);
+  flex-shrink: 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.post-list a:hover .post-arrow {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 640px) {
+  .series-header { padding: 3rem 1.5rem 1.5rem; }
+  .series-header h1 { font-size: 1.8rem; }
+  .series-hero-img { width: 200px; height: 200px; }
+  .post-list a { gap: 0.8em; padding: 1.1em 0; }
+  .post-title { font-size: 1rem; }
+}
+
+/* ================================
+   SUBTLE PAPER GRAIN
+   ================================ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.032;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+</style>
+</head>
+<body>
+
+<nav class="home-nav">
+  <a href="https://morrisclay.com">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Morris Clay
+  </a>
+</nav>
+
+<header class="series-header">
+  <h1>Shape Work</h1>
+  <p class="series-sub">The most consequential decisions in frontier tech aren't about technology. They're about&nbsp;shape.</p>
+  <p class="series-meta"><a href="https://morrisclay.com">Morris Clay</a> &middot; February 2026</p>
+</header>
+
+<div class="series-hero">
+  <div class="series-hero-img">
+    <img src="/images/shape-work/shape-work-light.png" alt="">
+  </div>
+</div>
+
+<ol class="post-list">
+  <li>
+    <a href="/blog/shape-work/shape-work">
+      <span class="post-num">00</span>
+      <span class="post-info">
+        <span class="post-title">Shape Work</span>
+        <span class="post-desc">A series on the discipline of product shape</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+  <li>
+    <a href="/blog/shape-work/the-shape-of-the-thing">
+      <span class="post-num">01</span>
+      <span class="post-info">
+        <span class="post-title">The Shape of the Thing</span>
+        <span class="post-desc">Why the most expensive mistake in frontier tech keeps happening by accident</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+  <li>
+    <a href="/blog/shape-work/the-seven-shapes">
+      <span class="post-num">02</span>
+      <span class="post-info">
+        <span class="post-title">The Seven Shapes</span>
+        <span class="post-desc">A taxonomy of seven shapes</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+  <li>
+    <a href="/blog/shape-work/the-pull-between">
+      <span class="post-num">03</span>
+      <span class="post-info">
+        <span class="post-title">The Pull Between</span>
+        <span class="post-desc">What happens when shapes don't agree</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+  <li>
+    <a href="/blog/shape-work/the-room">
+      <span class="post-num">04</span>
+      <span class="post-info">
+        <span class="post-title">The Room</span>
+        <span class="post-desc">The friction that compounds</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+  <li>
+    <a href="/blog/shape-work/the-simplest-move">
+      <span class="post-num">05</span>
+      <span class="post-info">
+        <span class="post-title">The Simplest Move</span>
+        <span class="post-desc">Shapes don't hold still</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+  <li>
+    <a href="/blog/shape-work/acquired-taste">
+      <span class="post-num">06</span>
+      <span class="post-info">
+        <span class="post-title">Acquired Taste</span>
+        <span class="post-desc">The simplest move</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+  <li>
+    <a href="/blog/shape-work/the-drift">
+      <span class="post-num">07</span>
+      <span class="post-info">
+        <span class="post-title">The Drift</span>
+        <span class="post-desc">What survives</span>
+      </span>
+      <span class="post-arrow">&rarr;</span>
+    </a>
+  </li>
+</ol>
+
+</body>
+</html>
