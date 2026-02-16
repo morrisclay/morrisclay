@@ -201,8 +201,12 @@ body {
 .post-list {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 0 1.5rem 6rem;
+  padding: 0 1.5rem 3rem;
   list-style: none;
+}
+
+.post-list:last-child {
+  padding-bottom: 6rem;
 }
 
 .post-list li {
@@ -213,10 +217,61 @@ body {
   border-bottom: 1px solid var(--rule);
 }
 
-.post-list li[data-publish] { opacity: 0.35; pointer-events: none; }
-.post-list li[data-publish] .post-arrow { display: none; }
-.post-list li.published { opacity: 1; pointer-events: auto; }
-.post-list li.published .post-arrow { display: block; }
+.post-list li[data-publish] { display: none; }
+.post-list li.published { display: list-item; }
+
+.coming-next {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
+}
+
+.coming-next-heading {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faded);
+  padding-bottom: 1.2em;
+}
+
+.coming-next ol {
+  list-style: none;
+  padding: 0;
+}
+
+.coming-next li {
+  border-top: 1px solid var(--rule);
+  padding: 1.2em 0;
+  display: flex;
+  align-items: baseline;
+  gap: 1.2em;
+  color: var(--faded);
+}
+
+.coming-next li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.coming-next .post-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: var(--rule);
+  flex-shrink: 0;
+  min-width: 2.2em;
+  text-align: right;
+}
+
+.coming-next .post-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: var(--faded);
+}
 
 .post-list a {
   display: flex;
@@ -288,6 +343,8 @@ body {
   .series-hero-img { width: 200px; height: 200px; }
   .post-list a { gap: 0.8em; padding: 1.1em 0; }
   .post-title { font-size: 1rem; }
+  .coming-next li { gap: 0.8em; padding: 1em 0; }
+  .coming-next .post-title { font-size: 1rem; }
 }
 
 /* ================================
@@ -417,9 +474,27 @@ body::after {
 <script>
 (function(){
   var now = new Date();
+  var upcoming = [];
   document.querySelectorAll('.post-list li[data-publish]').forEach(function(li){
-    if (now >= new Date(li.dataset.publish + 'T00:00:00')) li.classList.add('published');
+    if (now >= new Date(li.dataset.publish + 'T00:00:00')) {
+      li.classList.add('published');
+    } else {
+      upcoming.push(li);
+    }
   });
+  if (upcoming.length > 0) {
+    var section = document.createElement('div');
+    section.className = 'coming-next';
+    section.innerHTML = '<p class="coming-next-heading">Coming next</p><ol></ol>';
+    var ol = section.querySelector('ol');
+    upcoming.forEach(function(li){
+      var item = document.createElement('li');
+      item.innerHTML = '<span class="post-num">' + li.querySelector('.post-num').textContent + '</span>'
+        + '<span class="post-title">' + li.querySelector('.post-title').textContent + '</span>';
+      ol.appendChild(item);
+    });
+    document.querySelector('.post-list').after(section);
+  }
 })();
 </script>
 </body>
