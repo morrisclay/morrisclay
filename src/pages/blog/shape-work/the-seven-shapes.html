@@ -224,6 +224,36 @@ body {
 
 .home-nav a:hover svg { transform: translateX(-2px); }
 
+.subscribe-nav {
+  position: fixed;
+  top: 1.4rem;
+  right: 1.6rem;
+  z-index: 300;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+  transition: opacity 0.4s ease;
+}
+
+.subscribe-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  padding: 0.5em 1.2em;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.subscribe-nav a:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+  background: rgba(43, 41, 38, 0.04);
+}
+
 /* ================================
    HERO
    ================================ */
@@ -690,6 +720,7 @@ body.mode-agent .agent-view { display: block; }
 body.mode-agent .companion-shape,
 body.mode-agent .progress-track,
 body.mode-agent .home-nav,
+body.mode-agent .subscribe-nav,
 body.mode-agent .grain { display: none; }
 
 /* ================================
@@ -705,6 +736,7 @@ body.mode-agent .grain { display: none; }
   }
   html { font-size: 16.5px; }
   .home-nav { top: 1rem; left: var(--pad-x); }
+  .subscribe-nav { top: 1rem; right: var(--pad-x); }
   .hero { min-height: 580px; }
   .hero-shape { width: 150px; height: 150px; margin-bottom: 1.8rem; }
   .hero-content { padding: 0 var(--pad-x); }
@@ -965,6 +997,10 @@ body::after {
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     Morris Clay
   </a>
+</nav>
+
+<nav class="subscribe-nav">
+  <a href="https://morrisclay.substack.com/t/shape-work" target="_blank">Subscribe</a>
 </nav>
 
 <!-- Bottom toggle -->
