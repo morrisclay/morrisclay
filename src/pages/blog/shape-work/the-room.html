@@ -930,6 +930,8 @@ body.mode-agent .grain { display: none; }
   margin-left: auto;
 }
 
+.post-nav a[data-publish] { display: none; }
+
 @media (max-width: 640px) {
   .post-nav { padding: 2rem var(--pad-x) 3rem; }
 }
@@ -1105,7 +1107,7 @@ body::after {
 
   <nav class="post-nav">
     <a class="nav-prev" href="/blog/shape-work/the-pull-between"><span class="nav-label">&larr; Previous</span><span class="nav-title">The Pull Between</span></a>
-    <a class="nav-next" href="/blog/shape-work/the-simplest-move"><span class="nav-label">Next &rarr;</span><span class="nav-title">The Simplest Move</span></a>
+    <a class="nav-next" href="/blog/shape-work/the-simplest-move" data-publish="2026-02-25"><span class="nav-label">Next &rarr;</span><span class="nav-title">The Simplest Move</span></a>
   </nav>
 
 </main>
@@ -1607,5 +1609,13 @@ document.getElementById('modeDock').addEventListener('click', e => {
 })();
 </script>
 
+<script>
+(function(){
+  var now = new Date();
+  document.querySelectorAll('.post-nav a[data-publish]').forEach(function(a){
+    if (now >= new Date(a.dataset.publish + 'T00:00:00')) a.style.display = '';
+  });
+})();
+</script>
 </body>
 </html>
