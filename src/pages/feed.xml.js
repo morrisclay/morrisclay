@@ -17,37 +17,37 @@ export function GET() {
     {
       title: 'The Seven Shapes',
       slug: 'the-seven-shapes',
-      date: '2026-02-18',
+      date: '2026-02-24',
       description: 'A taxonomy of form. Every product holds seven shapes at once \u2014 imagined, founder, made, measured, felt, ruled, enacted. Naming them is how you start to see.',
     },
     {
       title: 'The Pull Between',
       slug: 'the-pull-between',
-      date: '2026-02-19',
+      date: '2026-02-25',
       description: 'What happens when shapes don\u2019t agree. The tension between competing shapes isn\u2019t a bug \u2014 it\u2019s where the real decisions live.',
     },
     {
       title: 'The Room',
       slug: 'the-room',
-      date: '2026-02-20',
+      date: '2026-02-26',
       description: 'The friction that compounds. When competing product shapes collide, the pressure produces something irreplaceable: taste.',
     },
     {
       title: 'The Drift',
       slug: 'the-drift',
-      date: '2026-02-21',
+      date: '2026-03-05',
       description: 'Shapes don\u2019t hold still. Understanding shape injection and temporal drift is essential to navigating how products change.',
     },
     {
       title: 'The Simplest Move',
       slug: 'the-simplest-move',
-      date: '2026-02-22',
+      date: '2026-03-02',
       description: 'What naming does. The most powerful move in shape work is the simplest: naming which shape the room is in.',
     },
     {
       title: 'Acquired Taste',
       slug: 'acquired-taste',
-      date: '2026-02-23',
+      date: '2026-03-04',
       description: 'What survives when execution gets cheap. Taste as accumulated capacity \u2014 built through years of friction, not aesthetic preference.',
     },
   ];
